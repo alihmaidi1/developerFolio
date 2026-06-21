@@ -1,0 +1,51 @@
+{
+  "name": "developerfolio",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "dependencies": {
+    "@tanstack/react-query": "^5.100.10",
+    "@tanstack/react-query-devtools": "^5.100.10",
+    "axios": "^1.16.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^1.17.0",
+    "lottie-react": "^2.4.0",
+    "react": "^19.2.6",
+    "react-dom": "^19.2.6",
+    "react-easy-emoji": "^1.8.1",
+    "sass": "^1.32.8",
+    "tailwind-merge": "^3.6.0",
+    "zod": "^4.4.3"
+  },
+  "scripts": {
+    "dev": "node fetch.cjs && vite",
+    "predeploy": "npm run build",
+    "start": "npm run dev",
+    "build": "node fetch.cjs && tsc -b && vite build",
+    "build:docker": "tsc -b && vite build",
+    "deploy": "gh-pages -d dist",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "format": "prettier --write .",
+    "check-format": "prettier --check ."
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.12.4",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.1",
+    "eslint": "^10.3.0",
+    "eslint-plugin-boundaries": "^6.0.2",
+    "eslint-import-resolver-typescript": "^4.4.5",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.2",
+    "dotenv": "^17.2.3",
+    "gh-pages": "^6.3.0",
+    "globals": "^17.6.0",
+    "prettier": "^3.5.3",
+    "typescript": "~6.0.2",
+    "typescript-eslint": "^8.59.2",
+    "vite": "^8.0.12"
+  }
+}
