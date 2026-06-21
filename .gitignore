@@ -27,3 +27,10 @@ yarn-error.log*
 #user generated content
 public/profile.json
 public/blogs.json
+
+# .NET backend
+**/bin/
+**/obj/
+backend/.idea/
+backend/DeveloperFolio.Api/App_Data/
+backend/TestResults/
