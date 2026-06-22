@@ -3,41 +3,28 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace DeveloperFolio.Infrastructure.Migrations
+namespace DeveloperFolio.Infrastructure.Persistence.Migrations
 {
     /// <inheritdoc />
-    public partial class sss : Migration
+    public partial class AddPortfolioProjects : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "ProjectTechnologies");
-
-            migrationBuilder.DropTable(
-                name: "ResumeDocuments");
-
-            migrationBuilder.DropTable(
-                name: "Projects");
-        }
-
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
                 name: "Projects",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    CreatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    Title = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    Summary = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
                     Description = table.Column<string>(type: "character varying(5000)", maxLength: 5000, nullable: true),
                     ImageUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
-                    IsPublished = table.Column<bool>(type: "boolean", nullable: false),
-                    LiveUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
                     RepositoryUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
+                    LiveUrl = table.Column<string>(type: "character varying(2048)", maxLength: 2048, nullable: true),
                     SortOrder = table.Column<int>(type: "integer", nullable: false),
-                    Summary = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    Title = table.Column<string>(type: "character varying(160)", maxLength: 160, nullable: false),
+                    IsPublished = table.Column<bool>(type: "boolean", nullable: false),
+                    CreatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
                     UpdatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
@@ -46,30 +33,14 @@ namespace DeveloperFolio.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "ResumeDocuments",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    ContentType = table.Column<string>(type: "character varying(100)", maxLength: 100, nullable: false),
-                    CreatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
-                    FileName = table.Column<string>(type: "character varying(255)", maxLength: 255, nullable: false),
-                    SizeInBytes = table.Column<long>(type: "bigint", nullable: false),
-                    StorageKey = table.Column<string>(type: "character varying(500)", maxLength: 500, nullable: false),
-                    UpdatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResumeDocuments", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "ProjectTechnologies",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uuid", nullable: false),
-                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
                     ProjectId = table.Column<Guid>(type: "uuid", nullable: false),
-                    SortOrder = table.Column<int>(type: "integer", nullable: false)
+                    Name = table.Column<string>(type: "character varying(80)", maxLength: 80, nullable: false),
+                    CreatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false),
+                    UpdatedAtUtc = table.Column<DateTimeOffset>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -92,6 +63,16 @@ namespace DeveloperFolio.Infrastructure.Migrations
                 table: "ProjectTechnologies",
                 columns: new[] { "ProjectId", "Name" },
                 unique: true);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "ProjectTechnologies");
+
+            migrationBuilder.DropTable(
+                name: "Projects");
         }
     }
 }
