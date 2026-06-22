@@ -1,6 +1,6 @@
 .page {
   --ui-color-accent: var(--admin-color-accent);
-  --ui-color-accent-contrast: var(--admin-color-background);
+  --ui-color-accent-contrast: #fff;
   --ui-color-accent-hover: var(--admin-color-accent-hover);
   --ui-color-border: var(--admin-color-border-strong);
   --ui-color-danger: var(--admin-color-danger);
@@ -8,163 +8,255 @@
   --ui-color-positive: var(--admin-color-positive);
   --ui-color-subtle: var(--admin-color-subtle);
   --ui-color-text: var(--admin-color-text);
-  --ui-radius: 0;
+  --ui-input-background: var(--admin-color-surface-raised);
+  --ui-input-radius: 11px;
+  --ui-focus-shadow: rgb(100 98 215 / 14%);
+  --ui-danger-shadow: rgb(201 79 104 / 10%);
+  --ui-radius: 11px;
   --ui-transition-fast: var(--admin-transition-fast);
 
-  color-scheme: dark;
+  color-scheme: light;
   min-height: 100svh;
   color: var(--admin-color-text);
   background: var(--admin-color-background);
-  overflow: hidden;
 }
 
 .header {
-  min-height: 76px;
-  padding: 0 6vw;
+  min-height: 72px;
+  padding: 0 clamp(24px, 4vw, 64px);
+  background: rgb(255 255 255 / 82%);
+  border-bottom: 1px solid var(--admin-color-border);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid var(--admin-color-border);
+  backdrop-filter: blur(14px);
 }
 
 .brand {
   color: inherit;
   display: inline-flex;
-  align-items: baseline;
+  align-items: center;
   gap: 12px;
   text-decoration: none;
+}
 
-  &:focus-visible {
-    outline: 2px solid var(--admin-color-accent);
-    outline-offset: 3px;
-  }
+.brand:focus-visible {
+  outline: 2px solid var(--admin-color-accent);
+  outline-offset: 4px;
+  border-radius: 8px;
 }
 
 .brandMark {
-  color: var(--admin-color-accent);
-  font-family: "Agustina Regular", sans-serif;
-  font-size: 1.75rem;
+  width: 38px;
+  height: 38px;
+  color: #fff;
+  background: var(--admin-color-accent);
+  border-radius: 11px;
+  display: grid;
+  place-items: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
 }
 
-.brandName,
-.secureLabel {
-  font-size: 0.72rem;
-  letter-spacing: 0.16em;
+.brandCopy {
+  display: grid;
+  gap: 2px;
+}
+
+.brandName {
+  font-size: 0.82rem;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.brandCopy small {
+  color: var(--admin-color-muted);
+  font-size: 0.68rem;
 }
 
 .secureLabel {
   color: var(--admin-color-muted);
+  background: var(--admin-color-surface-raised);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 999px;
+  padding: 8px 12px;
   display: flex;
   align-items: center;
-  gap: 9px;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 600;
+}
 
-  svg {
-    width: 15px;
-  }
+.secureLabel svg {
+  width: 14px;
+  height: 14px;
+  color: var(--admin-color-accent);
 }
 
 .content {
-  min-height: calc(100svh - 77px);
+  min-height: calc(100svh - 73px);
   display: grid;
-  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+  grid-template-columns: minmax(0, 1.12fr) minmax(380px, 0.88fr);
 }
 
 .formColumn {
-  padding: clamp(38px, 6vh, 80px) 8vw 38px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  animation: login-enter 520ms ease-out both;
+  padding: clamp(40px, 7vw, 96px);
+  display: grid;
+  place-items: center;
+}
+
+.formPanel {
+  width: min(100%, 500px);
+  background: var(--admin-color-surface);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 22px;
+  padding: clamp(28px, 4vw, 44px);
+  box-shadow: var(--admin-shadow-soft);
+  animation: form-enter 480ms ease-out both;
 }
 
 .eyebrow {
   color: var(--admin-color-accent);
-  margin: 0 0 22px;
+  margin: 0 0 14px;
   font-size: 0.72rem;
   font-weight: 700;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .title {
   margin: 0;
-  font-size: clamp(3.2rem, 5.5vw, 6rem);
-  line-height: 0.94;
-  letter-spacing: -0.065em;
+  font-size: clamp(2.25rem, 4vw, 3.25rem);
+  line-height: 1.05;
+  letter-spacing: -0.045em;
 }
 
 .intro {
   color: var(--admin-color-muted);
-  max-width: 470px;
-  margin: 22px 0 30px;
-  font-size: clamp(1rem, 1.4vw, 1.16rem);
-  line-height: 1.7;
+  margin: 14px 0 30px;
+  font-size: 0.95rem;
+  line-height: 1.65;
+}
+
+.accessNote {
+  color: var(--admin-color-subtle);
+  margin: 18px 0 0;
+  font-size: 0.75rem;
+  text-align: center;
 }
 
 .context {
   min-height: 100%;
-  background: var(--admin-color-surface);
-  border-left: 1px solid var(--admin-color-border);
-  padding: 8vh 5vw 7vh;
-  box-sizing: border-box;
+  color: #303149;
+  background: #e1e0f8;
+  border-left: 1px solid rgb(100 98 215 / 10%);
+  padding: clamp(36px, 6vw, 76px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  overflow: hidden;
   position: relative;
-  animation: context-enter 650ms 90ms ease-out both;
-
-  &::after {
-    content: "";
-    width: 1px;
-    height: 36%;
-    background: var(--admin-color-accent);
-    opacity: 0.5;
-    position: absolute;
-    right: 10%;
-    top: 0;
-  }
 }
 
+.context::after {
+  content: "";
+  width: 320px;
+  height: 320px;
+  background: rgb(100 98 215 / 9%);
+  border-radius: 50%;
+  position: absolute;
+  right: -120px;
+  bottom: -100px;
+}
+
+.contextHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  z-index: 1;
+}
+
+.contextLabel,
 .index {
-  color: rgb(255 255 255 / 8%);
-  font-size: clamp(7rem, 14vw, 13rem);
+  color: #73749a;
+  font-size: 0.7rem;
   font-weight: 700;
-  line-height: 0.8;
-  letter-spacing: -0.09em;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
 }
 
 .contextCopy {
-  max-width: 370px;
-
-  svg {
-    width: 34px;
-    height: 34px;
-    color: var(--admin-color-accent);
-    margin-bottom: 22px;
-  }
-
-  p {
-    margin: 0 0 12px;
-    font-size: clamp(1.5rem, 2.3vw, 2.25rem);
-    line-height: 1.2;
-  }
-
-  span {
-    color: var(--admin-color-muted);
-    font-size: 0.92rem;
-    line-height: 1.7;
-  }
+  max-width: 410px;
+  position: relative;
+  z-index: 1;
 }
 
-.signal {
-  color: var(--admin-color-muted);
+.contextIcon {
+  width: 48px;
+  height: 48px;
+  color: var(--admin-color-accent);
+  background: rgb(255 255 255 / 65%);
+  border: 1px solid rgb(100 98 215 / 12%);
+  border-radius: 14px;
+  margin-bottom: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.contextIcon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.contextCopy h2 {
+  max-width: 390px;
+  margin: 0;
+  font-size: clamp(2rem, 3.4vw, 3.4rem);
+  line-height: 1.08;
+  letter-spacing: -0.045em;
+}
+
+.contextCopy > p {
+  max-width: 360px;
+  color: #676985;
+  margin: 18px 0 28px;
+  font-size: 0.92rem;
+  line-height: 1.7;
+}
+
+.contextList {
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 13px;
+  list-style: none;
+}
+
+.contextList li {
   display: flex;
   align-items: center;
   gap: 10px;
-  font-size: 0.72rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.contextList svg {
+  width: 17px;
+  height: 17px;
+  color: var(--admin-color-accent);
+}
+
+.signal {
+  color: #73749a;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+  z-index: 1;
+  font-size: 0.7rem;
+  font-weight: 600;
 }
 
 .signalDot {
@@ -172,31 +264,23 @@
   height: 7px;
   background: var(--admin-color-positive);
   border-radius: 50%;
-  box-shadow: 0 0 0 5px rgb(121 217 152 / 10%);
+  box-shadow: 0 0 0 5px rgb(46 150 102 / 10%);
 }
 
-@keyframes login-enter {
+@keyframes form-enter {
   from {
     opacity: 0;
-    transform: translateY(16px);
+    transform: translateY(12px);
   }
 }
 
-@keyframes context-enter {
-  from {
-    opacity: 0;
-    transform: translateX(18px);
-  }
-}
-
-@media (max-width: 860px) {
+@media (max-width: 900px) {
   .content {
     grid-template-columns: 1fr;
   }
 
   .formColumn {
-    min-height: calc(100svh - 77px);
-    box-sizing: border-box;
+    min-height: calc(100svh - 73px);
     padding-inline: 7vw;
   }
 
@@ -207,26 +291,27 @@
 
 @media (max-width: 520px) {
   .header {
-    padding-inline: 22px;
+    padding-inline: 18px;
   }
 
+  .brandCopy small,
   .secureLabel {
-    font-size: 0;
+    display: none;
   }
 
   .formColumn {
-    padding: 52px 22px 42px;
-    justify-content: flex-start;
+    padding: 28px 16px;
+    align-items: start;
   }
 
-  .title {
-    font-size: clamp(3.2rem, 18vw, 4.6rem);
+  .formPanel {
+    border-radius: 18px;
+    padding: 28px 22px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .formColumn,
-  .context {
+  .formPanel {
     animation: none;
   }
 }

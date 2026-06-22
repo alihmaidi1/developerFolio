@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/store";
-import { logoutAdmin } from "../api/auth.api";
+import { authApi } from "../api/auth.api";
 import { clearAdminQueries } from "../lib/clear-admin-queries";
 import { clearAdminSession } from "../model/admin-auth.slice";
 
@@ -10,7 +10,7 @@ export function useAdminLogout() {
   const navigate = useNavigate();
 
   const mutation = useMutation({
-    mutationFn: logoutAdmin,
+    mutationFn: authApi.logout,
     onSettled: () => {
       dispatch(clearAdminSession());
       clearAdminQueries();

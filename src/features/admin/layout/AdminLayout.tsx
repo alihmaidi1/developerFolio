@@ -17,7 +17,10 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
       <aside className={styles.sidebar}>
         <Link to="/admin" className={styles.brand}>
           <span className={styles.brandMark}>AH</span>
-          <strong className={styles.brandName}>Control</strong>
+          <span className={styles.brandCopy}>
+            <strong className={styles.brandName}>Control</strong>
+            <small>Admin workspace</small>
+          </span>
         </Link>
 
         <nav className={styles.navigation} aria-label="Admin navigation">
@@ -30,18 +33,30 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
             }
           >
             <FolderKanban aria-hidden="true" />
-            Overview
+            <span className={styles.navigationCopy}>
+              <strong>Overview</strong>
+              <small>Workspace status</small>
+            </span>
           </NavLink>
           <span className={styles.navigationUnavailable} aria-disabled="true">
             <FileText aria-hidden="true" />
-            Content tools coming next
+            <span className={styles.navigationCopy}>
+              <strong>Content</strong>
+              <small>Projects and resume</small>
+            </span>
+            <span className={styles.navigationMeta}>Soon</span>
           </span>
         </nav>
 
         <div className={styles.account}>
           <div className={styles.accountIdentity}>
-            <span>Signed in as</span>
-            <strong>{admin?.email}</strong>
+            <span className={styles.accountAvatar} aria-hidden="true">
+              A
+            </span>
+            <span className={styles.accountCopy}>
+              <small>Signed in as</small>
+              <strong>{admin?.email}</strong>
+            </span>
           </div>
           <button
             className={styles.logoutButton}

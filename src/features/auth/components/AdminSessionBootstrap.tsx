@@ -1,7 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { useAppDispatch } from "@/app/store";
 import { setUnauthorizedHandler } from "@/shared/lib/private-client";
-import { getAdminSession } from "../api/auth.api";
+import { authApi } from "../api/auth.api";
 import { clearAdminQueries } from "../lib/clear-admin-queries";
 import { clearAdminSession, setAdminSession } from "../model/admin-auth.slice";
 
@@ -22,7 +22,8 @@ export function AdminSessionBootstrap({
     };
     const unregisterUnauthorizedHandler = setUnauthorizedHandler(clearSession);
 
-    getAdminSession()
+    authApi
+      .getSession()
       .then((session) => {
         if (isActive) {
           dispatch(setAdminSession(session));

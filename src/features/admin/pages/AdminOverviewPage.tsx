@@ -4,27 +4,42 @@ export function AdminOverviewPage() {
   return (
     <section className={styles.overview}>
       <header className={styles.header}>
-        <p className={styles.eyebrow}>Admin workspace</p>
-        <h1 className={styles.title}>Content overview</h1>
-        <p className={styles.intro}>
-          Manage the portfolio content from one focused workspace. Project and
-          resume editors are the next features.
-        </p>
-      </header>
-
-      <div className={styles.status} aria-label="Workspace status">
-        <span className={styles.statusLabel}>Authentication</span>
-        <strong className={styles.statusValue}>
+        <div className={styles.headerCopy}>
+          <p className={styles.eyebrow}>Workspace</p>
+          <h1 className={styles.title}>Overview</h1>
+          <p className={styles.intro}>
+            Review what is ready and what comes next for your portfolio tools.
+          </p>
+        </div>
+        <span className={styles.sessionStatus}>
           <span className={styles.statusDot} aria-hidden="true" />
           Session active
-        </strong>
-      </div>
+        </span>
+      </header>
+
+      <dl className={styles.summary} aria-label="Workspace status">
+        <div className={styles.summaryItem}>
+          <dt>Authentication</dt>
+          <dd className={styles.readyValue}>Ready</dd>
+        </div>
+        <div className={styles.summaryItem}>
+          <dt>Projects editor</dt>
+          <dd>Next</dd>
+        </div>
+        <div className={styles.summaryItem}>
+          <dt>Resume editor</dt>
+          <dd>Planned</dd>
+        </div>
+      </dl>
 
       <section className={styles.nextActions} aria-labelledby="next-actions">
         <header className={styles.sectionHeader}>
-          <h2 id="next-actions" className={styles.sectionLabel}>
-            Next actions
-          </h2>
+          <div>
+            <h2 id="next-actions" className={styles.sectionLabel}>
+              Setup queue
+            </h2>
+            <p>Features planned for the next workspace iteration.</p>
+          </div>
           <span className={styles.actionCount}>2 planned</span>
         </header>
         <ol className={styles.actionList}>
@@ -34,7 +49,7 @@ export function AdminOverviewPage() {
               <strong>Project management</strong>
               <p>Create, edit, order, and publish portfolio projects.</p>
             </div>
-            <span className={styles.actionState}>Next</span>
+            <span className={styles.actionStatePrimary}>Next</span>
           </li>
           <li className={styles.action}>
             <span className={styles.actionIndex}>02</span>

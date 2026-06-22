@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/store";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { loginAdmin } from "../api/auth.api";
+import { authApi } from "../api/auth.api";
 import { setAdminSession } from "../model/admin-auth.slice";
 import { adminLoginSchema, type AdminLoginValues } from "../model/auth.schema";
 
@@ -25,7 +25,7 @@ export function useAdminLogin() {
   });
 
   const mutation = useMutation({
-    mutationFn: loginAdmin,
+    mutationFn: authApi.login,
     onSuccess: (session) => {
       dispatch(setAdminSession(session));
       const destination =

@@ -3,7 +3,7 @@
   width: max-content;
   box-sizing: border-box;
   border: 1px solid transparent;
-  border-radius: var(--ui-radius, 6px);
+  border-radius: var(--ui-radius, 10px);
   padding: 0 22px;
   display: inline-flex;
   align-items: center;
@@ -23,7 +23,7 @@
 }
 
 .button:hover:not(:disabled) {
-  transform: translateY(-2px);
+  transform: translateY(-1px);
 }
 
 .button:focus-visible {

@@ -2,11 +2,11 @@
   width: 100%;
   box-sizing: border-box;
   color: var(--ui-color-text, #1f1f24);
-  background: transparent;
-  border: 0;
-  border-bottom: 1px solid var(--ui-color-border, rgb(31 31 36 / 24%));
-  border-radius: 0;
-  padding: 10px 0 12px;
+  background: var(--ui-input-background, transparent);
+  border: 1px solid var(--ui-color-border, rgb(31 31 36 / 24%));
+  border-radius: var(--ui-input-radius, var(--ui-radius, 6px));
+  min-height: var(--ui-input-height, 48px);
+  padding: var(--ui-input-padding, 0 14px);
   font: inherit;
   outline: none;
   transition:
@@ -20,11 +20,12 @@
 
 .input:focus-visible {
   border-color: var(--ui-color-accent, #55198b);
-  box-shadow: 0 1px 0 var(--ui-color-accent, #55198b);
+  box-shadow: 0 0 0 3px var(--ui-focus-shadow, rgb(85 25 139 / 14%));
 }
 
 .input[aria-invalid="true"] {
   border-color: var(--ui-color-danger, #c7354f);
+  box-shadow: 0 0 0 3px var(--ui-danger-shadow, rgb(199 53 79 / 10%));
 }
 
 .input:disabled {

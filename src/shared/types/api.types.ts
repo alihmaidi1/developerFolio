@@ -3,10 +3,22 @@ export interface ApiError {
   message: string;
 }
 
-export interface TResult<T> {
-  isSuccess: boolean;
-  isFailure: boolean;
+interface OperationResultBase {
   statusCode: number;
-  error: ApiError | null;
-  value: T | null;
 }
+
+interface SuccessfulResult<T> extends OperationResultBase {
+  isSuccess: true;
+  isFailure: false;
+  error: null;
+  value: T;
+}
+
+interface FailedResult extends OperationResultBase {
+  isSuccess: false;
+  isFailure: true;
+  error: ApiError;
+  value: null;
+}
+
+export type TResult<T> = SuccessfulResult<T> | FailedResult;

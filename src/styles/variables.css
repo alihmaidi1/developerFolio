@@ -14,18 +14,20 @@
   --transition-fast: 180ms ease;
   --radius-sm: 6px;
 
-  --admin-color-background: #0c0c12;
-  --admin-color-surface: #13131c;
-  --admin-color-surface-raised: #191823;
-  --admin-color-text: #f5f3fa;
-  --admin-color-muted: #9b98a8;
-  --admin-color-subtle: #666473;
-  --admin-color-accent: #9b7cff;
-  --admin-color-accent-hover: #ae96ff;
-  --admin-color-positive: #79d998;
-  --admin-color-danger: #ff9aab;
-  --admin-color-border: rgb(255 255 255 / 9%);
-  --admin-color-border-strong: rgb(255 255 255 / 16%);
+  --admin-color-background: #f4f5f8;
+  --admin-color-surface: #fff;
+  --admin-color-surface-raised: #f9f9fc;
+  --admin-color-text: #20222b;
+  --admin-color-muted: #6f7380;
+  --admin-color-subtle: #9a9eaa;
+  --admin-color-accent: #6462d7;
+  --admin-color-accent-hover: #514fc3;
+  --admin-color-accent-soft: #eeedff;
+  --admin-color-positive: #2e9666;
+  --admin-color-danger: #c94f68;
+  --admin-color-border: rgb(32 34 43 / 9%);
+  --admin-color-border-strong: rgb(32 34 43 / 15%);
+  --admin-shadow-soft: 0 24px 70px rgb(35 37 47 / 8%);
   --admin-transition-fast: 180ms ease;
 
   --ui-color-accent: var(--color-primary);
