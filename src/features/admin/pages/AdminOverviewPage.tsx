@@ -24,7 +24,7 @@ export function AdminOverviewPage() {
         </div>
         <div className={styles.summaryItem}>
           <dt>Projects editor</dt>
-          <dd>Next</dd>
+          <dd className={styles.readyValue}>Ready</dd>
         </div>
         <div className={styles.summaryItem}>
           <dt>Resume editor</dt>
@@ -40,24 +40,16 @@ export function AdminOverviewPage() {
             </h2>
             <p>Features planned for the next workspace iteration.</p>
           </div>
-          <span className={styles.actionCount}>2 planned</span>
+          <span className={styles.actionCount}>1 planned</span>
         </header>
         <ol className={styles.actionList}>
           <li className={styles.action}>
             <span className={styles.actionIndex}>01</span>
             <div className={styles.actionCopy}>
-              <strong>Project management</strong>
-              <p>Create, edit, order, and publish portfolio projects.</p>
-            </div>
-            <span className={styles.actionStatePrimary}>Next</span>
-          </li>
-          <li className={styles.action}>
-            <span className={styles.actionIndex}>02</span>
-            <div className={styles.actionCopy}>
               <strong>Resume replacement</strong>
               <p>Upload and replace the public resume from the workspace.</p>
             </div>
-            <span className={styles.actionState}>Planned</span>
+            <span className={styles.actionStatePrimary}>Next</span>
           </li>
         </ol>
       </section>

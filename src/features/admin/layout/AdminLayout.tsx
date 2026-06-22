@@ -1,5 +1,5 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { FolderKanban, FileText, LogOut } from "lucide-react";
+import { FileText, FolderKanban, LayoutDashboard, LogOut } from "lucide-react";
 import { useAppSelector } from "@/app/store";
 import { cn } from "@/shared/lib/cn";
 import styles from "./AdminLayout.module.css";
@@ -32,17 +32,29 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
               cn(styles.navigationLink, isActive && styles.navigationLinkActive)
             }
           >
-            <FolderKanban aria-hidden="true" />
+            <LayoutDashboard aria-hidden="true" />
             <span className={styles.navigationCopy}>
               <strong>Overview</strong>
               <small>Workspace status</small>
             </span>
           </NavLink>
+          <NavLink
+            to="/admin/projects"
+            className={({ isActive }) =>
+              cn(styles.navigationLink, isActive && styles.navigationLinkActive)
+            }
+          >
+            <FolderKanban aria-hidden="true" />
+            <span className={styles.navigationCopy}>
+              <strong>Projects</strong>
+              <small>Portfolio content</small>
+            </span>
+          </NavLink>
           <span className={styles.navigationUnavailable} aria-disabled="true">
             <FileText aria-hidden="true" />
             <span className={styles.navigationCopy}>
-              <strong>Content</strong>
-              <small>Projects and resume</small>
+              <strong>Resume</strong>
+              <small>Document management</small>
             </span>
             <span className={styles.navigationMeta}>Soon</span>
           </span>
