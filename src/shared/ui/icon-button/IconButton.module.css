@@ -1,0 +1,36 @@
+.button {
+  width: 42px;
+  height: 42px;
+  color: var(--ui-color-muted, #75727e);
+  background: transparent;
+  border: 0;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+  transition: color var(--ui-transition-fast, 180ms ease);
+}
+
+.button:hover:not(:disabled) {
+  color: var(--ui-color-text, #1f1f24);
+}
+
+.button:focus-visible {
+  outline: 2px solid var(--ui-color-accent, #55198b);
+  outline-offset: 3px;
+}
+
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.button svg {
+  width: 19px;
+  height: 19px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: none;
+  }
+}

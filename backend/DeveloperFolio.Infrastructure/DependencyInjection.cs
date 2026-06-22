@@ -28,6 +28,10 @@ public static class DependencyInjection
             .Bind(configuration.GetRequiredSection(StorageOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services.AddOptions<AuthCookieOptions>()
+            .Bind(configuration.GetRequiredSection(AuthCookieOptions.SectionName))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services.AddOptions<AdminSeedOptions>()
             .Bind(configuration.GetRequiredSection(AdminSeedOptions.SectionName))
             .ValidateDataAnnotations()
@@ -39,12 +43,17 @@ public static class DependencyInjection
         services.AddScoped<AdminSeeder>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
+        services.AddScoped<IAdminSessionCookie, AdminSessionCookie>();
         services.AddScoped<IFileStorage, LocalFileStorage>();
+        services.AddHttpContextAccessor();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             .AddJwtBearer();
         services.AddOptions<JwtBearerOptions>(JwtBearerDefaults.AuthenticationScheme)
-            .Configure<IOptions<JwtOptions>>((options, configuredJwtOptions) =>
+            .Configure<IOptions<JwtOptions>, IOptions<AuthCookieOptions>>((
+                options,
+                configuredJwtOptions,
+                configuredCookieOptions) =>
             {
                 var jwtOptions = configuredJwtOptions.Value;
                 options.TokenValidationParameters = new TokenValidationParameters
@@ -57,6 +66,21 @@ public static class DependencyInjection
                     ValidAudience = jwtOptions.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtOptions.Key)),
                     ClockSkew = TimeSpan.FromSeconds(30),
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnMessageReceived = context =>
+                    {
+                        if (string.IsNullOrEmpty(context.Token)
+                            && context.Request.Cookies.TryGetValue(
+                                configuredCookieOptions.Value.Name,
+                                out var cookieToken))
+                        {
+                            context.Token = cookieToken;
+                        }
+
+                        return Task.CompletedTask;
+                    },
                 };
             });
         services.AddAuthorizationBuilder()

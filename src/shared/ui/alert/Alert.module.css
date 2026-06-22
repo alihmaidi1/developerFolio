@@ -1,0 +1,21 @@
+.alert {
+  border-left: 2px solid currentColor;
+  padding: 10px 12px;
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.error {
+  color: var(--ui-color-danger, #c7354f);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.info {
+  color: var(--ui-color-accent, #55198b);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}
+
+.success {
+  color: var(--ui-color-positive, #278346);
+  background: color-mix(in srgb, currentColor 8%, transparent);
+}

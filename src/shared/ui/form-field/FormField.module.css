@@ -1,0 +1,20 @@
+.field {
+  margin-bottom: 18px;
+}
+
+.label {
+  display: block;
+  color: var(--ui-color-text, #1f1f24);
+  margin-bottom: 10px;
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.error {
+  color: var(--ui-color-danger, #c7354f);
+  display: block;
+  margin-top: 8px;
+  font-size: 0.78rem;
+}

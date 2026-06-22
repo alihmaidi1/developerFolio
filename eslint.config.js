@@ -28,6 +28,7 @@ export default defineConfig([
       },
       "boundaries/elements": [
         { type: "app", pattern: "src/main.tsx" },
+        { type: "store", pattern: "src/app/store/**" },
         { type: "app", pattern: "src/app/**" },
         {
           type: "feature",
@@ -48,7 +49,13 @@ export default defineConfig([
           rules: [
             {
               from: { type: "app" },
-              allow: { to: { type: ["app", "feature", "shared", "assets"] } },
+              allow: {
+                to: { type: ["app", "store", "feature", "shared", "assets"] },
+              },
+            },
+            {
+              from: { type: "store" },
+              allow: { to: { type: ["store", "feature", "shared"] } },
             },
             {
               from: { type: "feature" },
@@ -59,6 +66,7 @@ export default defineConfig([
                     captured: { featureName: "{{from.featureName}}" },
                   },
                   { type: "shared" },
+                  { type: "store" },
                   { type: "assets" },
                 ],
               },

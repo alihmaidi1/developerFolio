@@ -1,0 +1,37 @@
+.form {
+  width: min(100%, 470px);
+}
+
+.password {
+  position: relative;
+}
+
+.passwordInput {
+  padding-right: 48px;
+}
+
+.passwordToggle {
+  position: absolute;
+  right: -10px;
+  bottom: 4px;
+}
+
+.formAlert {
+  margin: -2px 0 16px;
+}
+
+.spinner {
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spinner {
+    animation-duration: 1.6s;
+  }
+}

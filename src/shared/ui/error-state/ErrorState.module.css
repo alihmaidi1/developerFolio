@@ -1,0 +1,88 @@
+.root {
+  --error-accent: #9b7cff;
+  --error-background: #0c0c12;
+  --error-text: #f5f3fa;
+  --error-muted: #9b98a8;
+
+  box-sizing: border-box;
+  color: var(--ui-color-text, #1f1f24);
+  background: transparent;
+  padding: clamp(32px, 7vw, 80px);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.fullPage {
+  min-height: 100svh;
+  color: var(--error-text);
+  background: var(--error-background);
+}
+
+.compact {
+  min-height: 240px;
+  margin: 32px 0;
+  padding: clamp(24px, 4vw, 48px);
+}
+
+.icon {
+  width: 30px;
+  height: 30px;
+  color: var(--error-accent);
+  margin-bottom: 24px;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4.5rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.description {
+  max-width: 560px;
+  color: var(--ui-color-muted, var(--error-muted));
+  margin: 20px 0 0;
+  line-height: 1.7;
+}
+
+.actions {
+  margin-top: 30px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.action,
+.link {
+  min-height: 44px;
+  box-sizing: border-box;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font: inherit;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action {
+  color: var(--ui-color-accent-contrast, #fff);
+  background: var(--ui-color-accent, var(--error-accent));
+  border: 1px solid var(--ui-color-accent, var(--error-accent));
+}
+
+.link {
+  color: inherit;
+  background: transparent;
+  border: 1px solid rgb(255 255 255 / 18%);
+}
+
+.action:focus-visible,
+.link:focus-visible {
+  outline: 2px solid var(--error-accent);
+  outline-offset: 3px;
+}

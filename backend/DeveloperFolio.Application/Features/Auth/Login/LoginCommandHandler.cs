@@ -8,7 +8,8 @@ namespace DeveloperFolio.Application.Features.Auth.Login;
 internal sealed class LoginCommandHandler(
     IApplicationDbContext dbContext,
     IPasswordHasher passwordHasher,
-    IJwtTokenService jwtTokenService)
+    IJwtTokenService jwtTokenService,
+    IAdminSessionCookie sessionCookie)
     : IRequestHandler<LoginCommand, TResult<LoginResponse>>
 {
     public async Task<TResult<LoginResponse>> Handle(LoginCommand request, CancellationToken cancellationToken)
@@ -24,6 +25,7 @@ internal sealed class LoginCommandHandler(
                 new Error("Auth.InvalidCredentials", "Email or password is incorrect."));
         }
 
-        return Result.Success(new LoginResponse(jwtTokenService.Create(admin)));
+        sessionCookie.Set(jwtTokenService.Create(admin));
+        return Result.Success(new LoginResponse(admin.Id, admin.Email));
     }
 }

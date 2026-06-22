@@ -1,0 +1,228 @@
+.layout {
+  --ui-color-accent: var(--admin-color-accent);
+  --ui-color-accent-contrast: var(--admin-color-background);
+  --ui-color-accent-hover: var(--admin-color-accent-hover);
+  --ui-color-border: var(--admin-color-border-strong);
+  --ui-color-danger: var(--admin-color-danger);
+  --ui-color-muted: var(--admin-color-muted);
+  --ui-color-positive: var(--admin-color-positive);
+  --ui-color-subtle: var(--admin-color-subtle);
+  --ui-color-text: var(--admin-color-text);
+  --ui-radius: 0;
+  --ui-transition-fast: var(--admin-transition-fast);
+
+  color-scheme: dark;
+  min-height: 100svh;
+  color: var(--admin-color-text);
+  background: var(--admin-color-background);
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+}
+
+.sidebar {
+  min-height: 100svh;
+  box-sizing: border-box;
+  background: var(--admin-color-surface);
+  border-right: 1px solid var(--admin-color-border);
+  padding: 32px 28px;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+}
+
+.brand {
+  color: inherit;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 11px;
+  align-self: flex-start;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--admin-color-accent);
+    outline-offset: 3px;
+  }
+}
+
+.brandMark {
+  color: var(--admin-color-accent);
+  font-family: "Agustina Regular", sans-serif;
+  font-size: 1.7rem;
+}
+
+.brandName {
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.navigation {
+  margin-top: 78px;
+  display: grid;
+  gap: 10px;
+}
+
+.navigationLabel {
+  color: var(--admin-color-muted);
+  margin: 0 10px 7px;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.navigationLink,
+.navigationUnavailable {
+  min-height: 44px;
+  color: var(--admin-color-muted);
+  padding: 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.82rem;
+  text-decoration: none;
+
+  svg {
+    width: 18px;
+  }
+}
+
+.navigationLink {
+  border-left: 2px solid transparent;
+  transition:
+    color var(--admin-transition-fast),
+    background-color var(--admin-transition-fast),
+    border-color var(--admin-transition-fast);
+
+  &:hover {
+    color: var(--admin-color-text);
+    background: rgb(255 255 255 / 3%);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--admin-color-accent);
+    outline-offset: 3px;
+  }
+}
+
+.navigationLinkActive {
+  color: var(--admin-color-text);
+  background: rgb(155 124 255 / 11%);
+  border-left-color: var(--admin-color-accent);
+}
+
+.navigationUnavailable {
+  opacity: 0.55;
+}
+
+.account {
+  margin-top: auto;
+  padding-top: 24px;
+  border-top: 1px solid var(--admin-color-border);
+}
+
+.accountIdentity {
+  display: grid;
+  gap: 6px;
+
+  span,
+  strong {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  span {
+    color: var(--admin-color-muted);
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  strong {
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+}
+
+.logoutButton {
+  width: 100%;
+  color: var(--admin-color-muted);
+  background: transparent;
+  border: 0;
+  padding: 18px 0 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font: inherit;
+  font-size: 0.78rem;
+  cursor: pointer;
+
+  &:hover:not(:disabled) {
+    color: var(--admin-color-text);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--admin-color-accent);
+    outline-offset: 3px;
+  }
+
+  &:disabled {
+    cursor: wait;
+    opacity: 0.6;
+  }
+
+  svg {
+    width: 17px;
+  }
+}
+
+.workspace {
+  min-width: 0;
+  padding: clamp(42px, 7vw, 96px);
+}
+
+@media (max-width: 760px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    min-height: auto;
+    padding: 20px 22px;
+    border-right: 0;
+    border-bottom: 1px solid var(--admin-color-border);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    position: static;
+  }
+
+  .navigation {
+    display: none;
+  }
+
+  .account {
+    margin: 0;
+    padding: 0;
+    border: 0;
+  }
+
+  .accountIdentity {
+    display: none;
+  }
+
+  .logoutButton {
+    padding: 0;
+  }
+
+  .workspace {
+    padding: 46px 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navigationLink {
+    transition: none;
+  }
+}

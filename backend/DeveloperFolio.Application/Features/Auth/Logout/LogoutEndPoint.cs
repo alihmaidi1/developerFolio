@@ -1,0 +1,20 @@
+using Carter;
+using DeveloperFolio.Domain.OperationResult;
+using MediatR;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+
+namespace DeveloperFolio.Application.Features.Auth.Logout;
+
+public sealed class LogoutEndPoint : ICarterModule
+{
+    public void AddRoutes(IEndpointRouteBuilder app)
+    {
+        app.MapPost("/api/auth/logout", async (ISender sender, CancellationToken cancellationToken) =>
+                (await sender.Send(new LogoutCommand(), cancellationToken)).ToHttpResult())
+            .AllowAnonymous()
+            .WithTags("Auth")
+            .WithSummary("Clear the admin session");
+    }
+}

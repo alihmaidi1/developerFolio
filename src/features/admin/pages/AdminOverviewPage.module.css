@@ -1,0 +1,153 @@
+.overview {
+  max-width: 940px;
+  animation: overview-enter 420ms ease-out both;
+}
+
+.header {
+  padding-bottom: clamp(48px, 8vw, 84px);
+}
+
+.eyebrow,
+.sectionLabel,
+.actionState {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.eyebrow {
+  color: var(--admin-color-accent);
+  margin: 0 0 22px;
+}
+
+.title {
+  max-width: 800px;
+  margin: 0;
+  font-size: clamp(3.2rem, 7vw, 7rem);
+  line-height: 0.95;
+  letter-spacing: -0.065em;
+}
+
+.intro {
+  max-width: 620px;
+  color: var(--admin-color-muted);
+  margin: 30px 0 0;
+  line-height: 1.7;
+}
+
+.status {
+  border-block: 1px solid var(--admin-color-border);
+  padding: 18px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.statusLabel {
+  color: var(--admin-color-muted);
+  font-size: 0.78rem;
+}
+
+.statusValue {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+}
+
+.statusDot {
+  width: 7px;
+  height: 7px;
+  background: var(--admin-color-positive);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgb(121 217 152 / 10%);
+}
+
+.nextActions {
+  padding-top: 48px;
+}
+
+.sectionHeader {
+  margin-bottom: 20px;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 24px;
+}
+
+.sectionLabel {
+  color: var(--admin-color-muted);
+  margin: 0;
+}
+
+.actionCount {
+  color: var(--admin-color-muted);
+  font-size: 0.78rem;
+}
+
+.actionList {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--admin-color-border);
+}
+
+.action {
+  min-height: 108px;
+  border-bottom: 1px solid var(--admin-color-border);
+  display: grid;
+  grid-template-columns: 56px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 20px;
+}
+
+.actionIndex {
+  color: var(--admin-color-accent);
+  font-size: 0.78rem;
+}
+
+.actionCopy {
+  display: grid;
+  gap: 7px;
+
+  strong {
+    font-size: 1rem;
+  }
+
+  p {
+    color: var(--admin-color-muted);
+    margin: 0;
+    font-size: 0.84rem;
+    line-height: 1.5;
+  }
+}
+
+.actionState {
+  color: var(--admin-color-muted);
+}
+
+@keyframes overview-enter {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+@media (max-width: 620px) {
+  .action {
+    padding: 24px 0;
+    grid-template-columns: 36px minmax(0, 1fr);
+  }
+
+  .actionState {
+    grid-column: 2;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overview {
+    animation: none;
+  }
+}

@@ -1,4 +1,4 @@
-import { apiClient } from "@/shared/lib/api-client";
+import { publicClient } from "@/shared/lib/public-client";
 import {
   githubDataSchema,
   mediumDataSchema,
@@ -7,7 +7,7 @@ import {
 } from "../model/portfolio.schemas";
 
 async function getJsonFile(path: string): Promise<unknown> {
-  const response = await apiClient.get<unknown>(path);
+  const response = await publicClient.get<unknown>(path);
   return response.data;
 }
 

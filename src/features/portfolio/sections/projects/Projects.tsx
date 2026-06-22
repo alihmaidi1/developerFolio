@@ -1,6 +1,6 @@
 ﻿import { lazy, Suspense } from "react";
 import { useGithubRepositories } from "@/features/portfolio/hooks/useGithubRepositories";
-import Button from "@/shared/ui/button/Button";
+import { Button, ErrorState } from "@/shared/ui";
 import {
   openSource,
   socialMediaLinks,
@@ -19,11 +19,26 @@ export default function Projects() {
     data: repositories = [],
     isError,
     isPending,
+    refetch,
   } = useGithubRepositories(openSource.display);
   const { isDark } = useTheme();
 
-  if (!openSource.display || isError) {
+  if (!openSource.display) {
     return null;
+  }
+
+  if (isError) {
+    return (
+      <div className="main" id="opensource">
+        <ErrorState
+          title="Projects are temporarily unavailable."
+          description="The portfolio data could not be loaded. Retry the request without reloading the entire page."
+          actionLabel="Retry projects"
+          onAction={() => void refetch()}
+          compact
+        />
+      </div>
+    );
   }
 
   if (isPending) {

@@ -1,18 +1,16 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { ArrowUp } from "lucide-react";
-import "./ScrollToTop.scss";
+import { cn } from "@/shared/lib/cn";
+import styles from "./ScrollToTop.module.css";
 
 export default function Top() {
+  const [isVisible, setIsVisible] = useState(false);
+
   useEffect(() => {
     const updateVisibility = () => {
-      const button = document.getElementById("topButton");
-      if (!button) {
-        return;
-      }
-
       const hasScrolled =
         document.body.scrollTop > 20 || document.documentElement.scrollTop > 20;
-      button.style.visibility = hasScrolled ? "visible" : "hidden";
+      setIsVisible(hasScrolled);
     };
 
     updateVisibility();
@@ -23,7 +21,13 @@ export default function Top() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <button onClick={scrollToTop} id="topButton" title="Go to top">
+    <button
+      className={cn(styles.button, isVisible && styles.visible)}
+      type="button"
+      onClick={scrollToTop}
+      title="Go to top"
+      aria-label="Scroll to top"
+    >
       <ArrowUp aria-hidden />
     </button>
   );

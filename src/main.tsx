@@ -1,9 +1,11 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
+import { AppErrorBoundary } from "@/app/errors/AppErrorBoundary";
 import { AppProviders } from "@/app/providers/AppProviders";
-import PortfolioPage from "@/app/PortfolioPage";
-import "@/app/styles/index.css";
-import "@/app/styles/global.scss";
+import { AppRouter } from "@/app/router/AppRouter";
+import "@/styles/variables.css";
+import "@/styles/reset.css";
+import "@/styles/global.css";
 
 const rootElement = document.getElementById("root");
 
@@ -13,8 +15,10 @@ if (!rootElement) {
 
 createRoot(rootElement).render(
   <StrictMode>
-    <AppProviders>
-      <PortfolioPage />
-    </AppProviders>
+    <AppErrorBoundary>
+      <AppProviders>
+        <AppRouter />
+      </AppProviders>
+    </AppErrorBoundary>
   </StrictMode>,
 );

@@ -1,0 +1,232 @@
+.page {
+  --ui-color-accent: var(--admin-color-accent);
+  --ui-color-accent-contrast: var(--admin-color-background);
+  --ui-color-accent-hover: var(--admin-color-accent-hover);
+  --ui-color-border: var(--admin-color-border-strong);
+  --ui-color-danger: var(--admin-color-danger);
+  --ui-color-muted: var(--admin-color-muted);
+  --ui-color-positive: var(--admin-color-positive);
+  --ui-color-subtle: var(--admin-color-subtle);
+  --ui-color-text: var(--admin-color-text);
+  --ui-radius: 0;
+  --ui-transition-fast: var(--admin-transition-fast);
+
+  color-scheme: dark;
+  min-height: 100svh;
+  color: var(--admin-color-text);
+  background: var(--admin-color-background);
+  overflow: hidden;
+}
+
+.header {
+  min-height: 76px;
+  padding: 0 6vw;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--admin-color-border);
+}
+
+.brand {
+  color: inherit;
+  display: inline-flex;
+  align-items: baseline;
+  gap: 12px;
+  text-decoration: none;
+
+  &:focus-visible {
+    outline: 2px solid var(--admin-color-accent);
+    outline-offset: 3px;
+  }
+}
+
+.brandMark {
+  color: var(--admin-color-accent);
+  font-family: "Agustina Regular", sans-serif;
+  font-size: 1.75rem;
+}
+
+.brandName,
+.secureLabel {
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.secureLabel {
+  color: var(--admin-color-muted);
+  display: flex;
+  align-items: center;
+  gap: 9px;
+
+  svg {
+    width: 15px;
+  }
+}
+
+.content {
+  min-height: calc(100svh - 77px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(340px, 0.92fr);
+}
+
+.formColumn {
+  padding: clamp(38px, 6vh, 80px) 8vw 38px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  animation: login-enter 520ms ease-out both;
+}
+
+.eyebrow {
+  color: var(--admin-color-accent);
+  margin: 0 0 22px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(3.2rem, 5.5vw, 6rem);
+  line-height: 0.94;
+  letter-spacing: -0.065em;
+}
+
+.intro {
+  color: var(--admin-color-muted);
+  max-width: 470px;
+  margin: 22px 0 30px;
+  font-size: clamp(1rem, 1.4vw, 1.16rem);
+  line-height: 1.7;
+}
+
+.context {
+  min-height: 100%;
+  background: var(--admin-color-surface);
+  border-left: 1px solid var(--admin-color-border);
+  padding: 8vh 5vw 7vh;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  animation: context-enter 650ms 90ms ease-out both;
+
+  &::after {
+    content: "";
+    width: 1px;
+    height: 36%;
+    background: var(--admin-color-accent);
+    opacity: 0.5;
+    position: absolute;
+    right: 10%;
+    top: 0;
+  }
+}
+
+.index {
+  color: rgb(255 255 255 / 8%);
+  font-size: clamp(7rem, 14vw, 13rem);
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.09em;
+}
+
+.contextCopy {
+  max-width: 370px;
+
+  svg {
+    width: 34px;
+    height: 34px;
+    color: var(--admin-color-accent);
+    margin-bottom: 22px;
+  }
+
+  p {
+    margin: 0 0 12px;
+    font-size: clamp(1.5rem, 2.3vw, 2.25rem);
+    line-height: 1.2;
+  }
+
+  span {
+    color: var(--admin-color-muted);
+    font-size: 0.92rem;
+    line-height: 1.7;
+  }
+}
+
+.signal {
+  color: var(--admin-color-muted);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.72rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.signalDot {
+  width: 7px;
+  height: 7px;
+  background: var(--admin-color-positive);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px rgb(121 217 152 / 10%);
+}
+
+@keyframes login-enter {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+
+@keyframes context-enter {
+  from {
+    opacity: 0;
+    transform: translateX(18px);
+  }
+}
+
+@media (max-width: 860px) {
+  .content {
+    grid-template-columns: 1fr;
+  }
+
+  .formColumn {
+    min-height: calc(100svh - 77px);
+    box-sizing: border-box;
+    padding-inline: 7vw;
+  }
+
+  .context {
+    display: none;
+  }
+}
+
+@media (max-width: 520px) {
+  .header {
+    padding-inline: 22px;
+  }
+
+  .secureLabel {
+    font-size: 0;
+  }
+
+  .formColumn {
+    padding: 52px 22px 42px;
+    justify-content: flex-start;
+  }
+
+  .title {
+    font-size: clamp(3.2rem, 18vw, 4.6rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .formColumn,
+  .context {
+    animation: none;
+  }
+}

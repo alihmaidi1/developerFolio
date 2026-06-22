@@ -18,8 +18,6 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
             password = "integration-password",
         });
         loginResponse.EnsureSuccessStatusCode();
-        var login = await loginResponse.Content.ReadFromJsonAsync<OperationResultResponse<LoginResponse>>();
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", login!.Value!.AccessToken);
 
         var createResponse = await _client.PostAsJsonAsync("/api/admin/projects", new
         {
@@ -38,7 +36,6 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
         created!.IsSuccess.Should().BeTrue();
         created.Value.Should().NotBeEmpty();
 
-        _client.DefaultRequestHeaders.Authorization = null;
         var projects = await _client.GetFromJsonAsync<OperationResultResponse<ProjectResponse[]>>("/api/projects");
         projects!.Value.Should().ContainSingle(project => project.Title == "Developer Folio");
     }
@@ -52,8 +49,6 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
             password = "integration-password",
         });
         loginResponse.EnsureSuccessStatusCode();
-        var login = await loginResponse.Content.ReadFromJsonAsync<OperationResultResponse<LoginResponse>>();
-        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", login!.Value!.AccessToken);
 
         var expectedContent = "%PDF-1.4 test resume"u8.ToArray();
         using var form = new MultipartFormDataContent();
@@ -64,7 +59,6 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
         var uploadResponse = await _client.PostAsync("/api/admin/resume", form);
         uploadResponse.EnsureSuccessStatusCode();
 
-        _client.DefaultRequestHeaders.Authorization = null;
         var downloadedContent = await _client.GetByteArrayAsync("/api/resume/download");
         downloadedContent.Should().Equal(expectedContent);
     }
@@ -99,7 +93,7 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
         result.Error!.Code.Should().Be("Error.ValidationFailures");
     }
 
-    private sealed record LoginResponse(string AccessToken);
+    private sealed record LoginResponse(Guid Id, string Email);
     private sealed record ProjectResponse(Guid Id, string Title);
     private sealed record ErrorResponse(string Code, string Message);
     private sealed record OperationResultResponse<T>(

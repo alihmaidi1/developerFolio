@@ -2,21 +2,21 @@ const fs = require("node:fs");
 const https = require("node:https");
 require("dotenv").config();
 
-const {GITHUB_TOKEN, GITHUB_USERNAME, MEDIUM_USERNAME, USE_GITHUB_DATA} =
+const { GITHUB_TOKEN, GITHUB_USERNAME, MEDIUM_USERNAME, USE_GITHUB_DATA } =
   process.env;
 
 const requestJson = (options, body) =>
   new Promise((resolve, reject) => {
-    const request = https.request(options, response => {
+    const request = https.request(options, (response) => {
       let responseBody = "";
 
-      response.on("data", chunk => {
+      response.on("data", (chunk) => {
         responseBody += chunk;
       });
       response.on("end", () => {
         if (response.statusCode !== 200) {
           reject(
-            new Error(`Request failed with status ${response.statusCode}`)
+            new Error(`Request failed with status ${response.statusCode}`),
           );
           return;
         }
@@ -55,7 +55,7 @@ async function fetchGithubData() {
           }
         }
       }
-    }`
+    }`,
   });
 
   const data = await requestJson(
@@ -66,10 +66,10 @@ async function fetchGithubData() {
       headers: {
         Authorization: `Bearer ${GITHUB_TOKEN}`,
         "Content-Type": "application/json",
-        "User-Agent": "developerFolio"
-      }
+        "User-Agent": "developerFolio",
+      },
     },
-    body
+    body,
   );
   await fs.promises.writeFile("./public/profile.json", data);
 }
@@ -82,12 +82,12 @@ async function fetchMediumData() {
   const data = await requestJson({
     hostname: "api.rss2json.com",
     path: `/v1/api.json?rss_url=https://medium.com/feed/@${MEDIUM_USERNAME}`,
-    method: "GET"
+    method: "GET",
   });
   await fs.promises.writeFile("./public/blogs.json", data);
 }
 
-Promise.all([fetchGithubData(), fetchMediumData()]).catch(error => {
+Promise.all([fetchGithubData(), fetchMediumData()]).catch((error) => {
   console.error(error);
   process.exitCode = 1;
 });

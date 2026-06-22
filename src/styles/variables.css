@@ -1,0 +1,42 @@
+:root {
+  --color-primary: #55198b;
+  --color-primary-hover: #8c43ce;
+  --color-background: #fff;
+  --color-background-dark: #171c28;
+  --color-text: #000;
+  --color-text-inverse: #fff;
+  --color-text-muted: #868e96;
+  --color-border: rgb(211 211 211 / 40%);
+  --color-danger: #c7354f;
+  --color-success: #278346;
+  --shadow-sm: 0 10px 30px -15px rgb(0 0 0 / 20%);
+  --shadow-md: 0 20px 30px -10px rgb(0 0 0 / 20%);
+  --transition-fast: 180ms ease;
+  --radius-sm: 6px;
+
+  --admin-color-background: #0c0c12;
+  --admin-color-surface: #13131c;
+  --admin-color-surface-raised: #191823;
+  --admin-color-text: #f5f3fa;
+  --admin-color-muted: #9b98a8;
+  --admin-color-subtle: #666473;
+  --admin-color-accent: #9b7cff;
+  --admin-color-accent-hover: #ae96ff;
+  --admin-color-positive: #79d998;
+  --admin-color-danger: #ff9aab;
+  --admin-color-border: rgb(255 255 255 / 9%);
+  --admin-color-border-strong: rgb(255 255 255 / 16%);
+  --admin-transition-fast: 180ms ease;
+
+  --ui-color-accent: var(--color-primary);
+  --ui-color-accent-contrast: var(--color-text-inverse);
+  --ui-color-accent-hover: var(--color-primary-hover);
+  --ui-color-border: var(--color-border);
+  --ui-color-danger: var(--color-danger);
+  --ui-color-muted: var(--color-text-muted);
+  --ui-color-positive: var(--color-success);
+  --ui-color-subtle: var(--color-text-muted);
+  --ui-color-text: var(--color-text);
+  --ui-radius: var(--radius-sm);
+  --ui-transition-fast: var(--transition-fast);
+}

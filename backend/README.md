@@ -29,6 +29,8 @@ dotnet run --project DeveloperFolio.Api
 ## الـAPI
 
 - `POST /api/auth/login`
+- `GET /api/auth/session`
+- `POST /api/auth/logout`
 - `GET /api/projects`
 - `GET /api/projects/{id}`
 - `GET /api/resume`
@@ -38,7 +40,9 @@ dotnet run --project DeveloperFolio.Api
 - `PUT /api/admin/projects/{id}`
 - `DELETE /api/admin/projects/{id}`
 - `POST /api/admin/resume` بصيغة `multipart/form-data` وحقل اسمه `file`، PDF وبحد أقصى 10 MB.
-كل مسارات `/api/admin/*` تتطلب `Authorization: Bearer <token>`.
+كل مسارات `/api/admin/*` تتطلب جلسة Admin صالحة.
+
+المصادقة في المتصفح تستخدم HttpOnly cookie باسم `developerfolio_admin`. الفرونت يرسلها عبر `withCredentials`، ولا يتم تخزين JWT أو قراءته في JavaScript.
 
 الـendpoints ترجع غلاف `OperationResult` موحدًا يحتوي `isSuccess` و`statusCode` و`error`، ومع النتائج التي تحمل بيانات يظهر الحقل `value`.
 

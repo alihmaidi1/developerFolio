@@ -1,0 +1,5 @@
+.all-contributorsrc
+backend/
+dist/
+node_modules/
+src/assets/lottie/

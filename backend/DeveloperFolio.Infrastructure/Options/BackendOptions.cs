@@ -24,6 +24,14 @@ public sealed class StorageOptions
     public string RootPath { get; init; } = "App_Data/uploads";
 }
 
+public sealed class AuthCookieOptions
+{
+    public const string SectionName = "AuthCookie";
+
+    [Required]
+    public string Name { get; init; } = "developerfolio_admin";
+}
+
 public sealed class AdminSeedOptions
 {
     public const string SectionName = "AdminSeed";

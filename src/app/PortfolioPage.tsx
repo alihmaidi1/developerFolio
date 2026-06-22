@@ -19,7 +19,6 @@ import {
   splashScreen,
 } from "@/features/portfolio";
 import { ScrollToTop } from "@/shared/ui";
-import "./PortfolioPage.scss";
 
 export default function PortfolioPage() {
   const [isShowingSplashAnimation, setIsShowingSplashAnimation] =

@@ -1,12 +1,11 @@
 ﻿import { Fade } from "@/shared/ui/reveal/Reveal";
 import manOnTable from "@/assets/images/manOnTable.svg";
-import resume from "@/assets/documents/resume.pdf";
 import emoji from "react-easy-emoji";
 import "./Greeting.scss";
 import landingPerson from "@/assets/lottie/landingPerson.json";
 import DisplayLottie from "@/shared/ui/display-lottie/DisplayLottie";
 import SocialMedia from "@/features/portfolio/components/social-media/SocialMedia";
-import Button from "@/shared/ui/button/Button";
+import { Button } from "@/shared/ui";
 import {
   illustration,
   greeting,
@@ -41,15 +40,11 @@ export default function Greeting() {
               <div id="resume" className="empty-div"></div>
               <SocialMedia />
               <div className="button-greeting-div">
-                <Button text="Contact me" href="#contact" />
-                {greeting.resumeLink && (
-                  <Button
-                    text="Download my resume"
-                    href={resume}
-                    download="Resume.pdf"
-                    className="download-link-button"
-                  />
-                )}
+                <Button
+                  className="greeting-button"
+                  text="Contact me"
+                  href="#contact"
+                />
               </div>
             </div>
           </div>

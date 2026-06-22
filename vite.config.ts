@@ -1,5 +1,5 @@
 import path from "node:path";
-import {defineConfig} from "vite";
+import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
 export default defineConfig({
@@ -9,8 +9,8 @@ export default defineConfig({
       "@": path.resolve(__dirname, "./src"),
       "lottie-react": path.resolve(
         __dirname,
-        "./node_modules/lottie-react/build/index.es.js"
-      )
-    }
-  }
+        "./node_modules/lottie-react/build/index.es.js",
+      ),
+    },
+  },
 });

@@ -1,0 +1,66 @@
+.switch {
+  position: relative;
+  width: 50px;
+  height: 26px;
+  display: inline-block;
+}
+
+.input {
+  width: 1px;
+  height: 1px;
+  position: absolute;
+  opacity: 0;
+}
+
+.slider {
+  position: absolute;
+  inset: 0;
+  background: #ccc;
+  border-radius: 34px;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  transition: background-color 400ms ease;
+}
+
+.slider::before {
+  content: "";
+  width: 28px;
+  height: 26px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--color-text-inverse);
+  border-radius: 50%;
+  transition: transform 400ms ease;
+}
+
+.input:checked + .slider {
+  background: #2196f3;
+}
+
+.input:focus-visible + .slider {
+  outline: 2px solid #2196f3;
+  outline-offset: 3px;
+}
+
+.input:checked + .slider::before,
+.input:checked + .slider > .emoji {
+  transform: translateX(24px);
+}
+
+.emoji {
+  z-index: 1;
+  margin-left: 3px;
+  display: flex;
+  align-items: center;
+  transition: transform 400ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slider,
+  .slider::before,
+  .emoji {
+    transition: none;
+  }
+}
