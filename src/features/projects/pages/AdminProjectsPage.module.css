@@ -42,6 +42,45 @@
   align-items: flex-end;
 }
 
+.headerActions {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.addButton {
+  min-height: 42px;
+  color: #fff;
+  background: var(--admin-color-accent);
+  border-radius: 11px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex: 0 0 auto;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    background-color var(--admin-transition-fast),
+    transform var(--admin-transition-fast);
+}
+
+.addButton:hover {
+  background: var(--admin-color-accent-hover);
+  transform: translateY(-1px);
+}
+
+.addButton:focus-visible {
+  outline: 2px solid var(--admin-color-accent);
+  outline-offset: 3px;
+}
+
+.addButton svg {
+  width: 15px;
+  height: 15px;
+}
+
 .summary div {
   min-width: 92px;
   padding: 0 20px;
@@ -264,6 +303,12 @@
     gap: 24px;
   }
 
+  .headerActions {
+    width: 100%;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
   .summary div:first-child {
     padding-left: 0;
   }
@@ -284,6 +329,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .page,
+  .addButton,
   .loadingRow > span,
   .loadingRow strong,
   .loadingRow small,

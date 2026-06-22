@@ -1,4 +1,5 @@
-import { FolderKanban } from "lucide-react";
+import { FolderKanban, Plus } from "lucide-react";
+import { Link } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
 import { ErrorState } from "@/shared/ui";
 import { ProjectListItem } from "../components/project-list-item/ProjectListItem";
@@ -23,18 +24,24 @@ export function AdminProjectsPage() {
           </p>
         </div>
 
-        {!projectsQuery.isPending && !projectsQuery.isError && (
-          <dl className={styles.summary} aria-label="Project summary">
-            <div>
-              <dt>Total</dt>
-              <dd>{projects.length}</dd>
-            </div>
-            <div>
-              <dt>Published</dt>
-              <dd>{publishedCount}</dd>
-            </div>
-          </dl>
-        )}
+        <div className={styles.headerActions}>
+          {!projectsQuery.isPending && !projectsQuery.isError && (
+            <dl className={styles.summary} aria-label="Project summary">
+              <div>
+                <dt>Total</dt>
+                <dd>{projects.length}</dd>
+              </div>
+              <div>
+                <dt>Published</dt>
+                <dd>{publishedCount}</dd>
+              </div>
+            </dl>
+          )}
+          <Link className={styles.addButton} to="/admin/projects/new">
+            <Plus aria-hidden="true" />
+            Add project
+          </Link>
+        </div>
       </header>
 
       {projectsQuery.isPending && <ProjectsLoading />}

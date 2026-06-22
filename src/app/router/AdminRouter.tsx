@@ -6,7 +6,7 @@ import {
   RequireAdminSession,
   useAdminLogout,
 } from "@/features/auth";
-import { AdminProjectsPage } from "@/features/projects";
+import { AddProjectPage, AdminProjectsPage } from "@/features/projects";
 
 export default function AdminRouter() {
   const { logout, isPending } = useAdminLogout();
@@ -21,6 +21,7 @@ export default function AdminRouter() {
           >
             <Route index element={<AdminOverviewPage />} />
             <Route path="projects" element={<AdminProjectsPage />} />
+            <Route path="projects/new" element={<AddProjectPage />} />
           </Route>
         </Route>
       </Routes>
