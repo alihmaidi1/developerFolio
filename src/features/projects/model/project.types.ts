@@ -24,3 +24,10 @@ export interface CreateProjectRequest {
   sortOrder: number;
   isPublished: boolean;
 }
+
+export type ProjectOrderDirection = "up" | "down";
+
+export interface ReorderProjectRequest {
+  projectId: string;
+  direction: ProjectOrderDirection;
+}

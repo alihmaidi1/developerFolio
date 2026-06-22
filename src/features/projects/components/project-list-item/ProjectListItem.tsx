@@ -1,11 +1,18 @@
 import { useState } from "react";
-import { Code2, Globe2, Trash2 } from "lucide-react";
-import type { AdminProject } from "../../model/project.types";
+import { ArrowDown, ArrowUp, Code2, Globe2, Trash2 } from "lucide-react";
+import type {
+  AdminProject,
+  ProjectOrderDirection,
+} from "../../model/project.types";
 import styles from "./ProjectListItem.module.css";
 
 interface ProjectListItemProps {
   project: AdminProject;
+  canMoveUp: boolean;
+  canMoveDown: boolean;
+  isReordering: boolean;
   onDelete: (project: AdminProject) => void;
+  onReorder: (projectId: string, direction: ProjectOrderDirection) => void;
 }
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
@@ -14,7 +21,14 @@ const dateFormatter = new Intl.DateTimeFormat("en", {
   year: "numeric",
 });
 
-export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
+export function ProjectListItem({
+  project,
+  canMoveUp,
+  canMoveDown,
+  isReordering,
+  onDelete,
+  onReorder,
+}: ProjectListItemProps) {
   const [hasImageError, setHasImageError] = useState(false);
   const visibleTechnologies = project.technologies.slice(0, 3);
   const hiddenTechnologiesCount =
@@ -76,6 +90,26 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
       </div>
 
       <div className={styles.links} aria-label={`${project.title} actions`}>
+        <button
+          className={styles.moveButton}
+          type="button"
+          title="Move project up"
+          aria-label={`Move ${project.title} up`}
+          onClick={() => onReorder(project.id, "up")}
+          disabled={!canMoveUp || isReordering}
+        >
+          <ArrowUp aria-hidden="true" />
+        </button>
+        <button
+          className={styles.moveButton}
+          type="button"
+          title="Move project down"
+          aria-label={`Move ${project.title} down`}
+          onClick={() => onReorder(project.id, "down")}
+          disabled={!canMoveDown || isReordering}
+        >
+          <ArrowDown aria-hidden="true" />
+        </button>
         {project.repositoryUrl && (
           <a
             href={project.repositoryUrl}
@@ -101,6 +135,7 @@ export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
           type="button"
           aria-label={`Delete ${project.title}`}
           onClick={() => onDelete(project)}
+          disabled={isReordering}
         >
           <Trash2 aria-hidden="true" />
         </button>

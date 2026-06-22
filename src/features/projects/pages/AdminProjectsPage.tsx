@@ -7,7 +7,11 @@ import { DeleteProjectDialog } from "../components/delete-project-dialog/DeleteP
 import { ProjectListItem } from "../components/project-list-item/ProjectListItem";
 import { useAdminProjects } from "../hooks/useAdminProjects";
 import { useDeleteProject } from "../hooks/useDeleteProject";
-import type { AdminProject } from "../model/project.types";
+import { useReorderProject } from "../hooks/useReorderProject";
+import type {
+  AdminProject,
+  ProjectOrderDirection,
+} from "../model/project.types";
 import styles from "./AdminProjectsPage.module.css";
 
 export function AdminProjectsPage() {
@@ -16,6 +20,7 @@ export function AdminProjectsPage() {
   );
   const projectsQuery = useAdminProjects();
   const deleteProject = useDeleteProject();
+  const reorderProject = useReorderProject();
   const {
     error: deleteError,
     isError: isDeleteError,
@@ -49,6 +54,11 @@ export function AdminProjectsPage() {
       return;
     }
   }, [deleteProjectAsync, projectToDelete]);
+
+  const reorder = (projectId: string, direction: ProjectOrderDirection) => {
+    reorderProject.reset();
+    reorderProject.mutate({ projectId, direction });
+  };
 
   return (
     <section className={styles.page}>
@@ -134,11 +144,20 @@ export function AdminProjectsPage() {
             </div>
 
             <div className={styles.projectList}>
-              {projects.map((project) => (
+              {reorderProject.isError && (
+                <p className={styles.reorderError} role="alert">
+                  {resolveApiError(reorderProject.error)}
+                </p>
+              )}
+              {projects.map((project, index) => (
                 <ProjectListItem
                   key={project.id}
                   project={project}
+                  canMoveUp={index > 0}
+                  canMoveDown={index < projects.length - 1}
+                  isReordering={reorderProject.isPending}
                   onDelete={setProjectToDelete}
+                  onReorder={reorder}
                 />
               ))}
             </div>
