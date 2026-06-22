@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { ArrowUpRight, Code2, Globe2 } from "lucide-react";
+import { Code2, Globe2, Trash2 } from "lucide-react";
 import type { AdminProject } from "../../model/project.types";
 import styles from "./ProjectListItem.module.css";
 
 interface ProjectListItemProps {
   project: AdminProject;
+  onDelete: (project: AdminProject) => void;
 }
 
 const dateFormatter = new Intl.DateTimeFormat("en", {
@@ -13,7 +14,7 @@ const dateFormatter = new Intl.DateTimeFormat("en", {
   year: "numeric",
 });
 
-export function ProjectListItem({ project }: ProjectListItemProps) {
+export function ProjectListItem({ project, onDelete }: ProjectListItemProps) {
   const [hasImageError, setHasImageError] = useState(false);
   const visibleTechnologies = project.technologies.slice(0, 3);
   const hiddenTechnologiesCount =
@@ -74,7 +75,7 @@ export function ProjectListItem({ project }: ProjectListItemProps) {
         </small>
       </div>
 
-      <div className={styles.links} aria-label={`${project.title} links`}>
+      <div className={styles.links} aria-label={`${project.title} actions`}>
         {project.repositoryUrl && (
           <a
             href={project.repositoryUrl}
@@ -95,10 +96,14 @@ export function ProjectListItem({ project }: ProjectListItemProps) {
             <Globe2 aria-hidden="true" />
           </a>
         )}
-        {(project.repositoryUrl || project.liveUrl) && (
-          <ArrowUpRight className={styles.externalIcon} aria-hidden="true" />
-        )}
-        {!project.repositoryUrl && !project.liveUrl && <small>No links</small>}
+        <button
+          className={styles.deleteButton}
+          type="button"
+          aria-label={`Delete ${project.title}`}
+          onClick={() => onDelete(project)}
+        >
+          <Trash2 aria-hidden="true" />
+        </button>
       </div>
     </article>
   );

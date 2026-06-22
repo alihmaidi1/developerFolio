@@ -1,17 +1,54 @@
+import { useCallback, useState } from "react";
 import { FolderKanban, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
 import { ErrorState } from "@/shared/ui";
+import { DeleteProjectDialog } from "../components/delete-project-dialog/DeleteProjectDialog";
 import { ProjectListItem } from "../components/project-list-item/ProjectListItem";
 import { useAdminProjects } from "../hooks/useAdminProjects";
+import { useDeleteProject } from "../hooks/useDeleteProject";
+import type { AdminProject } from "../model/project.types";
 import styles from "./AdminProjectsPage.module.css";
 
 export function AdminProjectsPage() {
+  const [projectToDelete, setProjectToDelete] = useState<AdminProject | null>(
+    null,
+  );
   const projectsQuery = useAdminProjects();
+  const deleteProject = useDeleteProject();
+  const {
+    error: deleteError,
+    isError: isDeleteError,
+    isPending: isDeleting,
+    mutateAsync: deleteProjectAsync,
+    reset: resetDeleteProject,
+  } = deleteProject;
   const projects = projectsQuery.data ?? [];
   const publishedCount = projects.filter(
     (project) => project.isPublished,
   ).length;
+
+  const closeDeleteDialog = useCallback(() => {
+    if (isDeleting) {
+      return;
+    }
+
+    resetDeleteProject();
+    setProjectToDelete(null);
+  }, [isDeleting, resetDeleteProject]);
+
+  const confirmDelete = useCallback(async () => {
+    if (!projectToDelete) {
+      return;
+    }
+
+    try {
+      await deleteProjectAsync(projectToDelete.id);
+      setProjectToDelete(null);
+    } catch {
+      return;
+    }
+  }, [deleteProjectAsync, projectToDelete]);
 
   return (
     <section className={styles.page}>
@@ -93,16 +130,28 @@ export function AdminProjectsPage() {
               <span>Project</span>
               <span>Technology</span>
               <span>Status</span>
-              <span>Links</span>
+              <span>Actions</span>
             </div>
 
             <div className={styles.projectList}>
               {projects.map((project) => (
-                <ProjectListItem key={project.id} project={project} />
+                <ProjectListItem
+                  key={project.id}
+                  project={project}
+                  onDelete={setProjectToDelete}
+                />
               ))}
             </div>
           </section>
         )}
+
+      <DeleteProjectDialog
+        project={projectToDelete}
+        isPending={isDeleting}
+        error={isDeleteError ? resolveApiError(deleteError) : null}
+        onCancel={closeDeleteDialog}
+        onConfirm={() => void confirmDelete()}
+      />
     </section>
   );
 }

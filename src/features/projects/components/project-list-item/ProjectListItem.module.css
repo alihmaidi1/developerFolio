@@ -156,13 +156,17 @@
   gap: 5px;
 }
 
-.links a {
+.links a,
+.deleteButton {
   width: 34px;
   height: 34px;
   color: var(--admin-color-muted);
+  background: transparent;
+  border: 0;
   border-radius: 9px;
   display: grid;
   place-items: center;
+  cursor: pointer;
   transition:
     color var(--admin-transition-fast),
     background-color var(--admin-transition-fast);
@@ -173,7 +177,13 @@
   background: var(--admin-color-accent-soft);
 }
 
-.links a:focus-visible {
+.deleteButton:hover {
+  color: var(--admin-color-danger);
+  background: rgb(201 79 104 / 9%);
+}
+
+.links a:focus-visible,
+.deleteButton:focus-visible {
   outline: 2px solid var(--admin-color-accent);
   outline-offset: 2px;
 }
@@ -181,11 +191,6 @@
 .links svg {
   width: 16px;
   height: 16px;
-}
-
-.externalIcon {
-  color: var(--admin-color-subtle);
-  margin-left: 1px;
 }
 
 @media (max-width: 1120px) {
@@ -245,7 +250,8 @@
 @media (prefers-reduced-motion: reduce) {
   .project,
   .thumbnail img,
-  .links a {
+  .links a,
+  .deleteButton {
     transition: none;
   }
 }

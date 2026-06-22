@@ -24,4 +24,7 @@ export const projectsApi = {
 
     return unwrapOperationResult(result);
   },
+
+  delete: (projectId: string): Promise<void> =>
+    privateApi.delete<void>(PROJECTS_API_ROUTES.delete(projectId)),
 };
