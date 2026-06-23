@@ -54,10 +54,6 @@ export const createProjectSchema = z.object({
         parseTechnologies(value).every((technology) => technology.length <= 80),
       "Each technology cannot exceed 80 characters.",
     ),
-  sortOrder: z
-    .number({ error: "Order is required." })
-    .int("Order must be a whole number.")
-    .min(0, "Order cannot be negative."),
   isPublished: z.boolean(),
 });
 

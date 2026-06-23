@@ -33,8 +33,6 @@ internal sealed class UpdateProjectValidation : AbstractValidator<UpdateProjectC
             .NotEmpty()
             .MaximumLength(80);
 
-        RuleFor(command => command.SortOrder)
-            .GreaterThanOrEqualTo(0);
     }
 
     private void ApplyUrlRule(System.Linq.Expressions.Expression<Func<UpdateProjectCommand, string?>> expression)

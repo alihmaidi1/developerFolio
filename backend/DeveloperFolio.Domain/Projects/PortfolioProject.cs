@@ -10,7 +10,16 @@ public sealed class PortfolioProject : Entity
     {
     }
 
-    private PortfolioProject(string title,string summary,string? description,string? imageUrl,string? repositoryUrl,string? liveUrl,IEnumerable<string> technologies,int sortOrder,bool isPublished)
+    private PortfolioProject(
+        string title,
+        string summary,
+        string? description,
+        string? imageUrl,
+        string? repositoryUrl,
+        string? liveUrl,
+        IEnumerable<string> technologies,
+        int sortOrder,
+        bool isPublished)
     {
         ApplyDetails(
             title,
@@ -63,7 +72,6 @@ public sealed class PortfolioProject : Entity
         string? repositoryUrl,
         string? liveUrl,
         IEnumerable<string> technologies,
-        int sortOrder,
         bool isPublished)
     {
         ApplyDetails(
@@ -74,7 +82,7 @@ public sealed class PortfolioProject : Entity
             repositoryUrl,
             liveUrl,
             technologies,
-            sortOrder,
+            SortOrder,
             isPublished);
 
         Touch();

@@ -27,7 +27,6 @@ internal sealed class UpdateProjectCommandHandler(IApplicationDbContext dbContex
             request.RepositoryUrl,
             request.LiveUrl,
             request.Technologies ?? [],
-            request.SortOrder,
             request.IsPublished);
 
         return Result.NoContent();

@@ -26,7 +26,6 @@ public sealed class UpdateProjectEndpoint : ICarterModule
                     request.RepositoryUrl,
                     request.LiveUrl,
                     request.Technologies,
-                    request.SortOrder,
                     request.IsPublished);
 
                 var result = await sender.Send(command, cancellationToken);

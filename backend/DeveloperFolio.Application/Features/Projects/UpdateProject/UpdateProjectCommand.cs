@@ -12,5 +12,4 @@ internal sealed record UpdateProjectCommand(
     string? RepositoryUrl,
     string? LiveUrl,
     IReadOnlyCollection<string>? Technologies,
-    int SortOrder,
     bool IsPublished) : ICommand<Result>;

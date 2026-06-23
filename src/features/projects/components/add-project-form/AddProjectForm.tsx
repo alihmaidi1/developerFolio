@@ -242,24 +242,6 @@ export function AddProjectForm({
             <p>Control the initial position and visibility.</p>
           </header>
 
-          <FormField
-            label="Display order"
-            htmlFor="project-sort-order"
-            error={errors.sortOrder?.message}
-            errorId="project-sort-order-error"
-          >
-            <Input
-              id="project-sort-order"
-              type="number"
-              min={0}
-              aria-invalid={Boolean(errors.sortOrder)}
-              aria-describedby={
-                errors.sortOrder ? "project-sort-order-error" : undefined
-              }
-              {...form.register("sortOrder", { valueAsNumber: true })}
-            />
-          </FormField>
-
           <label className={styles.publishToggle}>
             <input type="checkbox" {...form.register("isPublished")} />
             <span aria-hidden="true" />

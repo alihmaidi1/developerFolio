@@ -28,7 +28,6 @@ export function AddProjectPage() {
       repositoryUrl: "",
       liveUrl: "",
       technologies: "",
-      sortOrder: 0,
       isPublished: false,
     },
   });
@@ -45,7 +44,6 @@ export function AddProjectPage() {
         repositoryUrl: values.repositoryUrl || null,
         liveUrl: values.liveUrl || null,
         technologies: parseTechnologies(values.technologies),
-        sortOrder: values.sortOrder,
         isPublished: values.isPublished,
       });
 

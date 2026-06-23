@@ -11,5 +11,4 @@ internal sealed record CreateProjectCommand(
     string? RepositoryUrl,
     string? LiveUrl,
     IReadOnlyCollection<string>? Technologies,
-    int SortOrder,
     bool IsPublished) : ICommand<TResult<Guid>>;

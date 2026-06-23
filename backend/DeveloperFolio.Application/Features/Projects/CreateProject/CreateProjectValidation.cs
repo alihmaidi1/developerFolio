@@ -31,8 +31,6 @@ internal sealed class CreateProjectValidation : AbstractValidator<CreateProjectC
             .NotEmpty()
             .MaximumLength(80);
 
-        RuleFor(command => command.SortOrder)
-            .GreaterThanOrEqualTo(0);
     }
 
     private void ApplyUrlRule(System.Linq.Expressions.Expression<Func<CreateProjectCommand, string?>> expression)

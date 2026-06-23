@@ -21,7 +21,6 @@ export interface CreateProjectRequest {
   repositoryUrl: string | null;
   liveUrl: string | null;
   technologies: string[];
-  sortOrder: number;
   isPublished: boolean;
 }
 

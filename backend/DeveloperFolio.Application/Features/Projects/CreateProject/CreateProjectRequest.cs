@@ -8,5 +8,4 @@ public sealed record CreateProjectRequest(
     string? RepositoryUrl,
     string? LiveUrl,
     IReadOnlyCollection<string>? Technologies,
-    int SortOrder,
     bool IsPublished);
