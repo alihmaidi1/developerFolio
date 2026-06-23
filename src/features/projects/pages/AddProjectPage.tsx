@@ -1,58 +1,11 @@
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
 import { ArrowLeft } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
-import { resolveApiError } from "@/shared/lib/api-error";
-import { AddProjectForm } from "../components/add-project-form/AddProjectForm";
-import { useCreateProject } from "../hooks/useCreateProject";
-import {
-  createProjectSchema,
-  parseTechnologies,
-  type CreateProjectFormValues,
-} from "../model/create-project.schema";
-import { projectsQueryKeys } from "../model/projects.query-keys";
+import { Link } from "react-router-dom";
+import { ProjectForm } from "../components/project-form/ProjectForm";
+import { useCreateProjectForm } from "../hooks/useCreateProjectForm";
 import styles from "./AddProjectPage.module.css";
 
 export function AddProjectPage() {
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const createProject = useCreateProject();
-  const form = useForm<CreateProjectFormValues>({
-    resolver: zodResolver(createProjectSchema),
-    defaultValues: {
-      title: "",
-      summary: "",
-      description: "",
-      imageUrl: "",
-      repositoryUrl: "",
-      liveUrl: "",
-      technologies: "",
-      isPublished: false,
-    },
-  });
-
-  const onSubmit = form.handleSubmit(async (values) => {
-    createProject.reset();
-
-    try {
-      await createProject.mutateAsync({
-        title: values.title,
-        summary: values.summary,
-        description: values.description || null,
-        imageUrl: values.imageUrl || null,
-        repositoryUrl: values.repositoryUrl || null,
-        liveUrl: values.liveUrl || null,
-        technologies: parseTechnologies(values.technologies),
-        isPublished: values.isPublished,
-      });
-
-      await queryClient.invalidateQueries({ queryKey: projectsQueryKeys.all });
-      navigate("/admin/projects", { replace: true });
-    } catch {
-      return;
-    }
-  });
+  const projectForm = useCreateProjectForm();
 
   return (
     <section className={styles.page}>
@@ -69,14 +22,10 @@ export function AddProjectPage() {
         </p>
       </header>
 
-      <AddProjectForm
-        form={form}
-        onSubmit={onSubmit}
-        onChange={() => createProject.reset()}
-        isPending={createProject.isPending}
-        error={
-          createProject.isError ? resolveApiError(createProject.error) : null
-        }
+      <ProjectForm
+        {...projectForm}
+        submitLabel="Create project"
+        submittingLabel="Creating project"
       />
     </section>
   );

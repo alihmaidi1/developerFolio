@@ -1,0 +1,128 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  animation: edit-project-enter 380ms ease-out both;
+}
+
+.header {
+  border-bottom: 1px solid var(--admin-color-border);
+  margin-bottom: 38px;
+  padding-bottom: 32px;
+}
+
+.backLink {
+  width: max-content;
+  color: var(--admin-color-muted);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: color var(--admin-transition-fast);
+}
+
+.backLink:hover {
+  color: var(--admin-color-accent);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--admin-color-accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.backLink svg {
+  width: 15px;
+  height: 15px;
+}
+
+.eyebrow {
+  color: var(--admin-color-accent);
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  overflow: hidden;
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  line-height: 1.05;
+  letter-spacing: -0.05em;
+  text-overflow: ellipsis;
+}
+
+.intro {
+  max-width: 620px;
+  color: var(--admin-color-muted);
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+.loading {
+  max-width: 1180px;
+  margin: 0 auto;
+  display: grid;
+  gap: 14px;
+}
+
+.loading > span,
+.loading > strong,
+.loading > small,
+.loading > div {
+  background: linear-gradient(90deg, #eceef3 25%, #f7f7fa 50%, #eceef3 75%);
+  background-size: 200% 100%;
+  border-radius: 999px;
+  animation: skeleton-shimmer 1.4s ease-in-out infinite;
+}
+
+.loading > span {
+  width: 80px;
+  height: 12px;
+}
+
+.loading > strong {
+  width: min(420px, 70%);
+  height: 54px;
+}
+
+.loading > small {
+  width: min(560px, 85%);
+  height: 14px;
+}
+
+.loading > div {
+  height: 420px;
+  border-radius: 16px;
+  margin-top: 28px;
+}
+
+@keyframes edit-project-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    background-position: -200% 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .backLink,
+  .loading > span,
+  .loading > strong,
+  .loading > small,
+  .loading > div {
+    animation: none;
+    transition: none;
+  }
+}

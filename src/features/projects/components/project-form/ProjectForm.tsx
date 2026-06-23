@@ -3,24 +3,28 @@ import { useWatch, type UseFormReturn } from "react-hook-form";
 import { ArrowRight, ImageIcon, LoaderCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Alert, Button, FormField, Input } from "@/shared/ui";
-import type { CreateProjectFormValues } from "../../model/create-project.schema";
-import styles from "./AddProjectForm.module.css";
+import type { ProjectFormValues } from "../../model/project-form.schema";
+import styles from "./ProjectForm.module.css";
 
-interface AddProjectFormProps {
-  form: UseFormReturn<CreateProjectFormValues>;
+interface ProjectFormProps {
+  form: UseFormReturn<ProjectFormValues>;
   onSubmit: FormEventHandler<HTMLFormElement>;
   onChange: FormEventHandler<HTMLFormElement>;
   isPending: boolean;
   error: string | null;
+  submitLabel: string;
+  submittingLabel: string;
 }
 
-export function AddProjectForm({
+export function ProjectForm({
   form,
   onSubmit,
   onChange,
   isPending,
   error,
-}: AddProjectFormProps) {
+  submitLabel,
+  submittingLabel,
+}: ProjectFormProps) {
   const [failedPreviewUrl, setFailedPreviewUrl] = useState<string | null>(null);
   const imageUrl = useWatch({ control: form.control, name: "imageUrl" });
   const title = useWatch({ control: form.control, name: "title" });
@@ -239,15 +243,15 @@ export function AddProjectForm({
         >
           <header>
             <h2 id="project-settings">Publishing</h2>
-            <p>Control the initial position and visibility.</p>
+            <p>Control whether this project is visible in the portfolio.</p>
           </header>
 
           <label className={styles.publishToggle}>
             <input type="checkbox" {...form.register("isPublished")} />
             <span aria-hidden="true" />
             <span>
-              <strong>Publish immediately</strong>
-              <small>Make this project visible after creation.</small>
+              <strong>Published</strong>
+              <small>Show this project in the public portfolio.</small>
             </span>
           </label>
         </section>
@@ -263,7 +267,7 @@ export function AddProjectForm({
             Cancel
           </Link>
           <Button type="submit" disabled={isPending} fullWidth>
-            <span>{isPending ? "Creating project" : "Create project"}</span>
+            <span>{isPending ? submittingLabel : submitLabel}</span>
             {isPending ? (
               <LoaderCircle className={styles.spinner} aria-hidden="true" />
             ) : (

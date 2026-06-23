@@ -1,5 +1,13 @@
 import { useState } from "react";
-import { ArrowDown, ArrowUp, Code2, Globe2, Trash2 } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUp,
+  Code2,
+  Globe2,
+  Pencil,
+  Trash2,
+} from "lucide-react";
+import { Link } from "react-router-dom";
 import type {
   AdminProject,
   ProjectOrderDirection,
@@ -110,6 +118,13 @@ export function ProjectListItem({
         >
           <ArrowDown aria-hidden="true" />
         </button>
+        <Link
+          to={`/admin/projects/${project.id}/edit`}
+          title="Edit project"
+          aria-label={`Edit ${project.title}`}
+        >
+          <Pencil aria-hidden="true" />
+        </Link>
         {project.repositoryUrl && (
           <a
             href={project.repositoryUrl}

@@ -24,7 +24,7 @@ function parseTechnologies(value: string): string[] {
     .filter(Boolean);
 }
 
-export const createProjectSchema = z.object({
+export const projectFormSchema = z.object({
   title: z
     .string()
     .trim()
@@ -57,6 +57,6 @@ export const createProjectSchema = z.object({
   isPublished: z.boolean(),
 });
 
-export type CreateProjectFormValues = z.infer<typeof createProjectSchema>;
+export type ProjectFormValues = z.infer<typeof projectFormSchema>;
 
 export { parseTechnologies };
