@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperFolio.Application.Features.Projects.UpdateProject;
 
-internal sealed class UpdateProjectCommandHandler(IApplicationDbContext dbContext)
+internal sealed class UpdateProjectCommandHandler(
+    IApplicationDbContext dbContext,
+    IImageStorageService imageStorage)
     : IRequestHandler<UpdateProjectCommand, Result>
 {
     public async Task<Result> Handle(UpdateProjectCommand request, CancellationToken cancellationToken)
@@ -19,6 +21,8 @@ internal sealed class UpdateProjectCommandHandler(IApplicationDbContext dbContex
             return Result.NotFound(UpdateProjectErrors.NotFound);
         }
 
+        var previousImageUrl = project.ImageUrl;
+
         project.Update(
             request.Title,
             request.Summary,
@@ -28,6 +32,11 @@ internal sealed class UpdateProjectCommandHandler(IApplicationDbContext dbContex
             request.LiveUrl,
             request.Technologies ?? [],
             request.IsPublished);
+
+        if (!string.Equals(previousImageUrl, project.ImageUrl, StringComparison.Ordinal))
+        {
+            await imageStorage.RemoveAsync(previousImageUrl, cancellationToken);
+        }
 
         return Result.NoContent();
     }

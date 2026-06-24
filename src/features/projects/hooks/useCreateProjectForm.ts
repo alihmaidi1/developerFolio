@@ -10,18 +10,37 @@ import {
   type ProjectFormValues,
 } from "../model/project-form.schema";
 import { createProject } from "../api/create-project.api";
+import { uploadProjectImage } from "../api/upload-project-image.api";
 
 export function useCreateProjectForm() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  const createMutation = useMutation({ mutationFn: createProject });
+  const createMutation = useMutation({
+    mutationFn: async (values: ProjectFormValues) => {
+      const imageUrl = values.imageFile
+        ? await uploadProjectImage(values.imageFile)
+        : null;
+
+      return createProject({
+        title: values.title,
+        summary: values.summary,
+        description: values.description || null,
+        imageUrl,
+        repositoryUrl: values.repositoryUrl || null,
+        liveUrl: values.liveUrl || null,
+        technologies: parseTechnologies(values.technologies),
+        isPublished: values.isPublished,
+      });
+    },
+  });
+
   const form = useForm<ProjectFormValues>({
     resolver: zodResolver(projectFormSchema),
     defaultValues: {
       title: "",
       summary: "",
       description: "",
-      imageUrl: "",
+      imageFile: null,
       repositoryUrl: "",
       liveUrl: "",
       technologies: "",
@@ -33,17 +52,7 @@ export function useCreateProjectForm() {
     createMutation.reset();
 
     try {
-      await createMutation.mutateAsync({
-        title: values.title,
-        summary: values.summary,
-        description: values.description || null,
-        imageUrl: values.imageUrl || null,
-        repositoryUrl: values.repositoryUrl || null,
-        liveUrl: values.liveUrl || null,
-        technologies: parseTechnologies(values.technologies),
-        isPublished: values.isPublished,
-      });
-
+      await createMutation.mutateAsync(values);
       await queryClient.invalidateQueries({ queryKey: projectsQueryKeys.all });
       navigate("/admin/projects", { replace: true });
     } catch {
@@ -59,5 +68,6 @@ export function useCreateProjectForm() {
     error: createMutation.isError
       ? resolveApiError(createMutation.error)
       : null,
+    existingImageUrl: null,
   };
 }

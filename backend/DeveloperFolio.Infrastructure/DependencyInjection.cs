@@ -24,8 +24,8 @@ public static class DependencyInjection
             .Bind(configuration.GetRequiredSection(JwtOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
-        services.AddOptions<StorageOptions>()
-            .Bind(configuration.GetRequiredSection(StorageOptions.SectionName))
+        services.AddOptions<ImageStorageOptions>()
+            .Bind(configuration.GetSection(ImageStorageOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
         services.AddOptions<AuthCookieOptions>()
@@ -46,6 +46,7 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IAdminSessionCookie, AdminSessionCookie>();
         services.AddScoped<IFileStorage, LocalFileStorage>();
+        services.AddScoped<IImageStorageService, LocalImageStorageService>();
         services.AddHttpContextAccessor();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

@@ -1,0 +1,75 @@
+.dropzone {
+  position: relative;
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  align-items: center;
+  gap: 14px;
+  background: var(--admin-color-surface);
+  border: 1px dashed var(--admin-color-border-strong);
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+  transition:
+    border-color var(--admin-transition-fast),
+    background-color var(--admin-transition-fast);
+}
+
+.dropzone:hover,
+.dropzone:focus-within {
+  border-color: var(--admin-color-accent);
+  background: var(--admin-color-background);
+}
+
+.dropzone[data-invalid="true"] {
+  border-color: var(--admin-color-danger);
+}
+
+.input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.thumbnail {
+  width: 92px;
+  height: 70px;
+  border-radius: 9px;
+  background: var(--admin-color-background);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.thumbnail svg {
+  width: 22px;
+  height: 22px;
+  color: var(--admin-color-subtle);
+}
+
+.copy {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+}
+
+.copy strong {
+  font-size: 0.78rem;
+}
+
+.copy small {
+  color: var(--admin-color-muted);
+  font-size: 0.66rem;
+  line-height: 1.45;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

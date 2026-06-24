@@ -29,9 +29,9 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
                 ["Jwt:Key"] = "integration-test-signing-key-1234567890",
                 ["AdminSeed:Email"] = "admin@example.com",
                 ["AdminSeed:Password"] = "integration-password",
-                ["Storage:RootPath"] = Path.Combine(Path.GetTempPath(), $"developerfolio-{Guid.NewGuid():N}"),
             });
         });
+        builder.UseWebRoot(Path.Combine(Path.GetTempPath(), $"developerfolio-{Guid.NewGuid():N}"));
         builder.ConfigureServices(services =>
         {
             services.RemoveAll<DbContextOptions<ApplicationDbContext>>();

@@ -33,4 +33,5 @@ public/blogs.json
 **/obj/
 backend/.idea/
 backend/DeveloperFolio.Api/App_Data/
+backend/DeveloperFolio.Api/wwwroot/
 backend/TestResults/

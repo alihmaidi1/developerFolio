@@ -19,7 +19,9 @@ internal sealed class UpdateProjectValidation : AbstractValidator<UpdateProjectC
         RuleFor(command => command.Description)
             .MaximumLength(5000);
 
-        ApplyUrlRule(command => command.ImageUrl);
+        RuleFor(command => command.ImageUrl)
+            .MaximumLength(2048);
+
         ApplyUrlRule(command => command.RepositoryUrl);
         ApplyUrlRule(command => command.LiveUrl);
 
@@ -32,7 +34,6 @@ internal sealed class UpdateProjectValidation : AbstractValidator<UpdateProjectC
         RuleForEach(command => command.Technologies)
             .NotEmpty()
             .MaximumLength(80);
-
     }
 
     private void ApplyUrlRule(System.Linq.Expressions.Expression<Func<UpdateProjectCommand, string?>> expression)

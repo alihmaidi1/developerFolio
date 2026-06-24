@@ -24,11 +24,10 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
             title = "Developer Folio",
             summary = "Portfolio project",
             description = "A clean portfolio.",
-            imageUrl = "https://example.com/project.png",
+            imageUrl = "/projects/sample.png",
             repositoryUrl = "https://github.com/example/project",
             liveUrl = "https://example.com",
             technologies = new[] { "React", "TypeScript" },
-            sortOrder = 0,
             isPublished = true,
         });
         createResponse.StatusCode.Should().Be(HttpStatusCode.Created);

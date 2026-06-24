@@ -1,9 +1,11 @@
-import { useState, type FormEventHandler } from "react";
+import { useEffect, useMemo, type FormEventHandler } from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
 import { ArrowRight, ImageIcon, LoaderCircle } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Alert, Button, FormField, Input } from "@/shared/ui";
+import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import type { ProjectFormValues } from "../../model/project-form.schema";
+import { ImageUploadField } from "../image-upload-field/ImageUploadField";
 import styles from "./ProjectForm.module.css";
 
 interface ProjectFormProps {
@@ -14,6 +16,7 @@ interface ProjectFormProps {
   error: string | null;
   submitLabel: string;
   submittingLabel: string;
+  existingImageUrl: string | null;
 }
 
 export function ProjectForm({
@@ -24,11 +27,27 @@ export function ProjectForm({
   error,
   submitLabel,
   submittingLabel,
+  existingImageUrl,
 }: ProjectFormProps) {
-  const [failedPreviewUrl, setFailedPreviewUrl] = useState<string | null>(null);
-  const imageUrl = useWatch({ control: form.control, name: "imageUrl" });
+  const imageFile = useWatch({ control: form.control, name: "imageFile" });
   const title = useWatch({ control: form.control, name: "title" });
   const errors = form.formState.errors;
+
+  const localPreview = useMemo(
+    () => (imageFile ? URL.createObjectURL(imageFile) : null),
+    [imageFile],
+  );
+
+  useEffect(
+    () => () => {
+      if (localPreview) {
+        URL.revokeObjectURL(localPreview);
+      }
+    },
+    [localPreview],
+  );
+
+  const previewSrc = localPreview ?? resolveAssetUrl(existingImageUrl);
 
   return (
     <form
@@ -118,23 +137,18 @@ export function ProjectForm({
           </header>
 
           <div className={styles.fields}>
-            <FormField
-              label="Image URL"
-              htmlFor="project-image-url"
-              error={errors.imageUrl?.message}
-              errorId="project-image-url-error"
-            >
-              <Input
-                id="project-image-url"
-                type="url"
-                placeholder="https://example.com/project.jpg"
-                aria-invalid={Boolean(errors.imageUrl)}
-                aria-describedby={
-                  errors.imageUrl ? "project-image-url-error" : undefined
-                }
-                {...form.register("imageUrl")}
-              />
-            </FormField>
+            <ImageUploadField
+              label="Project image"
+              value={imageFile ?? null}
+              existingImageUrl={existingImageUrl}
+              error={errors.imageFile?.message}
+              onSelect={(file) =>
+                form.setValue("imageFile", file, {
+                  shouldValidate: true,
+                  shouldDirty: true,
+                })
+              }
+            />
 
             <div className={styles.twoColumns}>
               <FormField
@@ -221,12 +235,8 @@ export function ProjectForm({
             <span>Image</span>
           </header>
           <div className={styles.preview}>
-            {imageUrl && failedPreviewUrl !== imageUrl ? (
-              <img
-                src={imageUrl}
-                alt=""
-                onError={() => setFailedPreviewUrl(imageUrl)}
-              />
+            {previewSrc ? (
+              <img src={previewSrc} alt="" />
             ) : (
               <span>
                 <ImageIcon aria-hidden="true" />

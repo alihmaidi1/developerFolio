@@ -12,16 +12,19 @@ public sealed class JwtOptions
     public string Audience { get; init; } = string.Empty;
     [Required, MinLength(32)]
     public string Key { get; init; } = string.Empty;
-    [Range(5, 1440)]
     public int ExpirationMinutes { get; init; } = 60;
 }
 
-public sealed class StorageOptions
+public sealed class ImageStorageOptions
 {
-    public const string SectionName = "Storage";
+    public const string SectionName = "ImageStorage";
 
-    [Required]
-    public string RootPath { get; init; } = "App_Data/uploads";
+    [Range(1024, 50 * 1024 * 1024)]
+    public long MaxFileSizeBytes { get; init; } = 5 * 1024 * 1024;
+
+    [Required, MinLength(1)]
+    public string[] AllowedContentTypes { get; init; } =
+        ["image/png", "image/jpeg", "image/webp", "image/gif"];
 }
 
 public sealed class AuthCookieOptions

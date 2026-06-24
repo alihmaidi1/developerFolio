@@ -8,6 +8,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { Link } from "react-router-dom";
+import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import type {
   AdminProject,
   ProjectOrderDirection,
@@ -41,7 +42,8 @@ export function ProjectListItem({
   const visibleTechnologies = project.technologies.slice(0, 3);
   const hiddenTechnologiesCount =
     project.technologies.length - visibleTechnologies.length;
-  const showImage = project.imageUrl && !hasImageError;
+  const resolvedImageUrl = resolveAssetUrl(project.imageUrl);
+  const showImage = resolvedImageUrl && !hasImageError;
 
   return (
     <article className={styles.project}>
@@ -56,7 +58,7 @@ export function ProjectListItem({
         <div className={styles.thumbnail}>
           {showImage ? (
             <img
-              src={project.imageUrl ?? undefined}
+              src={resolvedImageUrl ?? undefined}
               alt=""
               onError={() => setHasImageError(true)}
             />

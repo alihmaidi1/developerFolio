@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperFolio.Application.Features.Projects.DeleteProject;
 
-internal sealed class DeleteProjectCommandHandler(IApplicationDbContext dbContext)
+internal sealed class DeleteProjectCommandHandler(
+    IApplicationDbContext dbContext,
+    IImageStorageService imageStorage)
     : IRequestHandler<DeleteProjectCommand, Result>
 {
     public async Task<Result> Handle(DeleteProjectCommand request, CancellationToken cancellationToken)
@@ -18,6 +20,7 @@ internal sealed class DeleteProjectCommandHandler(IApplicationDbContext dbContex
             return Result.NotFound(DeleteProjectErrors.NotFound);
         }
 
+        await imageStorage.RemoveAsync(project.ImageUrl, cancellationToken);
         dbContext.Projects.Remove(project);
         return Result.NoContent();
     }
