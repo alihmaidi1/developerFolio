@@ -1,3 +1,4 @@
+import { authTokenStorage } from "./auth-token";
 import { createAxiosClient, makeApi } from "./api-client";
 
 let unauthorizedHandler: () => void = () => undefined;
@@ -10,5 +11,8 @@ export function setUnauthorizedHandler(handler: () => void): () => void {
   };
 }
 
-export const privateAxios = createAxiosClient(() => unauthorizedHandler());
+export const privateAxios = createAxiosClient({
+  onUnauthorized: () => unauthorizedHandler(),
+  getAccessToken: () => authTokenStorage.get(),
+});
 export const privateApi = makeApi(privateAxios);

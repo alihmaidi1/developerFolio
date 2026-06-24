@@ -1,12 +1,16 @@
 import { privateApi } from "@/shared/lib/private-client";
 import { unwrapOperationResult } from "@/shared/lib/operation-result";
 import type { TResult } from "@/shared/types/api.types";
-import type { AdminLoginRequest, AdminSession } from "../model/auth.types";
+import type {
+  AdminLoginRequest,
+  AdminLoginResponse,
+  AdminSession,
+} from "../model/auth.types";
 import { AUTH_API_ROUTES } from "./auth.routes";
 
 export const authApi = {
-  login: async (request: AdminLoginRequest): Promise<AdminSession> => {
-    const result = await privateApi.post<TResult<AdminSession>>(
+  login: async (request: AdminLoginRequest): Promise<AdminLoginResponse> => {
+    const result = await privateApi.post<TResult<AdminLoginResponse>>(
       AUTH_API_ROUTES.login,
       request,
     );
@@ -21,6 +25,4 @@ export const authApi = {
 
     return unwrapOperationResult(result);
   },
-
-  logout: (): Promise<void> => privateApi.post<void>(AUTH_API_ROUTES.logout),
 };

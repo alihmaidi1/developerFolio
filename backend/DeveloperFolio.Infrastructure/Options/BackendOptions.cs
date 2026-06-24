@@ -27,14 +27,6 @@ public sealed class ImageStorageOptions
         ["image/png", "image/jpeg", "image/webp", "image/gif"];
 }
 
-public sealed class AuthCookieOptions
-{
-    public const string SectionName = "AuthCookie";
-
-    [Required]
-    public string Name { get; init; } = "developerfolio_admin";
-}
-
 public sealed class AdminSeedOptions
 {
     public const string SectionName = "AdminSeed";

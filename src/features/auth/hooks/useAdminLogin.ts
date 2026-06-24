@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/store";
 import { resolveApiError } from "@/shared/lib/api-error";
+import { authTokenStorage } from "@/shared/lib/auth-token";
 import { authApi } from "../api/auth.api";
 import { setAdminSession } from "../model/admin-auth.slice";
 import { adminLoginSchema, type AdminLoginValues } from "../model/auth.schema";
@@ -26,8 +27,9 @@ export function useAdminLogin() {
 
   const mutation = useMutation({
     mutationFn: authApi.login,
-    onSuccess: (session) => {
-      dispatch(setAdminSession(session));
+    onSuccess: ({ accessToken, id, email }) => {
+      authTokenStorage.set(accessToken);
+      dispatch(setAdminSession({ id, email }));
       const destination =
         (location.state as LoginLocationState | null)?.from ?? "/admin";
       navigate(destination, { replace: true });

@@ -7,3 +7,7 @@ export interface AdminSession {
   id: string;
   email: string;
 }
+
+export interface AdminLoginResponse extends AdminSession {
+  accessToken: string;
+}

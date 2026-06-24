@@ -1,6 +1,7 @@
 import { useEffect, type ReactNode } from "react";
 import { useAppDispatch } from "@/app/store";
 import { setUnauthorizedHandler } from "@/shared/lib/private-client";
+import { authTokenStorage } from "@/shared/lib/auth-token";
 import { authApi } from "../api/auth.api";
 import { clearAdminQueries } from "../lib/clear-admin-queries";
 import { clearAdminSession, setAdminSession } from "../model/admin-auth.slice";
@@ -17,10 +18,19 @@ export function AdminSessionBootstrap({
   useEffect(() => {
     let isActive = true;
     const clearSession = () => {
+      authTokenStorage.clear();
       dispatch(clearAdminSession());
       clearAdminQueries();
     };
     const unregisterUnauthorizedHandler = setUnauthorizedHandler(clearSession);
+
+    if (!authTokenStorage.get()) {
+      clearSession();
+      return () => {
+        isActive = false;
+        unregisterUnauthorizedHandler();
+      };
+    }
 
     authApi
       .getSession()

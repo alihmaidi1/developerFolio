@@ -2,22 +2,37 @@ import axios, { type AxiosInstance } from "axios";
 
 export const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5062";
 
-export function createAxiosClient(onUnauthorized: () => void): AxiosInstance {
+export interface AxiosClientOptions {
+  onUnauthorized: () => void;
+  getAccessToken?: () => string | null;
+}
+
+export function createAxiosClient(options: AxiosClientOptions): AxiosInstance {
   const client = axios.create({
     baseURL: BASE_URL,
     timeout: 10_000,
-    withCredentials: true,
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
     },
   });
 
+  if (options.getAccessToken) {
+    const resolveToken = options.getAccessToken;
+    client.interceptors.request.use((request) => {
+      const token = resolveToken();
+      if (token) {
+        request.headers.set("Authorization", `Bearer ${token}`);
+      }
+      return request;
+    });
+  }
+
   client.interceptors.response.use(
     (response) => response,
     (error: unknown) => {
       if (axios.isAxiosError(error) && error.response?.status === 401) {
-        onUnauthorized();
+        options.onUnauthorized();
       }
 
       return Promise.reject(error);
