@@ -23,6 +23,7 @@ public static class DatabaseInitializer
         if (app.Environment.IsDevelopment())
         {
             await scope.ServiceProvider.GetRequiredService<ProjectSeeder>().SeedAsync();
+            await scope.ServiceProvider.GetRequiredService<EducationSeeder>().SeedAsync();
         }
     }
 }

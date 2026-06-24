@@ -7,6 +7,11 @@ import {
   useAdminLogout,
 } from "@/features/auth";
 import {
+  AddEducationPage,
+  AdminEducationPage,
+  EditEducationPage,
+} from "@/features/education";
+import {
   AddProjectPage,
   AdminProjectsPage,
   EditProjectPage,
@@ -29,6 +34,12 @@ export default function AdminRouter() {
             <Route
               path="projects/:projectId/edit"
               element={<EditProjectPage />}
+            />
+            <Route path="education" element={<AdminEducationPage />} />
+            <Route path="education/new" element={<AddEducationPage />} />
+            <Route
+              path="education/:educationId/edit"
+              element={<EditEducationPage />}
             />
           </Route>
         </Route>

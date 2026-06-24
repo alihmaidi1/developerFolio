@@ -1,5 +1,11 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
-import { FileText, FolderKanban, LayoutDashboard, LogOut } from "lucide-react";
+import {
+  FileText,
+  FolderKanban,
+  GraduationCap,
+  LayoutDashboard,
+  LogOut,
+} from "lucide-react";
 import { useAppSelector } from "@/app/store";
 import { cn } from "@/shared/lib/cn";
 import styles from "./AdminLayout.module.css";
@@ -48,6 +54,18 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
             <span className={styles.navigationCopy}>
               <strong>Projects</strong>
               <small>Portfolio content</small>
+            </span>
+          </NavLink>
+          <NavLink
+            to="/admin/education"
+            className={({ isActive }) =>
+              cn(styles.navigationLink, isActive && styles.navigationLinkActive)
+            }
+          >
+            <GraduationCap aria-hidden="true" />
+            <span className={styles.navigationCopy}>
+              <strong>Education</strong>
+              <small>Schools and degrees</small>
             </span>
           </NavLink>
           <span className={styles.navigationUnavailable} aria-disabled="true">

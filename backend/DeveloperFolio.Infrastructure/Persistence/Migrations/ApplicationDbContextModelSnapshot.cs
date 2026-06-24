@@ -22,6 +22,82 @@ namespace DeveloperFolio.Infrastructure.Persistence.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
+            modelBuilder.Entity("DeveloperFolio.Domain.Education.EducationDescriptionBullet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<Guid>("EducationEntryId")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Text")
+                        .IsRequired()
+                        .HasMaxLength(300)
+                        .HasColumnType("character varying(300)");
+
+                    b.Property<DateTimeOffset>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("EducationEntryId", "SortOrder");
+
+                    b.ToTable("EducationDescriptionBullets", (string)null);
+                });
+
+            modelBuilder.Entity("DeveloperFolio.Domain.Education.EducationEntry", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<DateTimeOffset>("CreatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Degree")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<string>("Description")
+                        .HasMaxLength(2000)
+                        .HasColumnType("character varying(2000)");
+
+                    b.Property<string>("Duration")
+                        .IsRequired()
+                        .HasMaxLength(120)
+                        .HasColumnType("character varying(120)");
+
+                    b.Property<bool>("IsPublished")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("LogoUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
+                    b.Property<string>("SchoolName")
+                        .IsRequired()
+                        .HasMaxLength(200)
+                        .HasColumnType("character varying(200)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTimeOffset>("UpdatedAtUtc")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IsPublished", "SortOrder");
+
+                    b.ToTable("EducationEntries", (string)null);
+                });
+
             modelBuilder.Entity("DeveloperFolio.Domain.Projects.PortfolioProject", b =>
                 {
                     b.Property<Guid>("Id")
@@ -128,6 +204,15 @@ namespace DeveloperFolio.Infrastructure.Persistence.Migrations
                     b.ToTable("AdminUsers", (string)null);
                 });
 
+            modelBuilder.Entity("DeveloperFolio.Domain.Education.EducationDescriptionBullet", b =>
+                {
+                    b.HasOne("DeveloperFolio.Domain.Education.EducationEntry", null)
+                        .WithMany("DescriptionBullets")
+                        .HasForeignKey("EducationEntryId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("DeveloperFolio.Domain.Projects.ProjectTechnology", b =>
                 {
                     b.HasOne("DeveloperFolio.Domain.Projects.PortfolioProject", null)
@@ -135,6 +220,11 @@ namespace DeveloperFolio.Infrastructure.Persistence.Migrations
                         .HasForeignKey("ProjectId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("DeveloperFolio.Domain.Education.EducationEntry", b =>
+                {
+                    b.Navigation("DescriptionBullets");
                 });
 
             modelBuilder.Entity("DeveloperFolio.Domain.Projects.PortfolioProject", b =>

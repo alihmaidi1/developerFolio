@@ -1,8 +1,8 @@
 using DeveloperFolio.Domain.OperationResult;
 
-namespace DeveloperFolio.Application.Features.Uploads.UploadProjectImage;
+namespace DeveloperFolio.Application.Features.Uploads.Common;
 
-internal static class UploadProjectImageErrors
+internal static class UploadErrors
 {
     public static readonly Error MissingFile = new(
         "Upload.MissingFile",

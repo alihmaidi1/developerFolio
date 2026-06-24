@@ -1,6 +1,7 @@
 using Carter;
 using DeveloperFolio.Application.Abstractions;
 using DeveloperFolio.Application.Features.Projects.Common;
+using DeveloperFolio.Application.Features.Uploads.Common;
 using DeveloperFolio.Domain.OperationResult;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -24,7 +25,7 @@ public sealed class UploadProjectImageEndpoint : ICarterModule
                 if (upload is null)
                 {
                     return Result.ValidationFailure<UploadImageResponse>(
-                        UploadProjectImageErrors.MissingFile).ToHttpResult();
+                        UploadErrors.MissingFile).ToHttpResult();
                 }
 
                 var result = await imageStorage.UploadAsync(

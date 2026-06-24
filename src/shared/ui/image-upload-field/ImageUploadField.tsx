@@ -1,8 +1,7 @@
 import { useEffect, useId, useMemo } from "react";
 import { ImageIcon } from "lucide-react";
-import { FormField } from "@/shared/ui";
 import { resolveAssetUrl } from "@/shared/lib/asset-url";
-import { PROJECT_IMAGE_ALLOWED_TYPES } from "../../model/project-form.schema";
+import { FormField } from "../form-field/FormField";
 import styles from "./ImageUploadField.module.css";
 
 interface ImageUploadFieldProps {
@@ -10,6 +9,10 @@ interface ImageUploadFieldProps {
   value: File | null;
   existingImageUrl: string | null;
   error?: string;
+  acceptedTypes: readonly string[];
+  helperText?: string;
+  emptyLabel?: string;
+  replaceLabel?: string;
   onSelect: (file: File | null) => void;
 }
 
@@ -18,6 +21,10 @@ export function ImageUploadField({
   value,
   existingImageUrl,
   error,
+  acceptedTypes,
+  helperText = "PNG, JPEG, WEBP, or GIF up to 5 MB.",
+  emptyLabel = "Choose an image",
+  replaceLabel = "Replace current image",
   onSelect,
 }: ImageUploadFieldProps) {
   const inputId = useId();
@@ -55,19 +62,15 @@ export function ImageUploadField({
         </div>
         <div className={styles.copy}>
           <strong>
-            {value
-              ? value.name
-              : displayedUrl
-                ? "Replace current image"
-                : "Choose an image"}
+            {value ? value.name : displayedUrl ? replaceLabel : emptyLabel}
           </strong>
-          <small>PNG, JPEG, WEBP, or GIF up to 5 MB.</small>
+          <small>{helperText}</small>
         </div>
         <input
           id={inputId}
           className={styles.input}
           type="file"
-          accept={PROJECT_IMAGE_ALLOWED_TYPES.join(",")}
+          accept={acceptedTypes.join(",")}
           aria-invalid={Boolean(error)}
           aria-describedby={error ? errorId : undefined}
           onChange={(event) => {

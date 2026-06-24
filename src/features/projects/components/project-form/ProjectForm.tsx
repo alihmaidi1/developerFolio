@@ -2,10 +2,12 @@ import { useEffect, useMemo, type FormEventHandler } from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
 import { ArrowRight, ImageIcon, LoaderCircle } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Alert, Button, FormField, Input } from "@/shared/ui";
+import { Alert, Button, FormField, ImageUploadField, Input } from "@/shared/ui";
 import { resolveAssetUrl } from "@/shared/lib/asset-url";
-import type { ProjectFormValues } from "../../model/project-form.schema";
-import { ImageUploadField } from "../image-upload-field/ImageUploadField";
+import {
+  PROJECT_IMAGE_ALLOWED_TYPES,
+  type ProjectFormValues,
+} from "../../model/project-form.schema";
 import styles from "./ProjectForm.module.css";
 
 interface ProjectFormProps {
@@ -142,6 +144,7 @@ export function ProjectForm({
               value={imageFile ?? null}
               existingImageUrl={existingImageUrl}
               error={errors.imageFile?.message}
+              acceptedTypes={PROJECT_IMAGE_ALLOWED_TYPES}
               onSelect={(file) =>
                 form.setValue("imageFile", file, {
                   shouldValidate: true,

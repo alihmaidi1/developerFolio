@@ -1,0 +1,64 @@
+.field {
+  display: grid;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+}
+
+.removeButton {
+  width: 30px;
+  height: 30px;
+  display: grid;
+  place-items: center;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--admin-color-muted);
+  border: 1px solid var(--admin-color-border-strong);
+  cursor: pointer;
+  transition:
+    color var(--admin-transition-fast),
+    border-color var(--admin-transition-fast);
+}
+
+.removeButton:hover {
+  color: var(--admin-color-danger);
+  border-color: var(--admin-color-danger);
+}
+
+.removeButton svg {
+  width: 14px;
+  height: 14px;
+}
+
+.addButton {
+  justify-self: start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: 1px dashed var(--admin-color-border-strong);
+  border-radius: 8px;
+  color: var(--admin-color-muted);
+  padding: 8px 14px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    color var(--admin-transition-fast),
+    border-color var(--admin-transition-fast);
+}
+
+.addButton:hover {
+  color: var(--admin-color-accent);
+  border-color: var(--admin-color-accent);
+}
+
+.addButton svg {
+  width: 14px;
+  height: 14px;
+}
