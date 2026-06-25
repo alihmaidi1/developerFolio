@@ -1,41 +1,50 @@
-﻿import "./WorkExperience.scss";
+import { useQuery } from "@tanstack/react-query";
+import "./WorkExperience.scss";
 import ExperienceCard from "@/features/portfolio/components/experience-card/ExperienceCard";
-import { workExperiences } from "@/features/portfolio/config/portfolio.config";
+import { getPublishedWorkExperience } from "@/features/portfolio/api/public-work-experience.api";
+import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import { Fade } from "@/shared/ui/reveal/Reveal";
 import { useTheme } from "@/shared/theme/ThemeContext";
 
 export default function WorkExperience() {
   const { isDark } = useTheme();
-  if (workExperiences.display) {
-    return (
-      <div id="experience">
-        <Fade bottom duration={1000} distance="20px">
-          <div className="experience-container" id="workExperience">
-            <div>
-              <h1 className="experience-heading">Experiences</h1>
-              <div className="experience-cards-div">
-                {workExperiences.experience.map((card, i) => {
-                  return (
-                    <ExperienceCard
-                      key={i}
-                      isDark={isDark}
-                      cardInfo={{
-                        company: card.company,
-                        desc: card.desc,
-                        date: card.date,
-                        companylogo: card.companylogo,
-                        role: card.role,
-                        descBullets: card.descBullets,
-                      }}
-                    />
-                  );
-                })}
-              </div>
+  const workExperienceQuery = useQuery({
+    queryKey: ["portfolio", "work-experience"],
+    queryFn: getPublishedWorkExperience,
+    staleTime: 60_000,
+  });
+
+  const entries = workExperienceQuery.data ?? [];
+
+  if (entries.length === 0) {
+    return null;
+  }
+
+  return (
+    <div id="experience">
+      <Fade bottom duration={1000} distance="20px">
+        <div className="experience-container" id="workExperience">
+          <div>
+            <h1 className="experience-heading">Experiences</h1>
+            <div className="experience-cards-div">
+              {entries.map((entry) => (
+                <ExperienceCard
+                  key={entry.id}
+                  isDark={isDark}
+                  cardInfo={{
+                    company: entry.company,
+                    desc: entry.description ?? "",
+                    date: entry.date,
+                    companylogo: resolveAssetUrl(entry.companyLogoUrl) ?? "",
+                    role: entry.role,
+                    descBullets: entry.descriptionBullets,
+                  }}
+                />
+              ))}
             </div>
           </div>
-        </Fade>
-      </div>
-    );
-  }
-  return null;
+        </div>
+      </Fade>
+    </div>
+  );
 }

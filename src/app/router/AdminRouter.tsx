@@ -16,6 +16,11 @@ import {
   AdminProjectsPage,
   EditProjectPage,
 } from "@/features/projects";
+import {
+  AddWorkExperiencePage,
+  AdminWorkExperiencePage,
+  EditWorkExperiencePage,
+} from "@/features/work-experience";
 
 export default function AdminRouter() {
   const { logout, isPending } = useAdminLogout();
@@ -40,6 +45,18 @@ export default function AdminRouter() {
             <Route
               path="education/:educationId/edit"
               element={<EditEducationPage />}
+            />
+            <Route
+              path="work-experience"
+              element={<AdminWorkExperiencePage />}
+            />
+            <Route
+              path="work-experience/new"
+              element={<AddWorkExperiencePage />}
+            />
+            <Route
+              path="work-experience/:workExperienceId/edit"
+              element={<EditWorkExperiencePage />}
             />
           </Route>
         </Route>

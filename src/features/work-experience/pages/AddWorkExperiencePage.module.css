@@ -1,0 +1,78 @@
+.page {
+  max-width: 1180px;
+  margin: 0 auto;
+  animation: add-project-enter 380ms ease-out both;
+}
+
+.header {
+  border-bottom: 1px solid var(--admin-color-border);
+  margin-bottom: 38px;
+  padding-bottom: 32px;
+}
+
+.backLink {
+  width: max-content;
+  color: var(--admin-color-muted);
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.72rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition: color var(--admin-transition-fast);
+}
+
+.backLink:hover {
+  color: var(--admin-color-accent);
+}
+
+.backLink:focus-visible {
+  outline: 2px solid var(--admin-color-accent);
+  outline-offset: 4px;
+  border-radius: 6px;
+}
+
+.backLink svg {
+  width: 15px;
+  height: 15px;
+}
+
+.eyebrow {
+  color: var(--admin-color-accent);
+  margin: 0 0 10px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.header h1 {
+  margin: 0;
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.05em;
+}
+
+.intro {
+  max-width: 600px;
+  color: var(--admin-color-muted);
+  margin: 14px 0 0;
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+@keyframes add-project-enter {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page,
+  .backLink {
+    animation: none;
+    transition: none;
+  }
+}

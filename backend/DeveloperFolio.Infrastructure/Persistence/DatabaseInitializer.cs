@@ -24,6 +24,7 @@ public static class DatabaseInitializer
         {
             await scope.ServiceProvider.GetRequiredService<ProjectSeeder>().SeedAsync();
             await scope.ServiceProvider.GetRequiredService<EducationSeeder>().SeedAsync();
+            await scope.ServiceProvider.GetRequiredService<WorkExperienceSeeder>().SeedAsync();
         }
     }
 }

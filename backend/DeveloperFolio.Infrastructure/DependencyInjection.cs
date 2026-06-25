@@ -39,6 +39,7 @@ public static class DependencyInjection
         services.AddScoped<AdminSeeder>();
         services.AddScoped<ProjectSeeder>();
         services.AddScoped<EducationSeeder>();
+        services.AddScoped<WorkExperienceSeeder>();
         services.AddScoped<IPasswordHasher, PasswordHasher>();
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IFileStorage, LocalFileStorage>();
