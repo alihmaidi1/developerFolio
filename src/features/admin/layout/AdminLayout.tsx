@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet } from "react-router-dom";
 import {
+  BrainCircuit,
   Briefcase,
   FileText,
   FolderKanban,
@@ -79,6 +80,18 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
             <span className={styles.navigationCopy}>
               <strong>Work experience</strong>
               <small>Roles and companies</small>
+            </span>
+          </NavLink>
+          <NavLink
+            to="/admin/skills"
+            className={({ isActive }) =>
+              cn(styles.navigationLink, isActive && styles.navigationLinkActive)
+            }
+          >
+            <BrainCircuit aria-hidden="true" />
+            <span className={styles.navigationCopy}>
+              <strong>Skills</strong>
+              <small>Statements and stack icons</small>
             </span>
           </NavLink>
           <span className={styles.navigationUnavailable} aria-disabled="true">

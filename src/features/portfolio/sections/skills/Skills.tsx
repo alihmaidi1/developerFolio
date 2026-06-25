@@ -1,9 +1,10 @@
-﻿import "./Skills.scss";
-import SoftwareSkill from "@/features/portfolio/components/software-skills/SoftwareSkill";
+import { useQuery } from "@tanstack/react-query";
+import "./Skills.scss";
 import {
   illustration,
   skillsSection,
 } from "@/features/portfolio/config/portfolio.config";
+import { getPublishedSkills } from "@/features/portfolio/api/public-skills.api";
 import { Fade } from "@/shared/ui/reveal/Reveal";
 import developerActivity from "@/assets/images/developerActivity.svg";
 import codingPerson from "@/assets/lottie/codingPerson.json";
@@ -13,9 +14,19 @@ import { cn } from "@/shared/lib/cn";
 
 export default function Skills() {
   const { isDark } = useTheme();
-  if (!skillsSection.display) {
+  const skillsQuery = useQuery({
+    queryKey: ["portfolio", "skills"],
+    queryFn: getPublishedSkills,
+    staleTime: 60_000,
+  });
+
+  const statements = skillsQuery.data?.statements ?? [];
+  const softwareSkills = skillsQuery.data?.softwareSkills ?? [];
+
+  if (statements.length === 0 && softwareSkills.length === 0) {
     return null;
   }
+
   return (
     <div className={cn("main", isDark && "dark-mode")} id="skills">
       <div className="skills-main-div">
@@ -41,21 +52,33 @@ export default function Skills() {
             >
               {skillsSection.subTitle}
             </p>
-            <SoftwareSkill />
+            {softwareSkills.length > 0 && (
+              <div>
+                <div className="software-skills-main-div">
+                  <ul className="dev-icons">
+                    {softwareSkills.map((skill) => (
+                      <li
+                        key={skill.id}
+                        className="software-skill-inline"
+                        data-skill={skill.name}
+                      >
+                        <i className={skill.iconClassName}></i>
+                        <p>{skill.name}</p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </div>
+            )}
             <div>
-              {skillsSection.skills.map((skills, i) => {
-                return (
-                  <p
-                    key={i}
-                    className={cn(
-                      "subTitle skills-text",
-                      isDark && "dark-mode",
-                    )}
-                  >
-                    {skills}
-                  </p>
-                );
-              })}
+              {statements.map((statement) => (
+                <p
+                  key={statement.id}
+                  className={cn("subTitle skills-text", isDark && "dark-mode")}
+                >
+                  {statement.text}
+                </p>
+              ))}
             </div>
           </div>
         </Fade>
