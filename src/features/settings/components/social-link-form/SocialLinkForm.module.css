@@ -1,0 +1,123 @@
+.form {
+  background: var(--admin-color-surface);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 14px;
+  padding: 20px;
+  display: grid;
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.formHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+}
+
+.formHeader h3 {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+}
+
+.formHeader span {
+  font-size: 0.65rem;
+  color: var(--admin-color-muted);
+}
+
+.textarea {
+  width: 100%;
+  box-sizing: border-box;
+  color: var(--admin-color-text);
+  background: var(--admin-color-background);
+  border: 1px solid var(--admin-color-border-strong);
+  border-radius: 10px;
+  padding: 12px 14px;
+  font: inherit;
+  font-size: 0.8rem;
+  line-height: 1.55;
+  resize: vertical;
+  outline: none;
+  transition:
+    border-color var(--admin-transition-fast),
+    box-shadow var(--admin-transition-fast);
+}
+
+.textarea:focus-visible {
+  border-color: var(--admin-color-accent);
+  box-shadow: 0 0 0 3px rgb(100 98 215 / 12%);
+}
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.publishToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--admin-color-text);
+  cursor: pointer;
+}
+
+.actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.cancelButton {
+  background: transparent;
+  border: 1px solid var(--admin-color-border-strong);
+  border-radius: 9px;
+  padding: 8px 16px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--admin-color-muted);
+  cursor: pointer;
+}
+
+.submitButton {
+  background: var(--admin-color-accent);
+  border: none;
+  border-radius: 9px;
+  padding: 8px 18px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.alert {
+  margin: 0;
+  padding: 10px 12px;
+  background: rgb(217 64 64 / 8%);
+  color: #c0392b;
+  border-radius: 9px;
+  font-size: 0.72rem;
+}
+
+.spinner {
+  width: 14px;
+  height: 14px;
+  animation: spin 800ms linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

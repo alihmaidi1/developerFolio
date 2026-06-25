@@ -1,0 +1,35 @@
+.tabs {
+  display: inline-flex;
+  background: var(--admin-color-surface);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 999px;
+  padding: 4px;
+  gap: 4px;
+}
+
+.tab {
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: var(--admin-color-muted);
+  cursor: pointer;
+  transition:
+    color var(--admin-transition-fast),
+    background-color var(--admin-transition-fast);
+}
+
+.tab:hover {
+  color: var(--admin-color-text);
+}
+
+.tabActive {
+  background: var(--admin-color-accent);
+  color: #fff;
+}
+
+.tabActive:hover {
+  color: #fff;
+}

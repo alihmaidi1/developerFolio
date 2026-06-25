@@ -2,6 +2,7 @@ using DeveloperFolio.Application.Abstractions;
 using DeveloperFolio.Domain.Education;
 using DeveloperFolio.Domain.Projects;
 using DeveloperFolio.Domain.Security;
+using DeveloperFolio.Domain.Settings;
 using DeveloperFolio.Domain.Skills;
 using DeveloperFolio.Domain.WorkExperience;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,9 @@ public sealed class ApplicationDbContext(DbContextOptions<ApplicationDbContext> 
     public DbSet<WorkExperienceEntry> WorkExperienceEntries => Set<WorkExperienceEntry>();
     public DbSet<SkillStatement> SkillStatements => Set<SkillStatement>();
     public DbSet<SoftwareSkill> SoftwareSkills => Set<SoftwareSkill>();
+    public DbSet<GreetingSettings> GreetingSettings => Set<GreetingSettings>();
+    public DbSet<ContactSettings> ContactSettings => Set<ContactSettings>();
+    public DbSet<SocialLink> SocialLinks => Set<SocialLink>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

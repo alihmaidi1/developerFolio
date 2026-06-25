@@ -7,6 +7,7 @@ import {
   GraduationCap,
   LayoutDashboard,
   LogOut,
+  Settings,
 } from "lucide-react";
 import { useAppSelector } from "@/app/store";
 import { cn } from "@/shared/lib/cn";
@@ -92,6 +93,18 @@ export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
             <span className={styles.navigationCopy}>
               <strong>Skills</strong>
               <small>Statements and stack icons</small>
+            </span>
+          </NavLink>
+          <NavLink
+            to="/admin/settings"
+            className={({ isActive }) =>
+              cn(styles.navigationLink, isActive && styles.navigationLinkActive)
+            }
+          >
+            <Settings aria-hidden="true" />
+            <span className={styles.navigationCopy}>
+              <strong>Settings</strong>
+              <small>Greeting, contact, social</small>
             </span>
           </NavLink>
           <span className={styles.navigationUnavailable} aria-disabled="true">

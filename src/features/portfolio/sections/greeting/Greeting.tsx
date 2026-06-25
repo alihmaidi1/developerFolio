@@ -1,4 +1,4 @@
-﻿import { Fade } from "@/shared/ui/reveal/Reveal";
+import { Fade } from "@/shared/ui/reveal/Reveal";
 import manOnTable from "@/assets/images/manOnTable.svg";
 import emoji from "react-easy-emoji";
 import "./Greeting.scss";
@@ -6,18 +6,20 @@ import landingPerson from "@/assets/lottie/landingPerson.json";
 import DisplayLottie from "@/shared/ui/display-lottie/DisplayLottie";
 import SocialMedia from "@/features/portfolio/components/social-media/SocialMedia";
 import { Button } from "@/shared/ui";
-import {
-  illustration,
-  greeting,
-} from "@/features/portfolio/config/portfolio.config";
+import { illustration } from "@/features/portfolio/config/portfolio.config";
+import { usePortfolioSettings } from "@/features/portfolio/hooks/usePortfolioSettings";
 import { useTheme } from "@/shared/theme/ThemeContext";
 import { cn } from "@/shared/lib/cn";
 
 export default function Greeting() {
   const { isDark } = useTheme();
-  if (!greeting.displayGreeting) {
+  const settingsQuery = usePortfolioSettings();
+  const greeting = settingsQuery.data?.greeting;
+
+  if (!greeting || !greeting.displayGreeting) {
     return null;
   }
+
   return (
     <Fade bottom duration={1000} distance="40px">
       <div className="greet-main" id="greeting">
@@ -45,6 +47,13 @@ export default function Greeting() {
                   text="Contact me"
                   href="#contact"
                 />
+                {greeting.resumeUrl && (
+                  <Button
+                    className="greeting-button"
+                    text="Download resume"
+                    href={greeting.resumeUrl}
+                  />
+                )}
               </div>
             </div>
           </div>

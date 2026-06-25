@@ -1,0 +1,103 @@
+.entry {
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) 130px auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--admin-color-surface);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 12px;
+  padding: 14px 18px;
+}
+
+.entry + .entry {
+  margin-top: 8px;
+}
+
+.order {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--admin-color-muted);
+  letter-spacing: 0.06em;
+}
+
+.text {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: var(--admin-color-text);
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.66rem;
+  font-weight: 650;
+}
+
+.statusDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.published {
+  color: #1f9d55;
+}
+
+.draft {
+  color: var(--admin-color-muted);
+}
+
+.actions {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.button {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: transparent;
+  border: 1px solid var(--admin-color-border-strong);
+  border-radius: 8px;
+  color: var(--admin-color-muted);
+  cursor: pointer;
+  transition:
+    border-color var(--admin-transition-fast),
+    color var(--admin-transition-fast);
+}
+
+.button:hover:not(:disabled) {
+  border-color: var(--admin-color-accent);
+  color: var(--admin-color-accent);
+}
+
+.button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.button svg {
+  width: 14px;
+  height: 14px;
+}
+
+.deleteButton:hover:not(:disabled) {
+  border-color: var(--admin-color-danger);
+  color: var(--admin-color-danger);
+}
+
+@media (max-width: 720px) {
+  .entry {
+    grid-template-columns: 40px minmax(0, 1fr);
+  }
+
+  .status,
+  .actions {
+    grid-column: 1 / -1;
+    justify-self: start;
+  }
+}

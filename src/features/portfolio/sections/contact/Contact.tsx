@@ -1,9 +1,7 @@
-﻿import "./Contact.scss";
+import "./Contact.scss";
 import SocialMedia from "@/features/portfolio/components/social-media/SocialMedia";
-import {
-  illustration,
-  contactInfo,
-} from "@/features/portfolio/config/portfolio.config";
+import { illustration } from "@/features/portfolio/config/portfolio.config";
+import { usePortfolioSettings } from "@/features/portfolio/hooks/usePortfolioSettings";
 import { Fade } from "@/shared/ui/reveal/Reveal";
 import email from "@/assets/lottie/email.json";
 import DisplayLottie from "@/shared/ui/display-lottie/DisplayLottie";
@@ -13,41 +11,49 @@ import { cn } from "@/shared/lib/cn";
 
 export default function Contact() {
   const { isDark } = useTheme();
+  const settingsQuery = usePortfolioSettings();
+  const contact = settingsQuery.data?.contact;
+
+  if (!contact) {
+    return null;
+  }
+
   return (
     <Fade bottom duration={1000} distance="20px">
       <div className="main contact-margin-top" id="contact">
         <div className="contact-div-main">
           <div className="contact-header">
-            <h1 className="heading contact-title">{contactInfo.title}</h1>
+            <h1 className="heading contact-title">{contact.title}</h1>
             <p
               className={cn(
                 "contact-subtitle",
                 isDark ? "dark-mode" : "subTitle",
               )}
             >
-              {contactInfo.subtitle}
+              {contact.subtitle}
             </p>
             <div className={cn("contact-text-div", isDark && "dark-mode")}>
-              {contactInfo.number && (
+              {contact.phone && (
                 <>
-                  <a
-                    className="contact-detail"
-                    href={"tel:" + contactInfo.number}
-                  >
-                    {contactInfo.number}
+                  <a className="contact-detail" href={"tel:" + contact.phone}>
+                    {contact.phone}
                   </a>
                   <br />
                   <br />
                 </>
               )}
-              <a
-                className="contact-detail-email"
-                href={"mailto:" + contactInfo.email_address}
-              >
-                {contactInfo.email_address}
-              </a>
-              <br />
-              <br />
+              {contact.email && (
+                <>
+                  <a
+                    className="contact-detail-email"
+                    href={"mailto:" + contact.email}
+                  >
+                    {contact.email}
+                  </a>
+                  <br />
+                  <br />
+                </>
+              )}
               <SocialMedia />
             </div>
           </div>

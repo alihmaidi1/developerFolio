@@ -16,6 +16,7 @@ import {
   AdminProjectsPage,
   EditProjectPage,
 } from "@/features/projects";
+import { AdminSettingsPage } from "@/features/settings";
 import { AdminSkillsPage } from "@/features/skills";
 import {
   AddWorkExperiencePage,
@@ -60,6 +61,7 @@ export default function AdminRouter() {
               element={<EditWorkExperiencePage />}
             />
             <Route path="skills" element={<AdminSkillsPage />} />
+            <Route path="settings" element={<AdminSettingsPage />} />
           </Route>
         </Route>
       </Routes>
