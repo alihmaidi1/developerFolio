@@ -7,10 +7,13 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
-      "lottie-react": path.resolve(
-        __dirname,
-        "./node_modules/lottie-react/build/index.es.js",
-      ),
     },
+  },
+  optimizeDeps: {
+    /**
+     * Pre-bundle the heavy 3D stack so dynamic-import of HeroVideoCanvas
+     * never trips the "Outdated Optimize Dep" 504 after a fresh install.
+     */
+    include: ["@react-three/fiber", "@react-three/drei", "three"],
   },
 });

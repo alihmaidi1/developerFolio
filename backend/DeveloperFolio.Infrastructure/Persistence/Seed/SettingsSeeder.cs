@@ -32,7 +32,6 @@ internal sealed class SettingsSeeder(
             "Hi all, I'm Ali",
             "A passionate full-stack developer crafting polished products with React and ASP.NET Core. I enjoy turning hard problems into simple, calm interfaces.",
             null,
-            null,
             true);
 
         await dbContext.GreetingSettings.AddAsync(greeting, cancellationToken);

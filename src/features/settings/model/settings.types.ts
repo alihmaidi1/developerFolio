@@ -3,7 +3,6 @@ export interface GreetingSettings {
   title: string;
   subTitle: string;
   resumeUrl: string | null;
-  introVideoUrl: string | null;
   displayGreeting: boolean;
 }
 

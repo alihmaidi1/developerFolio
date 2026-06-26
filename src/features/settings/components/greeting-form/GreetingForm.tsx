@@ -1,13 +1,10 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle, Trash2, Video } from "lucide-react";
-import { useEffect, useMemo, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { LoaderCircle } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import { FormField, Input } from "@/shared/ui";
-import { greetingApi } from "../../api/greeting.api";
 import {
-  GREETING_VIDEO_ALLOWED_TYPES,
   greetingFormSchema,
   type GreetingFormValues,
 } from "../../model/greeting-form.schema";
@@ -21,16 +18,12 @@ interface GreetingFormProps {
 
 export function GreetingForm({ greeting }: GreetingFormProps) {
   const [savedOnce, setSavedOnce] = useState(false);
-  const [uploadError, setUploadError] = useState<string | null>(null);
-  const [isUploading, setIsUploading] = useState(false);
 
   const buildDefaults = (entry: GreetingSettings): GreetingFormValues => ({
     username: entry.username,
     title: entry.title,
     subTitle: entry.subTitle,
     resumeUrl: entry.resumeUrl ?? "",
-    videoFile: null,
-    removeVideo: false,
     displayGreeting: entry.displayGreeting,
   });
 
@@ -44,65 +37,24 @@ export function GreetingForm({ greeting }: GreetingFormProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [greeting]);
 
-  const videoFile = useWatch({ control: form.control, name: "videoFile" });
-  const removeVideo = useWatch({ control: form.control, name: "removeVideo" });
-
-  const localPreview = useMemo(
-    () => (videoFile ? URL.createObjectURL(videoFile) : null),
-    [videoFile],
-  );
-  useEffect(
-    () => () => {
-      if (localPreview) {
-        URL.revokeObjectURL(localPreview);
-      }
-    },
-    [localPreview],
-  );
-
-  const previewSrc =
-    localPreview ??
-    (removeVideo ? null : resolveAssetUrl(greeting.introVideoUrl));
-
   const mutation = useUpdateGreeting();
   const errors = form.formState.errors;
 
   const onSubmit = form.handleSubmit(async (values) => {
     mutation.reset();
-    setUploadError(null);
-
-    let introVideoUrl = greeting.introVideoUrl;
-    try {
-      if (values.videoFile) {
-        setIsUploading(true);
-        introVideoUrl = await greetingApi.uploadVideo(values.videoFile);
-      } else if (values.removeVideo) {
-        introVideoUrl = null;
-      }
-    } catch (error) {
-      setUploadError(resolveApiError(error));
-      return;
-    } finally {
-      setIsUploading(false);
-    }
-
     try {
       await mutation.mutateAsync({
         username: values.username,
         title: values.title,
         subTitle: values.subTitle,
         resumeUrl: values.resumeUrl || null,
-        introVideoUrl,
         displayGreeting: values.displayGreeting,
       });
       setSavedOnce(true);
-      form.reset(buildDefaults({ ...greeting, introVideoUrl }));
     } catch {
       // surfaced via mutation.isError
     }
   });
-
-  const isBusy = isUploading || mutation.isPending;
 
   return (
     <form className={styles.form} onSubmit={onSubmit} noValidate>
@@ -182,85 +134,13 @@ export function GreetingForm({ greeting }: GreetingFormProps) {
         />
       </FormField>
 
-      <FormField
-        label="Intro video"
-        htmlFor="greeting-video"
-        error={errors.videoFile?.message}
-        errorId="greeting-video-error"
-      >
-        <div className={styles.videoField}>
-          <div className={styles.videoPreview}>
-            {previewSrc ? (
-              <video
-                key={previewSrc}
-                className={styles.videoPlayer}
-                src={previewSrc}
-                muted
-                playsInline
-                controls
-              />
-            ) : (
-              <span className={styles.videoEmpty}>
-                <Video aria-hidden="true" />
-                No video
-              </span>
-            )}
-          </div>
-
-          <div className={styles.videoControls}>
-            <label className={styles.videoPick}>
-              <Video aria-hidden="true" />
-              {videoFile ? "Change video" : "Upload video"}
-              <input
-                id="greeting-video"
-                type="file"
-                accept={GREETING_VIDEO_ALLOWED_TYPES.join(",")}
-                aria-invalid={Boolean(errors.videoFile)}
-                aria-describedby={
-                  errors.videoFile ? "greeting-video-error" : undefined
-                }
-                onChange={(event) => {
-                  const [file] = Array.from(event.target.files ?? []);
-                  form.setValue("videoFile", file ?? null, {
-                    shouldValidate: true,
-                    shouldDirty: true,
-                  });
-                  if (file) {
-                    form.setValue("removeVideo", false);
-                  }
-                  event.target.value = "";
-                }}
-              />
-            </label>
-
-            {(videoFile || (greeting.introVideoUrl && !removeVideo)) && (
-              <button
-                type="button"
-                className={styles.videoRemove}
-                onClick={() => {
-                  form.setValue("videoFile", null);
-                  form.setValue("removeVideo", Boolean(greeting.introVideoUrl));
-                }}
-              >
-                <Trash2 aria-hidden="true" />
-                Remove
-              </button>
-            )}
-
-            <small className={styles.videoHint}>
-              MP4, WEBM, or MOV up to 30 MB.
-            </small>
-          </div>
-        </div>
-      </FormField>
-
-      {(mutation.isError || uploadError) && (
+      {mutation.isError && (
         <p className={styles.alert} role="alert">
-          {uploadError ?? resolveApiError(mutation.error)}
+          {resolveApiError(mutation.error)}
         </p>
       )}
 
-      {!mutation.isError && !uploadError && savedOnce && !isBusy && (
+      {!mutation.isError && savedOnce && !mutation.isPending && (
         <p className={styles.success}>Greeting saved successfully.</p>
       )}
 
@@ -273,12 +153,12 @@ export function GreetingForm({ greeting }: GreetingFormProps) {
           <button
             type="submit"
             className={styles.submitButton}
-            disabled={isBusy}
+            disabled={mutation.isPending}
           >
-            {isBusy && (
+            {mutation.isPending && (
               <LoaderCircle className={styles.spinner} aria-hidden="true" />
             )}
-            {isUploading ? "Uploading video" : "Save changes"}
+            Save changes
           </button>
         </div>
       </div>

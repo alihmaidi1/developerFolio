@@ -7,4 +7,3 @@ export { FormField } from "./form-field/FormField";
 export { IconButton } from "./icon-button/IconButton";
 export { ImageUploadField } from "./image-upload-field/ImageUploadField";
 export { Input } from "./input/Input";
-export { default as ScrollToTop } from "./scroll-to-top/ScrollToTop";

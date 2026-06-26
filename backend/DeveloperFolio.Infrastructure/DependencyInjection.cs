@@ -28,10 +28,6 @@ public static class DependencyInjection
             .Bind(configuration.GetSection(ImageStorageOptions.SectionName))
             .ValidateDataAnnotations()
             .ValidateOnStart();
-        services.AddOptions<VideoStorageOptions>()
-            .Bind(configuration.GetSection(VideoStorageOptions.SectionName))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
         services.AddOptions<AdminSeedOptions>()
             .Bind(configuration.GetRequiredSection(AdminSeedOptions.SectionName))
             .ValidateDataAnnotations()
@@ -50,7 +46,6 @@ public static class DependencyInjection
         services.AddScoped<IJwtTokenService, JwtTokenService>();
         services.AddScoped<IFileStorage, LocalFileStorage>();
         services.AddScoped<IImageStorageService, LocalImageStorageService>();
-        services.AddScoped<IVideoStorageService, LocalVideoStorageService>();
         services.AddHttpContextAccessor();
 
         services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)

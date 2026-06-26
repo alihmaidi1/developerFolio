@@ -5,7 +5,6 @@ public sealed record PortfolioGreeting(
     string Title,
     string SubTitle,
     string? ResumeUrl,
-    string? IntroVideoUrl,
     bool DisplayGreeting);
 
 public sealed record PortfolioContact(

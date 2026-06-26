@@ -15,7 +15,6 @@ internal sealed class GreetingSettingsConfiguration : EntityConfiguration<Greeti
         builder.Property(greeting => greeting.Title).HasMaxLength(200).IsRequired();
         builder.Property(greeting => greeting.SubTitle).HasMaxLength(2000).IsRequired();
         builder.Property(greeting => greeting.ResumeUrl).HasMaxLength(2048);
-        builder.Property(greeting => greeting.IntroVideoUrl).HasMaxLength(2048);
         builder.Property(greeting => greeting.DisplayGreeting).IsRequired();
     }
 }
