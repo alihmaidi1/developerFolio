@@ -8,4 +8,5 @@ internal sealed record UpdateGreetingCommand(
     string Title,
     string SubTitle,
     string? ResumeUrl,
+    string? IntroVideoUrl,
     bool DisplayGreeting) : ICommand<Result>;

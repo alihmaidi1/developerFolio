@@ -46,6 +46,7 @@ internal sealed class GetPortfolioSettingsQueryHandler(IApplicationDbContext dbC
                 greeting.Title,
                 greeting.SubTitle,
                 greeting.ResumeUrl,
+                greeting.IntroVideoUrl,
                 greeting.DisplayGreeting),
             new PortfolioContact(
                 contact.Title,

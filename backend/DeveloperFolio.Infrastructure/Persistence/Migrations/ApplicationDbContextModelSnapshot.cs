@@ -253,6 +253,10 @@ namespace DeveloperFolio.Infrastructure.Persistence.Migrations
                     b.Property<bool>("DisplayGreeting")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("IntroVideoUrl")
+                        .HasMaxLength(2048)
+                        .HasColumnType("character varying(2048)");
+
                     b.Property<string>("ResumeUrl")
                         .HasMaxLength(2048)
                         .HasColumnType("character varying(2048)");

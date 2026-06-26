@@ -5,4 +5,5 @@ public sealed record UpdateGreetingRequest(
     string Title,
     string SubTitle,
     string? ResumeUrl,
+    string? IntroVideoUrl,
     bool DisplayGreeting);

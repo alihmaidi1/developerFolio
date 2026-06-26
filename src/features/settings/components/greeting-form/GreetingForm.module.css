@@ -7,6 +7,96 @@
   gap: 16px;
 }
 
+.videoField {
+  display: grid;
+  grid-template-columns: 132px minmax(0, 1fr);
+  gap: 16px;
+  align-items: start;
+}
+
+.videoPreview {
+  width: 132px;
+  aspect-ratio: 3 / 4;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--admin-color-background);
+  border: 1px solid var(--admin-color-border-strong);
+  display: grid;
+  place-items: center;
+}
+
+.videoPlayer {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #000;
+}
+
+.videoEmpty {
+  display: grid;
+  justify-items: center;
+  gap: 6px;
+  color: var(--admin-color-subtle);
+  font-size: 0.7rem;
+}
+
+.videoEmpty svg {
+  width: 22px;
+  height: 22px;
+}
+
+.videoControls {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+}
+
+.videoPick {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 10px;
+  background: var(--admin-color-accent);
+  color: #fff;
+  font-size: 0.76rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.videoPick input {
+  display: none;
+}
+
+.videoPick svg {
+  width: 16px;
+  height: 16px;
+}
+
+.videoRemove {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  border: none;
+  color: var(--admin-color-danger);
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.videoRemove svg {
+  width: 14px;
+  height: 14px;
+}
+
+.videoHint {
+  color: var(--admin-color-muted);
+  font-size: 0.68rem;
+}
+
 .title {
   margin: 0;
   font-size: 0.92rem;

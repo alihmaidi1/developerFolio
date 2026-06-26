@@ -15,16 +15,18 @@ public sealed class GreetingSettings : Entity
         string title,
         string subTitle,
         string? resumeUrl,
+        string? introVideoUrl,
         bool displayGreeting)
     {
         Id = SingletonId;
-        ApplyDetails(username, title, subTitle, resumeUrl, displayGreeting);
+        ApplyDetails(username, title, subTitle, resumeUrl, introVideoUrl, displayGreeting);
     }
 
     public string Username { get; private set; } = string.Empty;
     public string Title { get; private set; } = string.Empty;
     public string SubTitle { get; private set; } = string.Empty;
     public string? ResumeUrl { get; private set; }
+    public string? IntroVideoUrl { get; private set; }
     public bool DisplayGreeting { get; private set; }
 
     public static GreetingSettings Create(
@@ -32,17 +34,19 @@ public sealed class GreetingSettings : Entity
         string title,
         string subTitle,
         string? resumeUrl,
+        string? introVideoUrl,
         bool displayGreeting) =>
-        new(username, title, subTitle, resumeUrl, displayGreeting);
+        new(username, title, subTitle, resumeUrl, introVideoUrl, displayGreeting);
 
     public void Update(
         string username,
         string title,
         string subTitle,
         string? resumeUrl,
+        string? introVideoUrl,
         bool displayGreeting)
     {
-        ApplyDetails(username, title, subTitle, resumeUrl, displayGreeting);
+        ApplyDetails(username, title, subTitle, resumeUrl, introVideoUrl, displayGreeting);
         Touch();
     }
 
@@ -51,12 +55,17 @@ public sealed class GreetingSettings : Entity
         string title,
         string subTitle,
         string? resumeUrl,
+        string? introVideoUrl,
         bool displayGreeting)
     {
         Username = username.Trim();
         Title = title.Trim();
         SubTitle = subTitle.Trim();
-        ResumeUrl = string.IsNullOrWhiteSpace(resumeUrl) ? null : resumeUrl.Trim();
+        ResumeUrl = NormalizeOptional(resumeUrl);
+        IntroVideoUrl = NormalizeOptional(introVideoUrl);
         DisplayGreeting = displayGreeting;
     }
+
+    private static string? NormalizeOptional(string? value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value.Trim();
 }

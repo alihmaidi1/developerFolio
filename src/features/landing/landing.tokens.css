@@ -1,0 +1,68 @@
+/* ============================================================
+   Landing design tokens — dark-first, themable via .landing--light
+   ============================================================ */
+.landing {
+  /* Accents */
+  --ln-violet: #8b5cf6;
+  --ln-cyan: #22d3ee;
+  --ln-gradient: linear-gradient(120deg, var(--ln-violet), var(--ln-cyan));
+
+  /* Dark theme (default) */
+  --ln-bg: #060615;
+  --ln-bg-soft: #0c0a1f;
+  --ln-surface: rgba(20, 18, 40, 0.66);
+  --ln-surface-strong: rgba(28, 24, 52, 0.85);
+  --ln-border: rgba(140, 124, 255, 0.22);
+  --ln-border-strong: rgba(140, 124, 255, 0.36);
+  --ln-text: #f4f6ff;
+  --ln-text-soft: rgba(244, 246, 255, 0.85);
+  --ln-muted: rgba(226, 232, 255, 0.6);
+  --ln-subtle: rgba(226, 232, 255, 0.42);
+
+  --ln-card-shadow: 0 24px 70px -30px rgba(0, 0, 0, 0.8);
+  --ln-card-shadow-hover: 0 36px 90px -28px rgba(0, 0, 0, 0.9);
+  --hero3d-shadow: 0 40px 110px -30px rgba(0, 0, 0, 0.9);
+
+  --font-heading: "Space Grotesk", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Inter", "Segoe UI", system-ui, sans-serif;
+
+  color-scheme: dark;
+}
+
+.landing--light {
+  --ln-bg: #f6f5fb;
+  --ln-bg-soft: #ffffff;
+  --ln-surface: rgba(255, 255, 255, 0.85);
+  --ln-surface-strong: #ffffff;
+  --ln-border: rgba(108, 92, 231, 0.18);
+  --ln-border-strong: rgba(108, 92, 231, 0.32);
+  --ln-text: #161324;
+  --ln-text-soft: #2a2540;
+  --ln-muted: rgba(38, 32, 70, 0.66);
+  --ln-subtle: rgba(38, 32, 70, 0.48);
+
+  --ln-card-shadow: 0 22px 50px -28px rgba(76, 51, 156, 0.35);
+  --ln-card-shadow-hover: 0 32px 70px -28px rgba(76, 51, 156, 0.5);
+  --hero3d-shadow: 0 32px 80px -28px rgba(76, 51, 156, 0.55);
+
+  color-scheme: light;
+}
+
+.landing {
+  background:
+    radial-gradient(
+      ellipse 90% 60% at 50% 0%,
+      rgba(139, 92, 246, 0.18),
+      transparent 60%
+    ),
+    var(--ln-bg);
+  color: var(--ln-text);
+  font-family: var(--font-body);
+  min-height: 100vh;
+}
+
+/* Shared utility container */
+.landing :global(.ln-container) {
+  width: min(1200px, 92%);
+  margin: 0 auto;
+}

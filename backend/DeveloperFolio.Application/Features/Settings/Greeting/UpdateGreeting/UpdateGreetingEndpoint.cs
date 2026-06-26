@@ -21,6 +21,7 @@ public sealed class UpdateGreetingEndpoint : ICarterModule
                     request.Title,
                     request.SubTitle,
                     request.ResumeUrl,
+                    request.IntroVideoUrl,
                     request.DisplayGreeting);
 
                 var result = await sender.Send(command, cancellationToken);

@@ -19,6 +19,20 @@ internal static class FormFileExtensions
             file.Length);
     }
 
+    public static VideoUpload? ToVideoUpload(this IFormFile? file)
+    {
+        if (file is null || file.Length == 0)
+        {
+            return null;
+        }
+
+        return new VideoUpload(
+            file.OpenReadStream(),
+            file.FileName,
+            file.ContentType,
+            file.Length);
+    }
+
     public static string? GetString(this IFormCollection form, string key)
     {
         var value = form[key].ToString();

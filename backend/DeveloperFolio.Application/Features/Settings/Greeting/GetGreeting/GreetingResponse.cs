@@ -7,6 +7,7 @@ public sealed record GreetingResponse(
     string Title,
     string SubTitle,
     string? ResumeUrl,
+    string? IntroVideoUrl,
     bool DisplayGreeting)
 {
     internal static GreetingResponse From(GreetingSettings greeting) =>
@@ -15,5 +16,6 @@ public sealed record GreetingResponse(
             greeting.Title,
             greeting.SubTitle,
             greeting.ResumeUrl,
+            greeting.IntroVideoUrl,
             greeting.DisplayGreeting);
 }

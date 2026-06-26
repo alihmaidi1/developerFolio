@@ -5,7 +5,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeveloperFolio.Application.Features.Settings.Greeting.UpdateGreeting;
 
-internal sealed class UpdateGreetingCommandHandler(IApplicationDbContext dbContext)
+internal sealed class UpdateGreetingCommandHandler(
+    IApplicationDbContext dbContext,
+    IVideoStorageService videoStorage)
     : IRequestHandler<UpdateGreetingCommand, Result>
 {
     public async Task<Result> Handle(UpdateGreetingCommand request, CancellationToken cancellationToken)
@@ -18,12 +20,20 @@ internal sealed class UpdateGreetingCommandHandler(IApplicationDbContext dbConte
             return Result.NotFound(GreetingErrors.NotInitialized);
         }
 
+        var previousVideoUrl = greeting.IntroVideoUrl;
+
         greeting.Update(
             request.Username,
             request.Title,
             request.SubTitle,
             request.ResumeUrl,
+            request.IntroVideoUrl,
             request.DisplayGreeting);
+
+        if (!string.Equals(previousVideoUrl, greeting.IntroVideoUrl, StringComparison.Ordinal))
+        {
+            await videoStorage.RemoveAsync(previousVideoUrl, cancellationToken);
+        }
 
         return Result.NoContent();
     }

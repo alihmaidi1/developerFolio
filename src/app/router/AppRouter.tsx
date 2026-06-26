@@ -3,7 +3,11 @@ import { Route, Routes } from "react-router-dom";
 import Loading from "@/shared/ui/loading/Loading";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
 
-const PortfolioPage = lazy(() => import("@/app/PortfolioPage"));
+const LandingPage = lazy(() =>
+  import("@/features/landing").then((module) => ({
+    default: module.LandingPage,
+  })),
+);
 const AdminRouter = lazy(() => import("./AdminRouter"));
 
 export function AppRouter() {
@@ -14,7 +18,7 @@ export function AppRouter() {
           path="/"
           element={
             <RouteErrorBoundary>
-              <PortfolioPage />
+              <LandingPage />
             </RouteErrorBoundary>
           }
         />

@@ -27,6 +27,18 @@ public sealed class ImageStorageOptions
         ["image/png", "image/jpeg", "image/webp", "image/gif"];
 }
 
+public sealed class VideoStorageOptions
+{
+    public const string SectionName = "VideoStorage";
+
+    [Range(1024, 200 * 1024 * 1024)]
+    public long MaxFileSizeBytes { get; init; } = 30 * 1024 * 1024;
+
+    [Required, MinLength(1)]
+    public string[] AllowedContentTypes { get; init; } =
+        ["video/mp4", "video/webm", "video/quicktime"];
+}
+
 public sealed class AdminSeedOptions
 {
     public const string SectionName = "AdminSeed";
