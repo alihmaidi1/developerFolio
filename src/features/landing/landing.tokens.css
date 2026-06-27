@@ -59,6 +59,10 @@
   color: var(--ln-text);
   font-family: var(--font-body);
   min-height: 100vh;
+  /* Become a stacking context so fixed background-lab (z-index: -1)
+     paints above this background but below content. */
+  isolation: isolate;
+  position: relative;
 }
 
 /* Shared utility container */

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSmoothScroll } from "../smooth-scroll/smooth-scroll-context";
 import styles from "./Navbar.module.css";
 
 interface NavbarProps {
@@ -17,6 +18,7 @@ const SECTIONS: { id: string; label: string }[] = [
 
 export function Navbar({ brand, contactHref }: NavbarProps) {
   const [active, setActive] = useState<string>("hero");
+  const { scrollTo } = useSmoothScroll();
 
   // Active link tracking via IntersectionObserver
   useEffect(() => {
@@ -49,7 +51,7 @@ export function Navbar({ brand, contactHref }: NavbarProps) {
   const scrollToId = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      scrollTo(el, -80);
     }
   };
 

@@ -1,20 +1,21 @@
-import { useEffect, useRef } from "react";
-import styles from "./HeroVideo3D.module.css";
+import { useEffect, useMemo, useRef } from "react";
+import styles from "./Hero3D.module.css";
 
-interface HeroVideoFallbackProps {
-  videoSrc: string | null;
-  placeholderText: string;
+interface Hero3DFallbackProps {
+  username: string;
+  role: string;
+  available: boolean;
 }
 
 /**
- * Pure CSS-3D card with pointer-driven tilt + the raw <video> playing inside.
- * Zero WebGL, smooth on any device. Used when 3D is not safe (reduced-motion,
- * no WebGL, low-power hardware).
+ * Pure CSS holographic ID card with pointer-driven tilt — no WebGL.
+ * Used when 3D is not safe (reduced-motion, no WebGL, low-power hardware).
  */
-export function HeroVideoFallback({
-  videoSrc,
-  placeholderText,
-}: HeroVideoFallbackProps) {
+export function Hero3DFallback({
+  username,
+  role,
+  available,
+}: Hero3DFallbackProps) {
   const cardRef = useRef<HTMLDivElement>(null);
   const frameRef = useRef<number>(0);
   const targetRef = useRef({ x: 0, y: 0 });
@@ -37,7 +38,6 @@ export function HeroVideoFallback({
       const rect = card.getBoundingClientRect();
       const px = (event.clientX - rect.left) / rect.width;
       const py = (event.clientY - rect.top) / rect.height;
-      // Tilt amplitude: ±8 deg X, ±10 deg Y
       targetRef.current.x = (py - 0.5) * -8;
       targetRef.current.y = (px - 0.5) * 10;
       if (!frameRef.current) {
@@ -81,24 +81,51 @@ export function HeroVideoFallback({
     };
   }, []);
 
+  const initials = useMemo(() => {
+    const parts = username.trim().split(/\s+/);
+    if (parts.length >= 2) {
+      return `${parts[0]?.[0] ?? ""}${parts[1]?.[0] ?? ""}`.toUpperCase();
+    }
+    return username.slice(0, 2).toUpperCase();
+  }, [username]);
+
+  const hashCode = useMemo(() => {
+    let h = 0;
+    for (let i = 0; i < username.length; i += 1) {
+      h = ((h << 5) - h + username.charCodeAt(i)) | 0;
+    }
+    const hex = Math.abs(h)
+      .toString(16)
+      .toUpperCase()
+      .padStart(6, "0")
+      .slice(0, 6);
+    return `0x${hex}`;
+  }, [username]);
+
   return (
     <div className={styles.fallback}>
       <div ref={cardRef} className={styles.fallbackCard}>
-        {videoSrc ? (
-          <video
-            className={styles.fallbackVideo}
-            src={videoSrc}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            aria-label="Introduction video"
-          />
-        ) : (
-          <div className={styles.fallbackPlaceholder}>{placeholderText}</div>
-        )}
-        <div className={styles.fallbackShade} aria-hidden="true" />
+        <span className={styles.fallbackStripe} aria-hidden="true" />
+
+        <header className={styles.fallbackTop}>
+          <span className={styles.fallbackChipLogo}>&lt;/&gt;</span>
+          <span className={styles.fallbackChipVersion}>v.2026</span>
+        </header>
+
+        <div className={styles.fallbackBody}>
+          <h2 className={styles.fallbackName}>{username.toUpperCase()}</h2>
+          <p className={styles.fallbackRole}>{role.toUpperCase()}</p>
+
+          <p className={styles.fallbackStatus}>
+            <span className={styles.fallbackDot} aria-hidden="true" />
+            {available ? "AVAILABLE FOR PROJECTS" : "PORTFOLIO // 2026"}
+          </p>
+        </div>
+
+        <footer className={styles.fallbackMeta}>
+          <span>ID · {initials}/2026</span>
+          <span>{hashCode}</span>
+        </footer>
       </div>
     </div>
   );

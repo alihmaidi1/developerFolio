@@ -4,7 +4,14 @@ import { ErrorState } from "@/shared/ui";
 import Loading from "@/shared/ui/loading/Loading";
 import { Footer } from "./components/footer/Footer";
 import { Navbar } from "./components/navbar/Navbar";
-import { useLandingSettings } from "./hooks/useLandingData";
+import { NotchBar } from "./components/notch-bar/NotchBar";
+import { CustomCursor } from "./components/custom-cursor/CustomCursor";
+import { SmoothScroll } from "./components/smooth-scroll/SmoothScroll";
+import { SoundProvider } from "./components/sound/SoundProvider";
+import { ProjectOverlayProvider } from "./components/project-overlay/ProjectOverlayProvider";
+import { ProjectOverlay } from "./components/project-overlay/ProjectOverlay";
+import { BackgroundLab } from "./components/background-lab/BackgroundLab";
+import { useLandingProjects, useLandingSettings } from "./hooks/useLandingData";
 import { ContactSection } from "./sections/ContactSection";
 import { EducationSection } from "./sections/EducationSection";
 import { ExperienceSection } from "./sections/ExperienceSection";
@@ -18,6 +25,7 @@ import styles from "./LandingPage.module.css";
 export default function LandingPage() {
   const { isDark } = useTheme();
   const settingsQuery = useLandingSettings();
+  const projectsQuery = useLandingProjects();
   const scrollBarRef = useRef<HTMLDivElement>(null);
 
   // Top scroll-progress bar
@@ -72,37 +80,56 @@ export default function LandingPage() {
   }
 
   return (
-    <div className={`landing ${!isDark ? "landing--light" : ""}`}>
-      <div ref={scrollBarRef} className={styles.scrollBar} aria-hidden="true" />
+    <SoundProvider>
+      <SmoothScroll>
+        <ProjectOverlayProvider projects={projectsQuery.data ?? []}>
+          <div className={`landing ${!isDark ? "landing--light" : ""}`}>
+            <BackgroundLab />
 
-      <Navbar
-        brand={greeting.username}
-        contactHref={contact.email ? `mailto:${contact.email}` : "#contact"}
-      />
+            <div
+              ref={scrollBarRef}
+              className={styles.scrollBar}
+              aria-hidden="true"
+            />
 
-      <main>
-        <HeroSection greeting={greeting} />
+            <NotchBar brand={greeting.username} />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <ProjectsSection />
+            <Navbar
+              brand={greeting.username}
+              contactHref={
+                contact.email ? `mailto:${contact.email}` : "#contact"
+              }
+            />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <OpenSourceSection />
+            <main>
+              <HeroSection greeting={greeting} />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <SkillsSection />
+              <div className={styles.divider} aria-hidden="true" />
+              <ProjectsSection />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <ExperienceSection />
+              <div className={styles.divider} aria-hidden="true" />
+              <OpenSourceSection />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <EducationSection />
+              <div className={styles.divider} aria-hidden="true" />
+              <SkillsSection />
 
-        <div className={styles.divider} aria-hidden="true" />
-        <ContactSection contact={contact} socialLinks={socialLinks} />
-      </main>
+              <div className={styles.divider} aria-hidden="true" />
+              <ExperienceSection />
 
-      <Footer brand={greeting.username} socials={socialLinks} />
-    </div>
+              <div className={styles.divider} aria-hidden="true" />
+              <EducationSection />
+
+              <div className={styles.divider} aria-hidden="true" />
+              <ContactSection contact={contact} socialLinks={socialLinks} />
+            </main>
+
+            <Footer brand={greeting.username} socials={socialLinks} />
+
+            <ProjectOverlay />
+            <CustomCursor />
+          </div>
+        </ProjectOverlayProvider>
+      </SmoothScroll>
+    </SoundProvider>
   );
 }

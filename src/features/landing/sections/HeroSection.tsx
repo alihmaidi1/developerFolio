@@ -1,14 +1,9 @@
 import { ArrowRight, Download } from "lucide-react";
 import type { LandingGreeting } from "../api/landing.api";
-import { HeroVideo3D } from "../components/hero-3d/HeroVideo3D";
+import { Hero3D } from "../components/hero-3d/Hero3D";
 import styles from "./HeroSection.module.css";
 
-/**
- * The intro video is shipped as a static asset (public/media/intro.mp4).
- * Always use this fixed file regardless of what the API returns — gives a
- * stable, fast-loading hero with the polished video Ali wants front-and-center.
- */
-const HERO_VIDEO_SRC = "/media/intro.mp4";
+const HERO_ROLE = "Full-Stack Developer";
 
 interface HeroSectionProps {
   greeting: LandingGreeting;
@@ -56,7 +51,11 @@ export function HeroSection({ greeting }: HeroSectionProps) {
         </div>
 
         <div className={styles.heroMedia}>
-          <HeroVideo3D videoSrc={HERO_VIDEO_SRC} username={greeting.username} />
+          <Hero3D
+            username={greeting.username}
+            role={HERO_ROLE}
+            available={greeting.displayGreeting}
+          />
         </div>
       </div>
     </section>

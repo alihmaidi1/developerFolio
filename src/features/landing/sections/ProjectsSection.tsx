@@ -7,6 +7,7 @@ import type { LandingProject } from "../api/landing.api";
 import { useLandingProjects } from "../hooks/useLandingData";
 import SectionShell from "../components/section-shell/SectionShell";
 import sectionStyles from "../components/section-shell/SectionShell.module.css";
+import { useProjectOverlay } from "../components/project-overlay/project-overlay-context";
 import styles from "./ProjectsSection.module.css";
 
 const MAX_TAGS = 4;
@@ -63,13 +64,33 @@ export function ProjectsSection() {
 
 function ProjectCard({ project }: { project: LandingProject }) {
   const [imageFailed, setImageFailed] = useState(false);
+  const { openProject } = useProjectOverlay();
   const imageUrl = resolveAssetUrl(project.imageUrl);
   const showImage = imageUrl && !imageFailed;
   const visibleTags = project.technologies.slice(0, MAX_TAGS);
   const hidden = project.technologies.length - visibleTags.length;
 
+  // Clicking anywhere on the card opens the case-study overlay, except for the
+  // external action links which retain their own click behavior.
+  const handleCardClick = () => {
+    openProject(project);
+  };
+
   return (
-    <article className={styles.card}>
+    <article
+      className={styles.card}
+      onClick={handleCardClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          openProject(project);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      data-cursor="hover"
+      aria-label={`Open case study for ${project.title}`}
+    >
       <div className={styles.media}>
         {showImage ? (
           <img
@@ -111,6 +132,8 @@ function ProjectCard({ project }: { project: LandingProject }) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                data-cursor="hover"
               >
                 Live demo
                 <ArrowUpRight aria-hidden="true" />
@@ -122,6 +145,8 @@ function ProjectCard({ project }: { project: LandingProject }) {
                 href={project.repositoryUrl}
                 target="_blank"
                 rel="noreferrer"
+                onClick={(e) => e.stopPropagation()}
+                data-cursor="hover"
               >
                 <Code2 aria-hidden="true" />
                 Code
