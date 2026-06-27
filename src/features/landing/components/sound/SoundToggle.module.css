@@ -1,0 +1,37 @@
+.toggle {
+  display: inline-grid;
+  place-items: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 999px;
+  background: transparent;
+  border: 1px solid rgba(140, 124, 255, 0.3);
+  color: var(--ln-muted, #a8a4c4);
+  cursor: pointer;
+  padding: 0;
+  transition:
+    border-color 0.25s ease,
+    color 0.25s ease,
+    background 0.25s ease,
+    transform 0.15s ease;
+}
+
+.toggle:hover {
+  border-color: var(--ln-cyan, #22d3ee);
+  color: var(--ln-cyan, #22d3ee);
+}
+
+.toggle:active {
+  transform: scale(0.92);
+}
+
+.on {
+  border-color: var(--ln-cyan, #22d3ee);
+  background: rgba(34, 211, 238, 0.1);
+  color: var(--ln-cyan, #22d3ee);
+}
+
+.toggle svg {
+  width: 11px;
+  height: 11px;
+}
