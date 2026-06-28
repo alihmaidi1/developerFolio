@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { FolderKanban, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { DeleteProjectDialog } from "../components/delete-project-dialog/DeleteProjectDialog";
 import { ProjectListItem } from "../components/project-list-item/ProjectListItem";
 import { useAdminProjects } from "../hooks/useAdminProjects";
@@ -176,20 +176,5 @@ export function AdminProjectsPage() {
 }
 
 function ProjectsLoading() {
-  return (
-    <div className={styles.loading} role="status" aria-label="Loading projects">
-      <div className={styles.loadingHeader} />
-      {[0, 1, 2].map((item) => (
-        <div className={styles.loadingRow} key={item}>
-          <span />
-          <div>
-            <strong />
-            <small />
-          </div>
-          <i />
-          <i />
-        </div>
-      ))}
-    </div>
-  );
+  return <Loading label="Loading projects" variant="inline" />;
 }

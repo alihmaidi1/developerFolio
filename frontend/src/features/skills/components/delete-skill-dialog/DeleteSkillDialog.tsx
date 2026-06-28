@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { AlertTriangle, LoaderCircle, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
+import { LoadingSpinner } from "@/shared/ui";
 import styles from "./DeleteSkillDialog.module.css";
 
 interface DeleteSkillDialogProps {
@@ -105,7 +106,7 @@ export function DeleteSkillDialog({
           >
             {isPending ? (
               <>
-                <LoaderCircle className={styles.spinner} aria-hidden="true" />
+                <LoadingSpinner className={styles.spinner} />
                 Deleting
               </>
             ) : (

@@ -1,12 +1,13 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAppSelector } from "@/app/store";
+import { Loading } from "@/shared/ui";
 
 export function RequireAdminSession() {
   const { user, status } = useAppSelector((state) => state.adminAuth);
   const location = useLocation();
 
   if (status === "checking") {
-    return null;
+    return <Loading label="Checking admin session" />;
   }
 
   return user ? (

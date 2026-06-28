@@ -1,6 +1,6 @@
 import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import Loading from "@/shared/ui/loading/Loading";
+import { Loading } from "@/shared/ui";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
 import {
   I18nProvider,
@@ -12,7 +12,7 @@ const AdminRouter = lazy(() => import("./AdminRouter"));
 
 export function AppRouter() {
   return (
-    <Suspense fallback={<Loading />}>
+    <Suspense fallback={<Loading label="Loading page" />}>
       <Routes>
         <Route
           path="/admin/*"

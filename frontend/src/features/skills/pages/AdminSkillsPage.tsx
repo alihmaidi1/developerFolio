@@ -1,7 +1,7 @@
 import { useCallback, useMemo, useState } from "react";
 import { BrainCircuit, Plus, Wand2 } from "lucide-react";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { DeleteSkillDialog } from "../components/delete-skill-dialog/DeleteSkillDialog";
 import {
   SkillsTabs,
@@ -433,20 +433,5 @@ function SoftwareSkillsPanel({
 }
 
 function LoadingList() {
-  return (
-    <div className={styles.loading} role="status" aria-label="Loading skills">
-      <div className={styles.loadingHeader} />
-      {[0, 1, 2].map((item) => (
-        <div className={styles.loadingRow} key={item}>
-          <span />
-          <div>
-            <strong />
-            <small />
-          </div>
-          <i />
-          <i />
-        </div>
-      ))}
-    </div>
-  );
+  return <Loading label="Loading skills" variant="inline" />;
 }

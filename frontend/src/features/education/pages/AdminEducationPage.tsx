@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { GraduationCap, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { DeleteEducationDialog } from "../components/delete-education-dialog/DeleteEducationDialog";
 import { EducationListItem } from "../components/education-list-item/EducationListItem";
 import { useAdminEducation } from "../hooks/useAdminEducation";
@@ -174,24 +174,5 @@ export function AdminEducationPage() {
 }
 
 function EducationLoading() {
-  return (
-    <div
-      className={styles.loading}
-      role="status"
-      aria-label="Loading education entries"
-    >
-      <div className={styles.loadingHeader} />
-      {[0, 1, 2].map((item) => (
-        <div className={styles.loadingRow} key={item}>
-          <span />
-          <div>
-            <strong />
-            <small />
-          </div>
-          <i />
-          <i />
-        </div>
-      ))}
-    </div>
-  );
+  return <Loading label="Loading education entries" variant="inline" />;
 }

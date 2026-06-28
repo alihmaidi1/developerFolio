@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import type { AdminProject } from "../model/project.types";
 import { ProjectForm } from "../components/project-form/ProjectForm";
 import { useProjectDetails } from "../hooks/useProjectDetails";
@@ -24,7 +24,7 @@ export function EditProjectPage() {
   }
 
   if (projectQuery.isPending) {
-    return <EditProjectLoading />;
+    return <Loading label="Loading project" variant="inline" />;
   }
 
   if (projectQuery.isError) {
@@ -67,16 +67,5 @@ function EditProjectEditor({ project }: { project: AdminProject }) {
         submittingLabel="Saving changes"
       />
     </section>
-  );
-}
-
-function EditProjectLoading() {
-  return (
-    <div className={styles.loading} role="status" aria-label="Loading project">
-      <span />
-      <strong />
-      <small />
-      <div />
-    </div>
   );
 }

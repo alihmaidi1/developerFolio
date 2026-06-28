@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { WorkExperienceForm } from "../components/work-experience-form/WorkExperienceForm";
 import { useWorkExperienceDetails } from "../hooks/useWorkExperienceDetails";
 import { useUpdateWorkExperienceForm } from "../hooks/useUpdateWorkExperienceForm";
@@ -24,7 +24,7 @@ export function EditWorkExperiencePage() {
   }
 
   if (entryQuery.isPending) {
-    return <EditWorkExperienceLoading />;
+    return <Loading label="Loading work experience entry" variant="inline" />;
   }
 
   if (entryQuery.isError) {
@@ -67,20 +67,5 @@ function EditWorkExperienceEditor({ entry }: { entry: AdminWorkExperience }) {
         submittingLabel="Saving changes"
       />
     </section>
-  );
-}
-
-function EditWorkExperienceLoading() {
-  return (
-    <div
-      className={styles.loading}
-      role="status"
-      aria-label="Loading work experience entry"
-    >
-      <span />
-      <strong />
-      <small />
-      <div />
-    </div>
   );
 }

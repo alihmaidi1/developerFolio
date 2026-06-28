@@ -7,6 +7,7 @@ import type {
   PublishedProject,
   PublishedWorkExperience,
 } from "../api/landing.types";
+import { defaultPortfolioSettings } from "../model/defaultPortfolioSettings";
 
 interface PortfolioDataContextValue {
   settings: PortfolioSettingsResponse | undefined;
@@ -25,7 +26,7 @@ export function PortfolioDataProvider({ children }: { children: ReactNode }) {
   const workExperienceQuery = usePublishedWorkExperience();
 
   const value: PortfolioDataContextValue = {
-    settings: settingsQuery.data,
+    settings: settingsQuery.data ?? defaultPortfolioSettings,
     projects: projectsQuery.data,
     workExperiences: workExperienceQuery.data,
     isLoading:

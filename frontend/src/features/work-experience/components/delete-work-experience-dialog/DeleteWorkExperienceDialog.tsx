@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { AlertTriangle, LoaderCircle, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
+import { LoadingSpinner } from "@/shared/ui";
 import type { AdminWorkExperience } from "../../model/work-experience.types";
 import styles from "./DeleteWorkExperienceDialog.module.css";
 
@@ -104,7 +105,7 @@ export function DeleteWorkExperienceDialog({
           >
             {isPending ? (
               <>
-                <LoaderCircle className={styles.spinner} aria-hidden="true" />
+                <LoadingSpinner className={styles.spinner} />
                 Deleting
               </>
             ) : (

@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { AlertTriangle, LoaderCircle, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
+import { LoadingSpinner } from "@/shared/ui";
 import type { AdminSocialLink } from "../../model/settings.types";
 import styles from "./DeleteSocialLinkDialog.module.css";
 
@@ -99,7 +100,7 @@ export function DeleteSocialLinkDialog({
           >
             {isPending ? (
               <>
-                <LoaderCircle className={styles.spinner} aria-hidden="true" />
+                <LoadingSpinner className={styles.spinner} />
                 Deleting
               </>
             ) : (

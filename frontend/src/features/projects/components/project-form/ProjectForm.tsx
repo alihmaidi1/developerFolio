@@ -1,8 +1,15 @@
 import { useEffect, useMemo, type FormEventHandler } from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
-import { ArrowRight, ImageIcon, LoaderCircle } from "lucide-react";
+import { ArrowRight, ImageIcon } from "lucide-react";
 import { Link } from "react-router-dom";
-import { Alert, Button, FormField, ImageUploadField, Input } from "@/shared/ui";
+import {
+  Alert,
+  Button,
+  FormField,
+  ImageUploadField,
+  Input,
+  LoadingSpinner,
+} from "@/shared/ui";
 import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import {
   PROJECT_IMAGE_ALLOWED_TYPES,
@@ -282,7 +289,7 @@ export function ProjectForm({
           <Button type="submit" disabled={isPending} fullWidth>
             <span>{isPending ? submittingLabel : submitLabel}</span>
             {isPending ? (
-              <LoaderCircle className={styles.spinner} aria-hidden="true" />
+              <LoadingSpinner className={styles.spinner} />
             ) : (
               <ArrowRight aria-hidden="true" />
             )}

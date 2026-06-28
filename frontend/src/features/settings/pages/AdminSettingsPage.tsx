@@ -1,7 +1,7 @@
 import { useCallback, useState } from "react";
 import { Link2, Plus } from "lucide-react";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { ContactForm } from "../components/contact-form/ContactForm";
 import { DeleteSocialLinkDialog } from "../components/delete-social-link-dialog/DeleteSocialLinkDialog";
 import { GreetingForm } from "../components/greeting-form/GreetingForm";
@@ -232,20 +232,5 @@ function SocialLinksPanel() {
 }
 
 function LoadingPanel() {
-  return (
-    <div className={styles.loading} role="status" aria-label="Loading settings">
-      <div className={styles.loadingHeader} />
-      {[0, 1, 2].map((item) => (
-        <div className={styles.loadingRow} key={item}>
-          <span />
-          <div>
-            <strong />
-            <small />
-          </div>
-          <i />
-          <i />
-        </div>
-      ))}
-    </div>
-  );
+  return <Loading label="Loading settings" variant="inline" />;
 }

@@ -1,7 +1,7 @@
 import { ArrowLeft } from "lucide-react";
 import { Link, useParams } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { EducationForm } from "../components/education-form/EducationForm";
 import { useEducationDetails } from "../hooks/useEducationDetails";
 import { useUpdateEducationForm } from "../hooks/useUpdateEducationForm";
@@ -24,7 +24,7 @@ export function EditEducationPage() {
   }
 
   if (entryQuery.isPending) {
-    return <EditEducationLoading />;
+    return <Loading label="Loading education entry" variant="inline" />;
   }
 
   if (entryQuery.isError) {
@@ -67,20 +67,5 @@ function EditEducationEditor({ entry }: { entry: AdminEducation }) {
         submittingLabel="Saving changes"
       />
     </section>
-  );
-}
-
-function EditEducationLoading() {
-  return (
-    <div
-      className={styles.loading}
-      role="status"
-      aria-label="Loading education entry"
-    >
-      <span />
-      <strong />
-      <small />
-      <div />
-    </div>
   );
 }

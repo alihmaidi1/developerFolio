@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { FormField, Input } from "@/shared/ui";
+import { FormField, Input, LoadingSpinner } from "@/shared/ui";
 import {
   socialLinkFormSchema,
   type SocialLinkFormValues,
@@ -134,7 +133,7 @@ export function SocialLinkForm({
             disabled={mutation.isPending}
           >
             {mutation.isPending && (
-              <LoaderCircle className={styles.spinner} aria-hidden="true" />
+              <LoadingSpinner className={styles.spinner} />
             )}
             {existing ? "Save changes" : "Add link"}
           </button>

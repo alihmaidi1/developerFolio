@@ -1,6 +1,6 @@
 import { useEffect, useMemo, type FormEventHandler } from "react";
 import { useWatch, type UseFormReturn } from "react-hook-form";
-import { ArrowRight, GraduationCap, LoaderCircle } from "lucide-react";
+import { ArrowRight, GraduationCap } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
   Alert,
@@ -9,6 +9,7 @@ import {
   FormField,
   ImageUploadField,
   Input,
+  LoadingSpinner,
 } from "@/shared/ui";
 import { resolveAssetUrl } from "@/shared/lib/asset-url";
 import {
@@ -280,7 +281,7 @@ export function EducationForm({
           <Button type="submit" disabled={isPending} fullWidth>
             <span>{isPending ? submittingLabel : submitLabel}</span>
             {isPending ? (
-              <LoaderCircle className={styles.spinner} aria-hidden="true" />
+              <LoadingSpinner className={styles.spinner} />
             ) : (
               <ArrowRight aria-hidden="true" />
             )}

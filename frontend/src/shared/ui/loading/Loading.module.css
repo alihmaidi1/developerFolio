@@ -4,13 +4,89 @@
   place-items: center;
 }
 
+.page {
+  min-height: calc(var(--svh) * 100);
+  background: var(--color-background-400, #f5efe6);
+}
+
+.inline {
+  min-height: 72px;
+}
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-index-preloader, 100);
+  min-height: calc(var(--svh) * 100);
+  background: var(--color-background-400, #f5efe6);
+}
+
+.surface {
+  display: grid;
+  place-items: center;
+  gap: 18px;
+  color: var(--ui-color-accent, var(--color-text-400, #2d2a24));
+}
+
 .spinner {
   width: 38px;
   height: 38px;
+  display: inline-block;
+  flex: 0 0 auto;
   border: 4px solid rgb(51 51 51 / 18%);
-  border-top-color: var(--ui-color-accent, var(--color-primary));
+  border-top-color: currentColor;
   border-radius: 50%;
   animation: spin 800ms linear infinite;
+}
+
+.spinnerCompact {
+  width: 20px;
+  height: 20px;
+  border-width: 2px;
+}
+
+.logo {
+  width: 72px;
+  height: 78px;
+  color: var(--color-text-400, #2d2a24);
+  transform-origin: center;
+  animation: logoPulse 1.4s var(--ease-power2-out, ease) infinite;
+}
+
+.logoPath {
+  fill: currentColor;
+}
+
+.logoProgress {
+  transform-origin: bottom center;
+  transition: transform 260ms var(--ease-power2-out, ease);
+}
+
+.progressTrack {
+  width: 120px;
+  height: 2px;
+  overflow: hidden;
+  background: rgb(45 42 36 / 18%);
+}
+
+.progressBar {
+  display: block;
+  width: var(--loading-progress, 0%);
+  height: 100%;
+  background: var(--color-text-400, #2d2a24);
+  transition: width 260ms var(--ease-power2-out, ease);
+}
+
+.label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
 
 @keyframes spin {
@@ -19,8 +95,22 @@
   }
 }
 
+@keyframes logoPulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(0.96);
+    opacity: 0.72;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
-  .spinner {
+  .spinner,
+  .logo {
     animation-duration: 1.6s;
   }
 }

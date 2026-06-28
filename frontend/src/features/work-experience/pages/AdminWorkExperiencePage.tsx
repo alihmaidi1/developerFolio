@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 import { Briefcase, Plus } from "lucide-react";
 import { Link } from "react-router-dom";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { ErrorState } from "@/shared/ui";
+import { ErrorState, Loading } from "@/shared/ui";
 import { DeleteWorkExperienceDialog } from "../components/delete-work-experience-dialog/DeleteWorkExperienceDialog";
 import { WorkExperienceListItem } from "../components/work-experience-list-item/WorkExperienceListItem";
 import { useAdminWorkExperience } from "../hooks/useAdminWorkExperience";
@@ -173,24 +173,5 @@ export function AdminWorkExperiencePage() {
 }
 
 function WorkExperienceLoading() {
-  return (
-    <div
-      className={styles.loading}
-      role="status"
-      aria-label="Loading work experience entries"
-    >
-      <div className={styles.loadingHeader} />
-      {[0, 1, 2].map((item) => (
-        <div className={styles.loadingRow} key={item}>
-          <span />
-          <div>
-            <strong />
-            <small />
-          </div>
-          <i />
-          <i />
-        </div>
-      ))}
-    </div>
-  );
+  return <Loading label="Loading work experience entries" variant="inline" />;
 }

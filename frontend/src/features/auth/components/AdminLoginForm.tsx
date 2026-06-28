@@ -1,7 +1,14 @@
 import { useState, type FormEventHandler } from "react";
 import type { UseFormReturn } from "react-hook-form";
-import { ArrowRight, Eye, EyeOff, LoaderCircle } from "lucide-react";
-import { Alert, Button, FormField, IconButton, Input } from "@/shared/ui";
+import { ArrowRight, Eye, EyeOff } from "lucide-react";
+import {
+  Alert,
+  Button,
+  FormField,
+  IconButton,
+  Input,
+  LoadingSpinner,
+} from "@/shared/ui";
 import type { AdminLoginValues } from "../model/auth.schema";
 import styles from "./AdminLoginForm.module.css";
 
@@ -90,7 +97,7 @@ export function AdminLoginForm({
       <Button type="submit" disabled={isPending} fullWidth size="large">
         <span>{isPending ? "Signing in" : "Sign in"}</span>
         {isPending ? (
-          <LoaderCircle className={styles.spinner} aria-hidden="true" />
+          <LoadingSpinner className={styles.spinner} />
         ) : (
           <ArrowRight aria-hidden="true" />
         )}

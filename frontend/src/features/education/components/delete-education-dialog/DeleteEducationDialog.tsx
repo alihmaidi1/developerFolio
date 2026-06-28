@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
-import { AlertTriangle, LoaderCircle, X } from "lucide-react";
+import { AlertTriangle, X } from "lucide-react";
+import { LoadingSpinner } from "@/shared/ui";
 import type { AdminEducation } from "../../model/education.types";
 import styles from "./DeleteEducationDialog.module.css";
 
@@ -101,7 +102,7 @@ export function DeleteEducationDialog({
           >
             {isPending ? (
               <>
-                <LoaderCircle className={styles.spinner} aria-hidden="true" />
+                <LoadingSpinner className={styles.spinner} />
                 Deleting
               </>
             ) : (

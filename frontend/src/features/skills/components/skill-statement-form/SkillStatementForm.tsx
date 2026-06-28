@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle } from "lucide-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { FormField } from "@/shared/ui";
+import { FormField, LoadingSpinner } from "@/shared/ui";
 import {
   skillStatementFormSchema,
   type SkillStatementFormValues,
@@ -103,7 +102,7 @@ export function SkillStatementForm({
             disabled={mutation.isPending}
           >
             {mutation.isPending && (
-              <LoaderCircle className={styles.spinner} aria-hidden="true" />
+              <LoadingSpinner className={styles.spinner} />
             )}
             {existing ? "Save changes" : "Add statement"}
           </button>

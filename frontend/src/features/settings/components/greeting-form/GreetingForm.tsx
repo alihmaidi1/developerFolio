@@ -1,9 +1,8 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoaderCircle } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { FormField, Input } from "@/shared/ui";
+import { FormField, Input, LoadingSpinner } from "@/shared/ui";
 import {
   greetingFormSchema,
   type GreetingFormValues,
@@ -156,7 +155,7 @@ export function GreetingForm({ greeting }: GreetingFormProps) {
             disabled={mutation.isPending}
           >
             {mutation.isPending && (
-              <LoaderCircle className={styles.spinner} aria-hidden="true" />
+              <LoadingSpinner className={styles.spinner} />
             )}
             Save changes
           </button>
