@@ -2,8 +2,7 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import Loading from "@/shared/ui/loading/Loading";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
-import { I18nProvider } from "@/hooks/useI18n";
-import { RootLayout } from "@/layouts/RootLayout";
+import { I18nProvider, RootLayout } from "@/features/landing";
 
 const AdminRouter = lazy(() => import("./AdminRouter"));
 
