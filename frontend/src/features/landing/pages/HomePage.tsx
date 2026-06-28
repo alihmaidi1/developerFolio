@@ -175,6 +175,7 @@ export function HomePage() {
             <div className="about-spacer" ref={aboutSpacerRef} id="about" />
           </div>
           <Projects id="projects" onLoaded={() => setProjectsLoaded(true)} />
+
           <div ref={contactRef} className="home-contact">
             {projectsLoaded ? <Contact id="contact" /> : null}
           </div>

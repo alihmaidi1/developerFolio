@@ -1,38 +1,33 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { isFeatureEnabled } from "../../../utils/features";
-import { previews } from "../../../content/projects/previews";
 import { useI18n } from "../../../hooks/useI18n";
-import type { ProjectPreview } from "../../../content/types";
+import { usePortfolioData } from "../../../hooks/usePortfolioData";
+import { resolveAssetUrl } from "@/shared/lib/asset-url";
+import type { PublishedProject } from "../../../api/landing.types";
 import { Banner } from "../Banner";
 import { NotchSection, Notch } from "../Notch";
 import { Link } from "../Link";
 import { ButtonRound } from "../Button";
 import { ArrowRightLong, Plus } from "../icons";
-import { social } from "../../../content/social";
 
 export function Projects({
   id,
   onLoaded,
 }: {
   id?: string;
-  onLoaded: (previews: ProjectPreview[]) => void;
+  onLoaded: () => void;
 }) {
-  const { t, locale } = useI18n();
-  const [loadedPreviews, setLoadedPreviews] = useState<ProjectPreview[] | null>(
-    null,
-  );
+  const { t } = useI18n();
+  const { projects, settings } = usePortfolioData();
 
   useEffect(() => {
-    let cancelled = false;
-    previews[locale]().then((module) => {
-      if (cancelled) return;
-      setLoadedPreviews(module.default);
-      onLoaded(module.default);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, [locale, onLoaded]);
+    if (projects) {
+      onLoaded();
+    }
+  }, [projects, onLoaded]);
+
+  const contactEmail = settings?.contact.email;
+  const contactHref = contactEmail ? `mailto:${contactEmail}` : undefined;
 
   return (
     <div className="projects" id={id}>
@@ -51,57 +46,68 @@ export function Projects({
       </div>
       <div className="grid">
         <div className="projects-cards">
-          {loadedPreviews?.map((preview) => (
-            <PreviewCard key={preview.title} preview={preview} />
+          {projects?.map((project) => (
+            <PreviewCard key={project.id} project={project} />
           ))}
-          {isFeatureEnabled("startProject") ? <PreviewCard /> : null}
+          {isFeatureEnabled("startProject") && contactHref ? (
+            <StartProjectCard href={contactHref} />
+          ) : null}
         </div>
       </div>
     </div>
   );
 }
 
-function PreviewCard({ preview }: { preview?: ProjectPreview }) {
+function StartProjectCard({ href }: { href: string }) {
   const { t } = useI18n();
-
-  if (!preview) {
-    return (
-      <Link
-        className="preview-card children-unclickable"
-        data-cursor="arrow-external"
-        data-hoversound="hover"
-        external
-        href={social[0].url}
-      >
-        <div className="preview-card-top preview-card-top-empty">
-          <Plus className="preview-card-top-empty-icon" />
-        </div>
-        <div className="preview-card-content">
-          <div className="preview-card-copys">
-            <h3 className="preview-card-title">{t("start-a-new-project")}</h3>
-          </div>
-        </div>
-      </Link>
-    );
-  }
 
   return (
     <Link
       className="preview-card children-unclickable"
-      to={`/project/${preview.slug}`}
-      aria-label={t("switch-to-project", { project: preview.title })}
-      data-cursor="arrow"
+      data-cursor="arrow-external"
+      data-hoversound="hover"
+      external
+      href={href}
+    >
+      <div className="preview-card-top preview-card-top-empty">
+        <Plus className="preview-card-top-empty-icon" />
+      </div>
+      <div className="preview-card-content">
+        <div className="preview-card-copys">
+          <h3 className="preview-card-title">{t("start-a-new-project")}</h3>
+        </div>
+      </div>
+    </Link>
+  );
+}
+
+function PreviewCard({ project }: { project: PublishedProject }) {
+  const { t } = useI18n();
+  const projectUrl = project.liveUrl ?? project.repositoryUrl;
+  const thumbnail = resolveAssetUrl(project.imageUrl);
+
+  if (!projectUrl) return null;
+
+  return (
+    <Link
+      className="preview-card children-unclickable"
+      href={projectUrl}
+      external
+      aria-label={t("switch-to-project", { project: project.title })}
+      data-cursor="arrow-external"
       data-sound="click"
       data-hoversound="hover"
     >
       <div className="preview-card-top">
         <div className="preview-card-image-wrapper">
           <div className="preview-card-image-container">
-            <img
-              src={preview.thumbnail}
-              alt={preview.title}
-              className="preview-card-image"
-            />
+            {thumbnail ? (
+              <img
+                src={thumbnail}
+                alt={project.title}
+                className="preview-card-image"
+              />
+            ) : null}
           </div>
         </div>
         <div className="preview-card-overlay">
@@ -120,8 +126,8 @@ function PreviewCard({ preview }: { preview?: ProjectPreview }) {
       </div>
       <div className="preview-card-content">
         <div className="preview-card-copys">
-          <h3 className="preview-card-title">{preview.title}</h3>
-          <p className="preview-card-description">{preview.description}</p>
+          <h3 className="preview-card-title">{project.title}</h3>
+          <p className="preview-card-description">{project.summary}</p>
         </div>
       </div>
     </Link>

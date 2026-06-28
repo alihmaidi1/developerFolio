@@ -1,4 +1,5 @@
 import { useI18n } from "../../hooks/useI18n";
+import { usePortfolioData } from "../../hooks/usePortfolioData";
 import { lenis } from "../../hooks/useScroll";
 import { ButtonRound } from "./Button";
 import { ArrowRightLong } from "./icons";
@@ -15,6 +16,8 @@ export function Footer({
   className?: string;
 }) {
   const { t, locale } = useI18n();
+  const { settings } = usePortfolioData();
+  const username = settings?.greeting.username ?? "";
   const showAttribution = import.meta.env.VITE_SHOW_ATTRIBUTION !== "false";
 
   return (
@@ -84,7 +87,9 @@ export function Footer({
               HM Surf
             </Link>
           </div>
-          <p>© {new Date().getFullYear()} David Heckhoff</p>
+          <p>
+            © {new Date().getFullYear()} {username}
+          </p>
         </div>
       </div>
     </footer>

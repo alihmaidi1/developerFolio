@@ -5,6 +5,7 @@ import { Vector3 } from "three";
 import { transitions } from "../../../animations";
 import { aboutProgress } from "../../../animations/transitions/about";
 import { useI18n } from "../../../hooks/useI18n";
+import { usePortfolioData } from "../../../hooks/usePortfolioData";
 import { useSignal } from "../../../hooks/useSignal";
 import { locale } from "../../../i18n/store";
 import { AppearingText } from "../AppearingText";
@@ -70,13 +71,15 @@ export function About({
 
 function BoxDetails() {
   const { t } = useI18n();
+  const { settings } = usePortfolioData();
+  const firstName = settings?.greeting.username.split(" ")[0] ?? "";
 
   return (
     <ProjectedElement point={detailsPoint}>
       <div className="box-details">
         <div className="box-details-content">
           <div className="box-details-title">
-            <AppearingText text="David" steps={1} duration={0.35} />
+            <AppearingText text={firstName} steps={1} duration={0.35} />
           </div>
           <div className="box-details-items">
             <div className="box-details-item">
@@ -99,13 +102,15 @@ function BoxDetails() {
 
 function BoxDescription() {
   const { t } = useI18n();
+  const { settings } = usePortfolioData();
+  const firstName = settings?.greeting.username.split(" ")[0] ?? "";
 
   return (
     <ProjectedElement point={descriptionPoint}>
       <div className="box-description">
         <div className="box-description-content">
           <div className="box-description-details">
-            <p className="box-description-details-name">David</p>
+            <p className="box-description-details-name">{firstName}</p>
             <div className="box-description-details-location">
               <Pin className="box-description-details-location-icon" />
               <p className="box-description-details-location-copy">

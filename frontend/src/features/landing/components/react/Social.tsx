@@ -1,4 +1,4 @@
-import { social } from "../../content/social";
+import { usePortfolioData } from "../../hooks/usePortfolioData";
 import { Link } from "./Link";
 
 export function Social({
@@ -6,11 +6,14 @@ export function Social({
 }: {
   variant?: "default" | "background";
 }) {
+  const { settings } = usePortfolioData();
+  const socialLinks = settings?.socialLinks ?? [];
+
   return (
     <div className={["social", `social-variant-${variant}`].join(" ")}>
-      {social.map((item) => (
+      {socialLinks.map((item) => (
         <Link
-          key={item.name}
+          key={item.id}
           href={item.url}
           external={item.url.startsWith("http")}
           className="social-link children-unclickable"
