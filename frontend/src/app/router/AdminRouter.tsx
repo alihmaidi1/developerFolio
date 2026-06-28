@@ -2,8 +2,9 @@ import { Route, Routes } from "react-router-dom";
 import { AdminLayout, AdminOverviewPage } from "@/features/admin";
 import {
   AdminLoginPage,
-  AdminSessionBootstrap,
-  RequireAdminSession,
+  AuthProvider,
+  GuestRoute,
+  ProtectedRoute,
   useAdminLogout,
 } from "@/features/auth";
 import {
@@ -28,10 +29,12 @@ export default function AdminRouter() {
   const { logout, isPending } = useAdminLogout();
 
   return (
-    <AdminSessionBootstrap>
+    <AuthProvider>
       <Routes>
-        <Route path="login" element={<AdminLoginPage />} />
-        <Route element={<RequireAdminSession />}>
+        <Route element={<GuestRoute />}>
+          <Route path="login" element={<AdminLoginPage />} />
+        </Route>
+        <Route element={<ProtectedRoute />}>
           <Route
             element={<AdminLayout onLogout={logout} isLoggingOut={isPending} />}
           >
@@ -65,6 +68,6 @@ export default function AdminRouter() {
           </Route>
         </Route>
       </Routes>
-    </AdminSessionBootstrap>
+    </AuthProvider>
   );
 }

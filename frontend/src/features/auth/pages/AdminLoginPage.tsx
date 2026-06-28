@@ -1,22 +1,11 @@
-import { Link, Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { CheckCircle2, LockKeyhole, ShieldCheck } from "lucide-react";
-import { useAppSelector } from "@/app/store";
-import { Loading } from "@/shared/ui";
 import { AdminLoginForm } from "../components/AdminLoginForm";
 import { useAdminLogin } from "../hooks/useAdminLogin";
 import styles from "./AdminLoginPage.module.css";
 
 export function AdminLoginPage() {
-  const { status, user: admin } = useAppSelector((state) => state.adminAuth);
   const { form, submit, isPending, error, clearError } = useAdminLogin();
-
-  if (status === "checking") {
-    return <Loading label="Checking admin session" />;
-  }
-
-  if (admin) {
-    return <Navigate to="/admin" replace />;
-  }
 
   return (
     <main className={styles.page}>
