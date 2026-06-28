@@ -18,7 +18,6 @@ internal sealed class ListPublishedWorkExperiencesQueryHandler(IApplicationDbCon
             .Include(entry => entry.DescriptionBullets)
             .Where(entry => entry.IsPublished)
             .OrderBy(entry => entry.SortOrder)
-            .ThenByDescending(entry => entry.CreatedAtUtc)
             .ToArrayAsync(cancellationToken);
 
         return Result.Success<IReadOnlyCollection<PublishedWorkExperienceResponse>>(

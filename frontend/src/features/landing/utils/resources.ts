@@ -9,6 +9,7 @@ import type { GLTF } from "three/examples/jsm/loaders/GLTFLoader.js";
 
 const isProd = import.meta.env.PROD;
 
+type Source = (typeof sources)[number];
 type ResourceType = Texture | GLTF;
 
 class Resources extends EventEmitter<{
@@ -18,7 +19,9 @@ class Resources extends EventEmitter<{
   toLoad = sources.length;
   isReady = false;
   loaded = 0;
-  items: Record<string, ResourceType> = {};
+  // Resources are keyed by runtime asset names from the source manifest.
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  items: Record<string, any> = {};
 
   loaders: {
     gltfLoader: GLTFLoader;
@@ -53,10 +56,7 @@ class Resources extends EventEmitter<{
     }
   }
 
-  sourceLoaded(
-    source: { name: string; type: string; path: string },
-    file: ResourceType,
-  ) {
+  sourceLoaded(source: Source, file: ResourceType) {
     this.items[source.name] = file;
 
     this.loaded++;

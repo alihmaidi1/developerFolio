@@ -1,7 +1,10 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using DeveloperFolio.Domain.WorkExperience;
+using DeveloperFolio.Infrastructure.Persistence;
 using FluentAssertions;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace DeveloperFolio.Tests.Integration;
 
@@ -37,6 +40,40 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
 
         var projects = await _client.GetFromJsonAsync<OperationResultResponse<ProjectResponse[]>>("/api/projects");
         projects!.Value.Should().ContainSingle(project => project.Title == "Developer Folio");
+    }
+
+    [Fact]
+    public async Task PublicCanReadPublishedWorkExperienceEntries()
+    {
+        using (var scope = factory.Services.CreateScope())
+        {
+            var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+            dbContext.WorkExperienceEntries.Add(WorkExperienceEntry.Create(
+                "Senior AI DevOps Engineer",
+                "Cloud Platform Team",
+                "2024 - Present",
+                "Built platform foundations for AI and cloud workloads.",
+                "/uploads/work-experience/cloud.png",
+                [
+                    "Improved deployment reliability across production services.",
+                    "Created reusable infrastructure workflows for engineering teams.",
+                ],
+                0,
+                true));
+            await dbContext.SaveChangesAsync();
+        }
+
+        var response = await _client.GetAsync("/api/work-experience");
+        var responseText = await response.Content.ReadAsStringAsync();
+        response.StatusCode.Should().Be(HttpStatusCode.OK, responseText);
+
+        var entries = await response.Content.ReadFromJsonAsync<OperationResultResponse<WorkExperienceResponse[]>>();
+
+        entries!.IsSuccess.Should().BeTrue();
+        entries.Value.Should().ContainSingle(entry =>
+            entry.Role == "Senior AI DevOps Engineer" &&
+            entry.Company == "Cloud Platform Team" &&
+            entry.DescriptionBullets.Length == 2);
     }
 
     [Fact]
@@ -94,6 +131,14 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
 
     private sealed record LoginResponse(Guid Id, string Email);
     private sealed record ProjectResponse(Guid Id, string Title);
+    private sealed record WorkExperienceResponse(
+        Guid Id,
+        string Role,
+        string Company,
+        string Date,
+        string? Description,
+        string? CompanyLogoUrl,
+        string[] DescriptionBullets);
     private sealed record ErrorResponse(string Code, string Message);
     private sealed record OperationResultResponse<T>(
         bool IsSuccess,

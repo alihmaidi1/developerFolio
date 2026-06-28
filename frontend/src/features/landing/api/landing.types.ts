@@ -37,3 +37,13 @@ export interface PublishedProject {
   liveUrl: string | null;
   technologies: string[];
 }
+
+export interface PublishedWorkExperience {
+  id: string;
+  role: string;
+  company: string;
+  date: string;
+  description: string | null;
+  companyLogoUrl: string | null;
+  descriptionBullets: string[];
+}

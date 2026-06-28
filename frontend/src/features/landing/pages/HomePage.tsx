@@ -3,11 +3,11 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { three } from "../three";
 import { animations } from "../animations";
-import { renderer } from "../three/core/renderer";
 import { raycast } from "../three/utils/raycast";
 import { Layout } from "../components/react/Layout";
 import { Hero } from "../components/react/home/Hero";
 import { About } from "../components/react/home/About";
+import { CareerJourney } from "../components/react/home/CareerJourney";
 import { Projects } from "../components/react/home/Projects";
 import { Contact } from "../components/react/home/Contact";
 import { Footer } from "../components/react/Footer";
@@ -15,11 +15,6 @@ import { HeaderHome } from "../components/react/HeaderHome";
 import { ScrollIcon } from "../components/react/ScrollIcon";
 import { useAgent } from "../hooks/useAgent";
 import { useSignal } from "../hooks/useSignal";
-import {
-  isTransitioningSignal,
-  projectIdSignal,
-  projectVisibleSignal,
-} from "../store/routeStore";
 import { preloaderVisible } from "../hooks/usePreloader";
 
 export function HomePage() {
@@ -31,9 +26,6 @@ export function HomePage() {
   const [projectsLoaded, setProjectsLoaded] = useState(false);
   const [contactBottom, setContactBottom] = useState(0);
   const [threeInitialized, setThreeInitialized] = useState(false);
-  const projectId = useSignal(projectIdSignal);
-  const projectVisible = useSignal(projectVisibleSignal);
-  const isTransitioning = useSignal(isTransitioningSignal);
   const isPreloaderVisible = useSignal(preloaderVisible);
   const { isTouch } = useAgent();
 
@@ -99,7 +91,7 @@ export function HomePage() {
       resizeObserver.disconnect();
       window.removeEventListener("resize", updateContactBottomOffset);
     };
-  }, [projectVisible, isTransitioning, projectsLoaded]);
+  }, [projectsLoaded]);
 
   useEffect(() => {
     const updateCursor = () => {
@@ -124,21 +116,9 @@ export function HomePage() {
     return () => animations.destroy();
   }, [isPreloaderVisible, projectsLoaded, threeInitialized]);
 
-  useEffect(() => {
-    renderer.setIsActive(!projectVisible);
-  }, [projectVisible]);
-
   return (
     <>
-      <div
-        className={[
-          "home-wrapper",
-          projectId !== null && isTransitioning ? "home-wrapper-out" : "",
-          projectId === null && isTransitioning ? "home-wrapper-in" : "",
-        ]
-          .filter(Boolean)
-          .join(" ")}
-      >
+      <div className="home-wrapper">
         <ScrollIcon />
         <Layout>
           <div className="intro-wrapper" ref={introRef}>
@@ -174,6 +154,7 @@ export function HomePage() {
             <div className="intro-wrapper-spacer" />
             <div className="about-spacer" ref={aboutSpacerRef} id="about" />
           </div>
+          <CareerJourney id="career" />
           <Projects id="projects" onLoaded={() => setProjectsLoaded(true)} />
 
           <div ref={contactRef} className="home-contact">

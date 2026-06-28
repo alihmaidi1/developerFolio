@@ -4,6 +4,7 @@ import type { TResult } from "@/shared/types/api.types";
 import type {
   PortfolioSettingsResponse,
   PublishedProject,
+  PublishedWorkExperience,
 } from "./landing.types";
 import { LANDING_API_ROUTES } from "./landing.routes";
 
@@ -18,6 +19,13 @@ export const landingApi = {
   getProjects: async (): Promise<PublishedProject[]> => {
     const result = await publicApi.get<TResult<PublishedProject[]>>(
       LANDING_API_ROUTES.publishedProjects,
+    );
+    return unwrapOperationResult(result);
+  },
+
+  getWorkExperience: async (): Promise<PublishedWorkExperience[]> => {
+    const result = await publicApi.get<TResult<PublishedWorkExperience[]>>(
+      LANDING_API_ROUTES.publishedWorkExperience,
     );
     return unwrapOperationResult(result);
   },
