@@ -1,0 +1,66 @@
+html,
+body,
+#app {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+body {
+  position: relative;
+}
+
+.home-wrapper,
+.project-wrapper,
+.layout,
+.intro-wrapper,
+.projects,
+.contact,
+.footer {
+  max-width: 100%;
+  overflow-x: clip;
+}
+
+.footer {
+  contain: layout paint;
+}
+
+.footer-content {
+  min-width: 0;
+}
+
+.music-toggle {
+  width: 44px;
+  height: 44px;
+  border: var(--stroke-md) solid currentColor;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--color-text-400);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 44px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.music-toggle-icon {
+  display: block;
+  width: 24px;
+  height: 24px;
+}
+
+.music-toggle .volume-body {
+  transform: translateX(0);
+}
+
+.music-toggle .volume-wave-1,
+.music-toggle .volume-wave-2 {
+  opacity: 0;
+  transform: translateX(-20px);
+}
+
+.music-toggle .volume-wave-1-active,
+.music-toggle .volume-wave-2-active {
+  opacity: 1;
+  transform: translateX(0);
+}

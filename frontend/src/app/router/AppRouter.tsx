@@ -1,7 +1,9 @@
 import { lazy, Suspense } from "react";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Loading from "@/shared/ui/loading/Loading";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
+import { I18nProvider } from "@/hooks/useI18n";
+import { RootLayout } from "@/layouts/RootLayout";
 
 const AdminRouter = lazy(() => import("./AdminRouter"));
 
@@ -17,7 +19,14 @@ export function AppRouter() {
             </RouteErrorBoundary>
           }
         />
-        <Route path="*" element={<Navigate to="/admin" replace />} />
+        <Route
+          path="/*"
+          element={
+            <I18nProvider>
+              <RootLayout />
+            </I18nProvider>
+          }
+        />
       </Routes>
     </Suspense>
   );

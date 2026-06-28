@@ -27,3 +27,8 @@ declare module "*.webp?url" {
   const value: string;
   export default value;
 }
+
+declare module "*.ktx2" {
+  const src: string;
+  export default src;
+}
