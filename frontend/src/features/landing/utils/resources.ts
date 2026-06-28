@@ -18,7 +18,7 @@ class Resources extends EventEmitter<{
   toLoad = sources.length;
   isReady = false;
   loaded = 0;
-  items: Record<string, any> = {};
+  items: Record<string, ResourceType> = {};
 
   loaders: {
     gltfLoader: GLTFLoader;

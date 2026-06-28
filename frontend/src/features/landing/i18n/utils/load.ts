@@ -48,7 +48,8 @@ export const loadTranslations = async (
     const p = (async () => {
       try {
         const mod = await modLoader(); // dynamic import
-        const data: Messages = (mod as any).default ?? mod;
+        const data: Messages =
+          (mod as { default?: Messages }).default ?? (mod as Messages);
         valueCache.set(key, data);
         return data;
       } finally {

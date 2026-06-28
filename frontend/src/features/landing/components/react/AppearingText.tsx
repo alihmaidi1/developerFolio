@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import gsap from "gsap";
 import { BREAKPOINTS } from "../../utils/sizes";
 
@@ -19,23 +19,26 @@ export function AppearingText({
   duration: number;
   className?: string;
 }) {
-  const [displayText, setDisplayText] = useState("");
+  const shouldSkipAnimation = useMemo(
+    () =>
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches ||
+      window.matchMedia(`(max-width: ${BREAKPOINTS.md - 1}px)`).matches,
+    [],
+  );
+
+  const [displayText, setDisplayText] = useState(() =>
+    shouldSkipAnimation ? text : "",
+  );
+  const [prevText, setPrevText] = useState(text);
+
+  if (text !== prevText) {
+    setPrevText(text);
+    setDisplayText(shouldSkipAnimation ? text : "");
+  }
 
   useEffect(() => {
-    if (!text) return;
-    const prefersReducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
-    const isMobile = window.matchMedia(
-      `(max-width: ${BREAKPOINTS.md - 1}px)`,
-    ).matches;
+    if (!text || shouldSkipAnimation) return;
 
-    if (prefersReducedMotion || isMobile) {
-      setDisplayText(text);
-      return;
-    }
-
-    setDisplayText("");
     const totalSteps = Math.ceil(text.length / steps);
     const durationPerStep = duration / totalSteps;
     const timeline = gsap.timeline();
@@ -63,7 +66,7 @@ export function AppearingText({
     return () => {
       timeline.kill();
     };
-  }, [duration, steps, text]);
+  }, [duration, steps, text, shouldSkipAnimation]);
 
   return (
     <div className={["appearing-text", className].filter(Boolean).join(" ")}>

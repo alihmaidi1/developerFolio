@@ -21,6 +21,8 @@ export function Media({
 
   useEffect(() => {
     if (!wrapperRef.current) return;
+    const mediaContentEl = mediaContentRef.current;
+    const mediaEl = mediaRef.current;
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: wrapperRef.current,
@@ -30,21 +32,21 @@ export function Media({
       },
     });
     tl.fromTo(
-      mediaContentRef.current,
+      mediaContentEl,
       { scale: 0.8 },
       { scale: 1, duration: 0.4, ease: "power1.out" },
       0,
     );
     tl.fromTo(
-      mediaRef.current,
+      mediaEl,
       { scale: 1.2 },
       { scale: 1, duration: 0.4, ease: "power1.out" },
       0,
     );
     return () => {
       tl.kill();
-      gsap.set(mediaContentRef.current, { scale: 1 });
-      gsap.set(mediaRef.current, { scale: 1 });
+      gsap.set(mediaContentEl, { scale: 1 });
+      gsap.set(mediaEl, { scale: 1 });
     };
   }, []);
 

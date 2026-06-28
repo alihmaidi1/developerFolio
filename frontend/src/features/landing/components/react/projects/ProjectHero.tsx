@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useI18n } from "../../../hooks/useI18n";
 import { Link } from "../Link";
 import { Tag } from "../Tag";
@@ -12,14 +11,9 @@ export function ProjectHero({
   projectId: string;
 }) {
   const { t } = useI18n();
-  const [animationKey, setAnimationKey] = useState(0);
-
-  useEffect(() => {
-    setAnimationKey((value) => value + 1);
-  }, [projectId]);
 
   return (
-    <div className="project-hero grid" key={animationKey}>
+    <div className="project-hero grid" key={projectId}>
       <div className="project-hero-content">
         <div className="project-hero-tags">
           {content.tags.map((tag) => (

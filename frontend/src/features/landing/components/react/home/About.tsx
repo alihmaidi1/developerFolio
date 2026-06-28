@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { RefObject } from "react";
 import gsap from "gsap";
 import { Vector3 } from "three";
 import { transitions } from "../../../animations";
@@ -14,15 +15,20 @@ const detailsPoint = new Vector3(-0.76, 3.6, 6.75);
 const descriptionPoint = new Vector3(-0.9, 2, 6.75);
 const servicesPoint = new Vector3(0.75, 2.75, 6.75);
 
-export function About({ spacerRef }: { spacerRef: HTMLElement | null }) {
+export function About({
+  spacerRef,
+}: {
+  spacerRef: RefObject<HTMLDivElement | null>;
+}) {
   const detailsRef = useRef<HTMLDivElement | null>(null);
   const descriptionRef = useRef<HTMLDivElement | null>(null);
   const servicesRef = useRef<HTMLDivElement | null>(null);
   const progressRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
+    const spacerEl = spacerRef.current;
     if (
-      !spacerRef ||
+      !spacerEl ||
       !detailsRef.current ||
       !descriptionRef.current ||
       !servicesRef.current ||
@@ -31,7 +37,7 @@ export function About({ spacerRef }: { spacerRef: HTMLElement | null }) {
       return;
 
     transitions.about.setup({
-      about: spacerRef,
+      about: spacerEl,
       contentDescription: descriptionRef.current,
       tlDescription: gsap.timeline({ paused: true }),
       contentServices: servicesRef.current,

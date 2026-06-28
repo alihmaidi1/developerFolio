@@ -167,7 +167,7 @@ export function HomePage() {
               <div
                 className={!isStickyVisible ? "intro-about-hidden" : undefined}
               >
-                <About spacerRef={aboutSpacerRef.current} />
+                <About spacerRef={aboutSpacerRef} />
               </div>
             </div>
             <Hero className="intro-hero" />

@@ -1,6 +1,6 @@
-export type EventCallback<T = any> = (data: T) => void;
+export type EventCallback<T = unknown> = (data: T) => void;
 
-export default class EventEmitter<TEvents extends Record<string, any>> {
+export default class EventEmitter<TEvents extends Record<string, unknown>> {
   private events: { [K in keyof TEvents]?: EventCallback<TEvents[K]>[] } = {};
 
   on<K extends keyof TEvents>(

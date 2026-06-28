@@ -7,12 +7,7 @@ import tseslint from "typescript-eslint";
 import { defineConfig, globalIgnores } from "eslint/config";
 
 export default defineConfig([
-  globalIgnores([
-    "dist",
-    "node_modules",
-    "src/assets/lottie",
-    "src/features/landing",
-  ]),
+  globalIgnores(["dist", "node_modules", "src/assets/lottie"]),
   {
     files: ["**/*.{ts,tsx}"],
     extends: [

@@ -74,43 +74,37 @@ const setIsActive = (value: boolean) => {
   isActive = value;
 };
 
-const compileScene = async (camera: Camera, sceneToCompile: Scene) => {
+const compileScene = (camera: Camera, sceneToCompile: Scene): Promise<void> => {
   if (!instance) {
     console.error("Renderer not initialized");
-    return;
+    return Promise.resolve();
   }
 
-  return new Promise<void>(async (resolve) => {
-    if (!instance) {
-      return;
+  const invisibleObjects: Object3D[] = [];
+  const instancedWithOriginalCullState: [Object3D, boolean][] = [];
+
+  sceneToCompile.traverse((child) => {
+    if (child.visible === false) {
+      invisibleObjects.push(child);
+      child.visible = true;
     }
 
-    const invisibleObjects: Object3D[] = [];
-    const instancedWithOriginalCullState: [Object3D, boolean][] = [];
-
-    sceneToCompile.traverse((child) => {
-      if (child.visible === false) {
-        invisibleObjects.push(child);
-        child.visible = true;
-      }
-
-      if (child.frustumCulled === true) {
-        instancedWithOriginalCullState.push([child, child.frustumCulled]);
-        child.frustumCulled = false; // Ensure it's rendered
-      }
-    });
-
-    instance.compile(sceneToCompile, camera);
-
-    invisibleObjects.forEach((child) => (child.visible = false));
-    instancedWithOriginalCullState.forEach(([child, originalState]) => {
-      child.frustumCulled = originalState;
-    });
-
-    renderTarget.render();
-
-    resolve();
+    if (child.frustumCulled === true) {
+      instancedWithOriginalCullState.push([child, child.frustumCulled]);
+      child.frustumCulled = false;
+    }
   });
+
+  instance.compile(sceneToCompile, camera);
+
+  invisibleObjects.forEach((child) => (child.visible = false));
+  instancedWithOriginalCullState.forEach(([child, originalState]) => {
+    child.frustumCulled = originalState;
+  });
+
+  renderTarget.render();
+
+  return Promise.resolve();
 };
 
 const destroy = () => {

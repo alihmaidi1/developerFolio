@@ -9,8 +9,12 @@ export const projectIds = [
   "pokedex",
 ];
 
-function simplifyModules(glob: Record<string, any>) {
-  const result: Record<string, any> = {};
+import type { ProjectContent } from "../types";
+
+type ProjectModule = { default?: ProjectContent };
+
+function simplifyModules(glob: Record<string, ProjectModule>) {
+  const result: Record<string, ProjectModule> = {};
   for (const [path, mod] of Object.entries(glob)) {
     const match = path.match(/\/([a-z0-9_-]+)\.ts$/i);
     if (match) result[match[1] as string] = mod;
@@ -21,4 +25,4 @@ function simplifyModules(glob: Record<string, any>) {
 export const projectModules = {
   de: simplifyModules(import.meta.glob("./de/*.ts", { eager: true })),
   en: simplifyModules(import.meta.glob("./en/*.ts", { eager: true })),
-} as const satisfies Record<Locale, Record<string, any>>;
+} as const satisfies Record<Locale, Record<string, ProjectModule>>;

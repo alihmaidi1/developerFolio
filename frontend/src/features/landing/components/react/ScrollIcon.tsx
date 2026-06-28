@@ -3,13 +3,13 @@ import { SwipeUp } from "./icons";
 
 export function ScrollIcon() {
   const [hasScrolled, setHasScrolled] = useState(false);
-  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [isTouchDevice] = useState(
+    () =>
+      window.matchMedia("(pointer: coarse)").matches ||
+      navigator.maxTouchPoints > 0,
+  );
 
   useEffect(() => {
-    setIsTouchDevice(
-      window.matchMedia("(pointer: coarse)").matches ||
-        navigator.maxTouchPoints > 0,
-    );
     const onScroll = () => setHasScrolled(window.scrollY > 20);
     onScroll();
     window.addEventListener("scroll", onScroll);

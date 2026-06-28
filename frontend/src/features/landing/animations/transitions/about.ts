@@ -243,7 +243,7 @@ const setupOutAnimation = (about: HTMLElement) => {
 };
 
 const setupScenesAnimation = (about: HTMLElement) => {
-  scenesMm = createMatchMedia((_context) => {
+  scenesMm = createMatchMedia(() => {
     const tl = gsap.timeline({
       duration: 1,
       scrollTrigger: {

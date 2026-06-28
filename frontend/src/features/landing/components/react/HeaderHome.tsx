@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useI18n } from "../../hooks/useI18n";
 import { useSignal } from "../../hooks/useSignal";
@@ -13,7 +13,7 @@ export function HeaderHome() {
   const { t } = useI18n();
   const projectId = useSignal(projectIdSignal);
   const [activeLink, setActiveLink] = useState<ActiveLink | null>(null);
-  const [mounted, setMounted] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
   const isDarkTheme = false;
   const hasScrolledIntoView = activeLink !== null;
 
@@ -30,7 +30,7 @@ export function HeaderHome() {
       }),
     );
     ScrollTrigger.refresh();
-    setMounted(true);
+    containerRef.current?.classList.add("header-home-mounted");
     return () => triggers.forEach((trigger) => trigger.kill());
   }, []);
 
@@ -38,9 +38,9 @@ export function HeaderHome() {
 
   return (
     <div
+      ref={containerRef}
       className={[
         "header-home",
-        mounted ? "header-home-mounted" : "",
         projectId !== null ? "header-home-isProjectPage" : "",
       ]
         .filter(Boolean)

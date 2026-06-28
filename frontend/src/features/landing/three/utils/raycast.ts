@@ -5,6 +5,7 @@ import { threeSizes } from "./sizes";
 import { playSound } from "../../sounds/utils/sounds";
 
 import type { ClickableBox3 } from "../types";
+import type { SoundKey } from "../../sounds/types";
 
 let hoveringBox: ClickableBox3 | null = null;
 let previousHoveringBox: ClickableBox3 | null = null;
@@ -74,7 +75,7 @@ const tick = () => {
     if (hoveringBox !== previousHoveringBox) {
       // If we started hovering over a new box with a hover sound
       if (hoveringBox && hoveringBox.hoverSound && !previousHoveringBox) {
-        playSound(hoveringBox.hoverSound as any);
+        playSound(hoveringBox.hoverSound as SoundKey);
       }
       previousHoveringBox = hoveringBox;
     }
