@@ -6,7 +6,7 @@ import type {
   PublishedProject,
   PublishedWorkExperience,
 } from "./landing.types";
-import { LANDING_API_ROUTES } from "./landing.routes";
+import { LANDING_API_ROUTES } from "@/shared/constants/api-routes";
 
 export const landingApi = {
   getSettings: async (): Promise<PortfolioSettingsResponse> => {

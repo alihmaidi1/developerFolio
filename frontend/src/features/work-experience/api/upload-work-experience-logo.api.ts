@@ -1,7 +1,7 @@
 import { privateAxios } from "@/shared/lib/private-client";
 import { unwrapOperationResult } from "@/shared/lib/operation-result";
 import type { TResult } from "@/shared/types/api.types";
-import { WORK_EXPERIENCE_API_ROUTES } from "./work-experience.routes";
+import { WORK_EXPERIENCE_API_ROUTES } from "@/shared/constants/api-routes";
 
 interface UploadImageResponse {
   url: string;

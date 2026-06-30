@@ -26,12 +26,6 @@ code {
     source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }
 
-.dark-mode {
-  color: var(--color-text-inverse);
-  background-color: var(--color-background-dark);
-  transition: background-color 100ms ease;
-}
-
 .subTitle {
   color: var(--color-text-muted);
 }

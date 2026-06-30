@@ -6,7 +6,7 @@ import type {
   ReorderSkillStatementRequest,
   UpsertSkillStatementRequest,
 } from "../model/skill-statement.types";
-import { SKILL_STATEMENT_ROUTES } from "./skills.routes";
+import { SKILL_STATEMENT_ROUTES } from "@/shared/constants/api-routes";
 
 export const skillStatementsApi = {
   list: async (): Promise<AdminSkillStatement[]> => {

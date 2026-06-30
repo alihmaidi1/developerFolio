@@ -6,7 +6,7 @@ import type {
   ReorderSocialLinkRequest,
   UpsertSocialLinkRequest,
 } from "../model/settings.types";
-import { SETTINGS_ROUTES } from "./settings.routes";
+import { SETTINGS_ROUTES } from "@/shared/constants/api-routes";
 
 export const socialLinksApi = {
   list: async (): Promise<AdminSocialLink[]> => {

@@ -59,7 +59,7 @@
   padding: 9px 16px;
   border-radius: 10px;
   background: var(--admin-color-accent);
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
   font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
@@ -162,7 +162,7 @@
   padding: 9px 18px;
   font-size: 0.76rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
   cursor: pointer;
   display: inline-flex;
   align-items: center;

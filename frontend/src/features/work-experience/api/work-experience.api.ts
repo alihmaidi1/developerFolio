@@ -5,7 +5,7 @@ import type {
   AdminWorkExperience,
   ReorderWorkExperienceRequest,
 } from "../model/work-experience.types";
-import { WORK_EXPERIENCE_API_ROUTES } from "./work-experience.routes";
+import { WORK_EXPERIENCE_API_ROUTES } from "@/shared/constants/api-routes";
 
 export const workExperienceApi = {
   list: async (): Promise<AdminWorkExperience[]> => {

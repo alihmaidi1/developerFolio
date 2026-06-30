@@ -12,8 +12,9 @@
 
 .passwordToggle {
   position: absolute;
-  right: -10px;
-  bottom: 4px;
+  top: 50%;
+  right: 4px;
+  transform: translateY(-50%);
 }
 
 .formAlert {

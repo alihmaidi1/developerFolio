@@ -1,6 +1,6 @@
-import styles from "./AdminOverviewPage.module.css";
+import styles from "./AdminDashboardPage.module.css";
 
-export function AdminOverviewPage() {
+export function AdminDashboardPage() {
   return (
     <section className={styles.overview}>
       <header className={styles.header}>

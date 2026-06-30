@@ -1,22 +1,17 @@
 .layout {
-  --ui-color-accent: var(--admin-color-accent);
-  --ui-color-accent-contrast: #fff;
-  --ui-color-accent-hover: var(--admin-color-accent-hover);
-  --ui-color-border: var(--admin-color-border-strong);
-  --ui-color-danger: var(--admin-color-danger);
-  --ui-color-muted: var(--admin-color-muted);
-  --ui-color-positive: var(--admin-color-positive);
-  --ui-color-subtle: var(--admin-color-subtle);
-  --ui-color-text: var(--admin-color-text);
   --ui-radius: 11px;
-  --ui-transition-fast: var(--admin-transition-fast);
 
-  color-scheme: light;
+  color-scheme: dark;
   min-height: 100svh;
   color: var(--admin-color-text);
   background: var(--admin-color-background);
   display: grid;
   grid-template-columns: 264px minmax(0, 1fr);
+  transition: grid-template-columns var(--admin-transition-fast);
+}
+
+.layoutSidebarCollapsed {
+  grid-template-columns: 88px minmax(0, 1fr);
 }
 
 .sidebar {
@@ -28,6 +23,13 @@
   flex-direction: column;
   position: sticky;
   top: 0;
+}
+
+.sidebarHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .brand {
@@ -42,7 +44,9 @@
 
 .brand:focus-visible,
 .navigationLink:focus-visible,
-.logoutButton:focus-visible {
+.logoutButton:focus-visible,
+.sidebarToggleDesktop:focus-visible,
+.sidebarToggleMobile:focus-visible {
   outline: 2px solid var(--admin-color-accent);
   outline-offset: 3px;
   border-radius: 10px;
@@ -51,7 +55,7 @@
 .brandMark {
   width: 36px;
   height: 36px;
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
   background: var(--admin-color-accent);
   border-radius: 10px;
   display: grid;
@@ -74,6 +78,40 @@
 .brandCopy small {
   color: var(--admin-color-muted);
   font-size: 0.66rem;
+}
+
+.sidebarToggleDesktop,
+.sidebarToggleMobile {
+  width: 36px;
+  height: 36px;
+  color: var(--admin-color-muted);
+  background: var(--admin-color-surface-raised);
+  border: 1px solid var(--admin-color-border);
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  cursor: pointer;
+  transition:
+    color var(--admin-transition-fast),
+    background-color var(--admin-transition-fast),
+    border-color var(--admin-transition-fast);
+}
+
+.sidebarToggleDesktop:hover,
+.sidebarToggleMobile:hover {
+  color: var(--admin-color-accent);
+  border-color: var(--admin-color-border-strong);
+}
+
+.sidebarToggleDesktop svg,
+.sidebarToggleMobile svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sidebarToggleMobile {
+  display: none;
 }
 
 .navigation {
@@ -102,6 +140,12 @@
   gap: 11px;
   font-size: 0.82rem;
   text-decoration: none;
+}
+
+.layoutSidebarCollapsed .navigationLink,
+.layoutSidebarCollapsed .navigationUnavailable {
+  justify-content: center;
+  padding: 0;
 }
 
 .navigationLink > svg,
@@ -142,6 +186,19 @@
 .navigationCopy small {
   color: var(--admin-color-subtle);
   font-size: 0.66rem;
+}
+
+.collapsedOnlyHidden {
+  transition:
+    opacity var(--admin-transition-fast),
+    width var(--admin-transition-fast);
+}
+
+.layoutSidebarCollapsed .collapsedOnlyHidden {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  pointer-events: none;
 }
 
 .navigationUnavailable {
@@ -227,6 +284,10 @@
   cursor: pointer;
 }
 
+.layoutSidebarCollapsed .logoutButton {
+  justify-content: center;
+}
+
 .logoutButton:hover:not(:disabled) {
   color: var(--admin-color-danger);
 }
@@ -251,6 +312,10 @@
     grid-template-columns: 1fr;
   }
 
+  .layoutSidebarCollapsed {
+    grid-template-columns: 1fr;
+  }
+
   .sidebar {
     height: auto;
     padding: 14px 18px;
@@ -262,8 +327,42 @@
     position: static;
   }
 
+  .sidebarHeader {
+    min-width: 0;
+  }
+
+  .sidebarToggleDesktop {
+    display: none;
+  }
+
+  .sidebarToggleMobile {
+    display: grid;
+  }
+
   .navigation {
     display: none;
+    grid-column: 1 / -1;
+    width: 100%;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--admin-color-border);
+  }
+
+  .layoutMobileSidebarOpen .navigation {
+    display: grid;
+  }
+
+  .layoutSidebarCollapsed .navigationLink,
+  .layoutSidebarCollapsed .navigationUnavailable {
+    justify-content: flex-start;
+    padding: 0 12px;
+  }
+
+  .layoutSidebarCollapsed .collapsedOnlyHidden {
+    width: auto;
+    opacity: 1;
+    overflow: visible;
+    pointer-events: auto;
   }
 
   .account {
@@ -291,7 +390,11 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .navigationLink {
+  .layout,
+  .navigationLink,
+  .collapsedOnlyHidden,
+  .sidebarToggleDesktop,
+  .sidebarToggleMobile {
     transition: none;
   }
 }

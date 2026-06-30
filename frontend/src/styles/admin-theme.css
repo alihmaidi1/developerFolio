@@ -1,0 +1,91 @@
+:root {
+  /* ============ BACKGROUNDS ============ */
+  --bg-base: #0a0a0a; /* body / app background */
+  --bg-sidebar: #0d0d0d; /* sidebar + form cards */
+  --bg-surface: #0d0d0d; /* card surface */
+  --bg-surface-2: #111111; /* topbar search, hover bg */
+  --bg-elevated: #161616; /* hover state, nav active, chips */
+  --bg-input: #0d0d0d; /* input background */
+
+  /* ============ BORDERS ============ */
+  --border-subtle: #1a1a1a; /* card borders, dividers */
+  --border-default: #1f1f1f; /* input + button borders */
+  --border-strong: #262626; /* hover borders, scrollbar */
+  --border-muted: #404040; /* scrollbar hover */
+
+  /* ============ TEXT ============ */
+  --text-primary: #fafafa; /* main text, headings */
+  --text-secondary: #a3a3a3; /* body copy, labels */
+  --text-muted: #737373; /* hints, descriptions */
+  --text-dim: #525252; /* monospace meta, placeholders */
+
+  /* ============ ACCENT (Lime) ============ */
+  --accent: #84cc16; /* primary CTA, active state, brand */
+  --accent-hover: #a3e635; /* button hover */
+  --accent-dim: #65a30d; /* darker variant */
+  --accent-soft: rgb(132 204 22 / 10%); /* subtle bg tint */
+  --accent-soft-2: rgb(132 204 22 / 12%); /* focus ring, badge bg */
+  --accent-border: rgb(132 204 22 / 25%); /* badge border */
+  --accent-glow: rgb(132 204 22 / 20%); /* logo glow shadow */
+
+  /* ============ SEMANTIC ============ */
+  --danger: #ef4444; /* delete, error text */
+  --danger-bg: #1a0f0f; /* delete button hover bg */
+  --positive: #22c55e; /* success states, online indicators */
+  --positive-soft: rgb(34 197 94 / 10%);
+
+  /* ============ TYPOGRAPHY ============ */
+  --font-sans: "Inter", system-ui, -apple-system, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* ============ RADIUS ============ */
+  --radius-sm: 4px; /* tags, kbd */
+  --radius: 6px; /* small buttons */
+  --radius-md: 8px; /* nav items, inputs, buttons */
+  --radius-lg: 10px; /* primary inputs */
+  --radius-xl: 12px; /* cards */
+
+  /* ============ SHADOWS ============ */
+  --shadow-glow:
+    0 0 0 1px rgb(132 204 22 / 30%), 0 0 32px rgb(132 204 22 / 20%);
+  --shadow-focus: 0 0 0 3px rgb(132 204 22 / 12%);
+  --shadow-card: 0 8px 32px rgb(0 0 0 / 60%);
+  --transition-fast: 180ms ease;
+
+  /*
+   * Bridge layer — maps the legacy --admin-color-* / --ui-color-* names
+   * (still referenced across existing admin feature CSS modules) onto the
+   * tokens above, so every component picks up the new theme at once.
+   */
+  --admin-color-background: var(--bg-base);
+  --admin-color-surface: var(--bg-surface);
+  --admin-color-surface-raised: var(--bg-elevated);
+  --admin-color-text: var(--text-primary);
+  --admin-color-muted: var(--text-secondary);
+  --admin-color-subtle: var(--text-muted);
+  --admin-color-accent: var(--accent);
+  --admin-color-accent-hover: var(--accent-hover);
+  --admin-color-accent-soft: var(--accent-soft);
+  --admin-color-positive: var(--positive);
+  --admin-color-danger: var(--danger);
+  --admin-color-border: var(--border-subtle);
+  --admin-color-border-strong: var(--border-strong);
+  --admin-shadow-soft: var(--shadow-card);
+  --admin-transition-fast: var(--transition-fast);
+
+  --ui-color-accent: var(--accent);
+  --ui-color-accent-contrast: var(--bg-base);
+  --ui-color-accent-hover: var(--accent-hover);
+  --ui-color-border: var(--border-default);
+  --ui-color-danger: var(--danger);
+  --ui-color-muted: var(--text-secondary);
+  --ui-color-positive: var(--positive);
+  --ui-color-subtle: var(--text-muted);
+  --ui-color-text: var(--text-primary);
+  --ui-danger-shadow: rgb(239 68 68 / 12%);
+  --ui-focus-shadow: var(--shadow-focus);
+  --ui-input-background: var(--bg-input);
+  --ui-input-radius: var(--radius-lg);
+  --ui-radius: var(--radius-md);
+  --ui-transition-fast: var(--transition-fast);
+}

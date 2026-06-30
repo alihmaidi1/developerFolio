@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import { BrowserRouter, useLocation } from "react-router-dom";
 import { store } from "@/app/store";
 import { queryClient } from "@/shared/lib/query-client";
-import { ThemeProvider } from "./ThemeProvider";
 
 const ReactQueryDevtools = lazy(() =>
   import("@tanstack/react-query-devtools").then((module) => ({
@@ -35,7 +34,7 @@ export function AppProviders({ children }: AppProvidersProps) {
     <Provider store={store}>
       <QueryClientProvider client={queryClient}>
         <BrowserRouter>
-          <ThemeProvider>{children}</ThemeProvider>
+          {children}
           <DevelopmentTools />
         </BrowserRouter>
       </QueryClientProvider>

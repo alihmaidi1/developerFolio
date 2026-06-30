@@ -23,6 +23,7 @@ const init = (_canvas: HTMLCanvasElement) => {
 
     objects.init();
     raycast.init();
+    renderer.setIsActive(true);
   };
 
   if (resources.isReady) {

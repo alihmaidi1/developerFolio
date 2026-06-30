@@ -2,7 +2,7 @@ import { privateApi } from "@/shared/lib/private-client";
 import { unwrapOperationResult } from "@/shared/lib/operation-result";
 import type { TResult } from "@/shared/types/api.types";
 import type { GreetingSettings } from "../model/settings.types";
-import { SETTINGS_ROUTES } from "./settings.routes";
+import { SETTINGS_ROUTES } from "@/shared/constants/api-routes";
 
 export const greetingApi = {
   get: async (): Promise<GreetingSettings> => {

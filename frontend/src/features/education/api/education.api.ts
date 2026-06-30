@@ -5,7 +5,7 @@ import type {
   AdminEducation,
   ReorderEducationRequest,
 } from "../model/education.types";
-import { EDUCATION_API_ROUTES } from "./education.routes";
+import { EDUCATION_API_ROUTES } from "@/shared/constants/api-routes";
 
 export const educationApi = {
   list: async (): Promise<AdminEducation[]> => {

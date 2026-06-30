@@ -5,7 +5,7 @@ import type {
   AdminProject,
   ReorderProjectRequest,
 } from "../model/project.types";
-import { PROJECTS_API_ROUTES } from "./projects.routes";
+import { PROJECTS_API_ROUTES } from "@/shared/constants/api-routes";
 
 export const projectsApi = {
   list: async (): Promise<AdminProject[]> => {

@@ -50,7 +50,7 @@
 
 .addButton {
   min-height: 42px;
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
   background: var(--admin-color-accent);
   border-radius: 11px;
   padding: 0 16px;

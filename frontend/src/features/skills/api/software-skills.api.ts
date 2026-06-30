@@ -6,7 +6,7 @@ import type {
   ReorderSoftwareSkillRequest,
   UpsertSoftwareSkillRequest,
 } from "../model/software-skill.types";
-import { SOFTWARE_SKILL_ROUTES } from "./skills.routes";
+import { SOFTWARE_SKILL_ROUTES } from "@/shared/constants/api-routes";
 
 export const softwareSkillsApi = {
   list: async (): Promise<AdminSoftwareSkill[]> => {

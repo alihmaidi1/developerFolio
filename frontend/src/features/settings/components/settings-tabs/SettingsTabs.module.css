@@ -27,9 +27,9 @@
 
 .tabActive {
   background: var(--admin-color-accent);
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
 }
 
 .tabActive:hover {
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
 }

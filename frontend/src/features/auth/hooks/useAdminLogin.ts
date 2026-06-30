@@ -3,8 +3,8 @@ import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/store";
+import { ADMIN_PATH } from "@/shared/constants/paths";
 import { resolveApiError } from "@/shared/lib/api-error";
-import { authTokenStorage } from "@/shared/lib/auth-token";
 import { authApi } from "../api/auth.api";
 import { setAdminSession } from "../model/admin-auth.slice";
 import { adminLoginSchema, type AdminLoginValues } from "../model/auth.schema";
@@ -28,10 +28,9 @@ export function useAdminLogin() {
   const mutation = useMutation({
     mutationFn: authApi.login,
     onSuccess: ({ accessToken, id, email }) => {
-      authTokenStorage.set(accessToken);
-      dispatch(setAdminSession({ id, email }));
+      dispatch(setAdminSession({ user: { id, email }, accessToken }));
       const destination =
-        (location.state as LoginLocationState | null)?.from ?? "/admin";
+        (location.state as LoginLocationState | null)?.from ?? ADMIN_PATH.ROOT;
       navigate(destination, { replace: true });
     },
   });

@@ -3,7 +3,7 @@ import { unwrapOperationResult } from "@/shared/lib/operation-result";
 import type { TResult } from "@/shared/types/api.types";
 import type { AdminEducation } from "../model/education.types";
 import type { UpdateEducationVariables } from "../model/update-education.types";
-import { EDUCATION_API_ROUTES } from "./education.routes";
+import { EDUCATION_API_ROUTES } from "@/shared/constants/api-routes";
 
 export async function getEducation(
   educationId: string,

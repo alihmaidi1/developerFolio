@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch } from "@/app/store";
-import { authTokenStorage } from "@/shared/lib/auth-token";
-import { clearAdminQueries } from "../lib/clear-admin-queries";
+import { ADMIN_PATH } from "@/shared/constants/paths";
 import { clearAdminSession } from "../model/admin-auth.slice";
 
 export function useAdminLogout() {
@@ -9,10 +8,8 @@ export function useAdminLogout() {
   const navigate = useNavigate();
 
   const logout = () => {
-    authTokenStorage.clear();
     dispatch(clearAdminSession());
-    clearAdminQueries();
-    navigate("/admin/login", { replace: true });
+    navigate(ADMIN_PATH.LOGIN, { replace: true });
   };
 
   return { logout, isPending: false };

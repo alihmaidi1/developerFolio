@@ -89,7 +89,7 @@
   padding: 8px 18px;
   font-size: 0.74rem;
   font-weight: 600;
-  color: #fff;
+  color: var(--ui-color-accent-contrast);
   cursor: pointer;
   display: inline-flex;
   align-items: center;
