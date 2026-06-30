@@ -137,6 +137,7 @@
   padding: 0 12px;
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 11px;
   font-size: 0.82rem;
   text-decoration: none;
@@ -196,8 +197,10 @@
 
 .layoutSidebarCollapsed .collapsedOnlyHidden {
   width: 0;
+  height: 0;
   opacity: 0;
   overflow: hidden;
+  white-space: nowrap;
   pointer-events: none;
 }
 
@@ -365,10 +368,18 @@
   }
 
   .account {
+    display: none;
     background: transparent;
     border: 0;
     margin: 0;
     padding: 0;
+  }
+
+  .layoutMobileSidebarOpen .account {
+    display: block;
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--admin-color-border);
   }
 
   .accountIdentity {
