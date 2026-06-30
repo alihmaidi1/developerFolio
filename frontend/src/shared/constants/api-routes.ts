@@ -3,9 +3,7 @@ export const AUTH_API_ROUTES = {
 } as const;
 
 export const LANDING_API_ROUTES = {
-  portfolioSettings: "/api/portfolio-settings",
-  publishedProjects: "/api/projects",
-  publishedWorkExperience: "/api/work-experience",
+  landingPage: "/api/landing-page",
 } as const;
 
 export const PROJECTS_API_ROUTES = {

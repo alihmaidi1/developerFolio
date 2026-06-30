@@ -2,9 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import { landingApi } from "../api/landing.api";
 import { landingQueryKeys } from "../api/landing.query-keys";
 
-export function usePortfolioSettings() {
+export function useLandingPage() {
   return useQuery({
-    queryKey: landingQueryKeys.settings(),
-    queryFn: landingApi.getSettings,
+    queryKey: landingQueryKeys.page(),
+    queryFn: landingApi.getLandingPage,
   });
 }

@@ -1,7 +1,5 @@
 import { createContext, useContext, type ReactNode } from "react";
-import { usePortfolioSettings } from "./usePortfolioSettings";
-import { usePublishedProjects } from "./usePublishedProjects";
-import { usePublishedWorkExperience } from "./usePublishedWorkExperience";
+import { useLandingPage } from "./useLandingPage";
 import type {
   PortfolioSettingsResponse,
   PublishedProject,
@@ -21,18 +19,13 @@ const PortfolioDataContext = createContext<PortfolioDataContextValue | null>(
 );
 
 export function PortfolioDataProvider({ children }: { children: ReactNode }) {
-  const settingsQuery = usePortfolioSettings();
-  const projectsQuery = usePublishedProjects();
-  const workExperienceQuery = usePublishedWorkExperience();
+  const landingPageQuery = useLandingPage();
 
   const value: PortfolioDataContextValue = {
-    settings: settingsQuery.data ?? defaultPortfolioSettings,
-    projects: projectsQuery.data,
-    workExperiences: workExperienceQuery.data,
-    isLoading:
-      settingsQuery.isLoading ||
-      projectsQuery.isLoading ||
-      workExperienceQuery.isLoading,
+    settings: landingPageQuery.data?.settings ?? defaultPortfolioSettings,
+    projects: landingPageQuery.data?.projects,
+    workExperiences: landingPageQuery.data?.workExperiences,
+    isLoading: landingPageQuery.isLoading,
   };
 
   return (

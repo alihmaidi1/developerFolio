@@ -38,8 +38,8 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
         created!.IsSuccess.Should().BeTrue();
         created.Value.Should().NotBeEmpty();
 
-        var projects = await _client.GetFromJsonAsync<OperationResultResponse<ProjectResponse[]>>("/api/projects");
-        projects!.Value.Should().ContainSingle(project => project.Title == "Developer Folio");
+        var landingPage = await _client.GetFromJsonAsync<OperationResultResponse<LandingPageResponse>>("/api/landing-page");
+        landingPage!.Value!.Projects.Should().ContainSingle(project => project.Title == "Developer Folio");
     }
 
     [Fact]
@@ -63,14 +63,14 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
             await dbContext.SaveChangesAsync();
         }
 
-        var response = await _client.GetAsync("/api/work-experience");
+        var response = await _client.GetAsync("/api/landing-page");
         var responseText = await response.Content.ReadAsStringAsync();
         response.StatusCode.Should().Be(HttpStatusCode.OK, responseText);
 
-        var entries = await response.Content.ReadFromJsonAsync<OperationResultResponse<WorkExperienceResponse[]>>();
+        var landingPage = await response.Content.ReadFromJsonAsync<OperationResultResponse<LandingPageResponse>>();
 
-        entries!.IsSuccess.Should().BeTrue();
-        entries.Value.Should().ContainSingle(entry =>
+        landingPage!.IsSuccess.Should().BeTrue();
+        landingPage.Value!.WorkExperiences.Should().ContainSingle(entry =>
             entry.Role == "Senior AI DevOps Engineer" &&
             entry.Company == "Cloud Platform Team" &&
             entry.DescriptionBullets.Length == 2);
@@ -131,6 +131,9 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
 
     private sealed record LoginResponse(Guid Id, string Email);
     private sealed record ProjectResponse(Guid Id, string Title);
+    private sealed record LandingPageResponse(
+        ProjectResponse[] Projects,
+        WorkExperienceResponse[] WorkExperiences);
     private sealed record WorkExperienceResponse(
         Guid Id,
         string Role,

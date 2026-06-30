@@ -47,3 +47,37 @@ export interface PublishedWorkExperience {
   companyLogoUrl: string | null;
   descriptionBullets: string[];
 }
+
+export interface PublishedSkillStatement {
+  id: string;
+  text: string;
+}
+
+export interface PublishedSoftwareSkill {
+  id: string;
+  name: string;
+  iconClassName: string;
+}
+
+export interface PublishedSkills {
+  statements: PublishedSkillStatement[];
+  softwareSkills: PublishedSoftwareSkill[];
+}
+
+export interface PublishedEducation {
+  id: string;
+  schoolName: string;
+  degree: string;
+  duration: string;
+  description: string | null;
+  logoUrl: string | null;
+  descriptionBullets: string[];
+}
+
+export interface LandingPageResponse {
+  settings: PortfolioSettingsResponse;
+  projects: PublishedProject[];
+  skills: PublishedSkills;
+  educations: PublishedEducation[];
+  workExperiences: PublishedWorkExperience[];
+}
