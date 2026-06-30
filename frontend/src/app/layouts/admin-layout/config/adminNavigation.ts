@@ -1,7 +1,6 @@
 import {
   BrainCircuit,
   Briefcase,
-  FileText,
   FolderKanban,
   GraduationCap,
   LayoutDashboard,
@@ -55,11 +54,5 @@ export const adminNavigationItems: AdminNavigationItem[] = [
     icon: Settings,
     label: "Settings",
     to: "/admin/settings",
-  },
-  {
-    description: "Document management",
-    icon: FileText,
-    label: "Resume",
-    meta: "Soon",
   },
 ];

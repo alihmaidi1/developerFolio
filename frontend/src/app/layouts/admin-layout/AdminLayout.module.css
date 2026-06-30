@@ -115,7 +115,7 @@
 }
 
 .navigation {
-  margin-top: 50px;
+  margin-top: 28px;
   display: grid;
   gap: 7px;
 }
@@ -321,9 +321,8 @@
     padding: 14px 18px;
     border-right: 0;
     border-bottom: 1px solid var(--admin-color-border);
-    display: grid;
-    grid-template-columns: 1fr auto;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
     position: static;
   }
 
