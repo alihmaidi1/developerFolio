@@ -5,7 +5,7 @@
   --error-muted: #9b98a8;
 
   box-sizing: border-box;
-  color: var(--ui-color-text, #1f1f24);
+  color: var(--ui-color-text, #fafafa);
   background: transparent;
   padding: clamp(32px, 7vw, 80px);
   display: flex;
@@ -42,7 +42,7 @@
 
 .description {
   max-width: 560px;
-  color: var(--ui-color-muted, var(--error-muted));
+  color: var(--ui-color-muted, #a3a3a3);
   margin: 20px 0 0;
   line-height: 1.7;
 }
@@ -70,9 +70,9 @@
 }
 
 .action {
-  color: var(--ui-color-accent-contrast, #fff);
-  background: var(--ui-color-accent, var(--error-accent));
-  border: 1px solid var(--ui-color-accent, var(--error-accent));
+  color: var(--ui-color-accent-contrast, #0a0a0a);
+  background: var(--ui-color-accent, #84cc16);
+  border: 1px solid var(--ui-color-accent, #84cc16);
 }
 
 .link {

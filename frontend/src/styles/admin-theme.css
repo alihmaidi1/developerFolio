@@ -86,6 +86,8 @@
   --ui-focus-shadow: var(--shadow-focus);
   --ui-input-background: var(--bg-input);
   --ui-input-radius: var(--radius-lg);
+  --ui-input-height: 48px;
+  --ui-input-padding: 0 14px;
   --ui-radius: var(--radius-md);
   --ui-transition-fast: var(--transition-fast);
 }

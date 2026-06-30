@@ -6,16 +6,16 @@
 }
 
 .error {
-  color: var(--ui-color-danger, #c7354f);
+  color: var(--ui-color-danger, #ef4444);
   background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .info {
-  color: var(--ui-color-accent, #55198b);
+  color: var(--ui-color-accent, #84cc16);
   background: color-mix(in srgb, currentColor 8%, transparent);
 }
 
 .success {
-  color: var(--ui-color-positive, #278346);
+  color: var(--ui-color-positive, #22c55e);
   background: color-mix(in srgb, currentColor 8%, transparent);
 }

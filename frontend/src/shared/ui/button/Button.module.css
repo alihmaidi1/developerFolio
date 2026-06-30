@@ -27,7 +27,7 @@
 }
 
 .button:focus-visible {
-  outline: 2px solid var(--ui-color-accent, #55198b);
+  outline: 2px solid var(--ui-color-accent, #84cc16);
   outline-offset: 3px;
 }
 
@@ -42,24 +42,24 @@
 }
 
 .primary {
-  color: var(--ui-color-accent-contrast, #fff);
-  background: var(--ui-color-accent, #55198b);
-  border-color: var(--ui-color-accent, #55198b);
+  color: var(--ui-color-accent-contrast, #0a0a0a);
+  background: var(--ui-color-accent, #84cc16);
+  border-color: var(--ui-color-accent, #84cc16);
 }
 
 .primary:hover:not(:disabled) {
-  background: var(--ui-color-accent-hover, #8c43ce);
-  border-color: var(--ui-color-accent-hover, #8c43ce);
+  background: var(--ui-color-accent-hover, #a3e635);
+  border-color: var(--ui-color-accent-hover, #a3e635);
 }
 
 .secondary {
-  color: var(--ui-color-text, #1f1f24);
+  color: var(--ui-color-text, #fafafa);
   background: transparent;
-  border-color: var(--ui-color-border, rgb(31 31 36 / 24%));
+  border-color: var(--ui-color-border, rgb(250 250 250 / 24%));
 }
 
 .ghost {
-  color: var(--ui-color-muted, #75727e);
+  color: var(--ui-color-muted, #a3a3a3);
   background: transparent;
 }
 
