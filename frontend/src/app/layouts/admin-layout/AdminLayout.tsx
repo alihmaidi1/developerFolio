@@ -13,27 +13,27 @@ interface AdminLayoutProps {
 export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
   const admin = useAppSelector((state) => state.adminAuth.user);
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
-  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
+  const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
   const toggleDesktopSidebar = () =>
     setIsSidebarCollapsed((currentValue) => !currentValue);
   const toggleMobileSidebar = () =>
-    setIsMobileSidebarOpen((currentValue) => !currentValue);
+    setIsMobileNavigationOpen((currentValue) => !currentValue);
 
   return (
     <div
       className={cn(
         styles.layout,
         isSidebarCollapsed && styles.layoutSidebarCollapsed,
-        isMobileSidebarOpen && styles.layoutMobileSidebarOpen,
+        isMobileNavigationOpen && styles.layoutMobileSidebarOpen,
       )}
     >
       <AdminSidebar
         isCollapsed={isSidebarCollapsed}
-        isMobileOpen={isMobileSidebarOpen}
+        isMobileOpen={isMobileNavigationOpen}
         email={admin?.email}
         isLoggingOut={isLoggingOut}
         onLogout={onLogout}
-        onNavigate={() => setIsMobileSidebarOpen(false)}
+        onNavigate={() => setIsMobileNavigationOpen(false)}
         onToggleDesktop={toggleDesktopSidebar}
         onToggleMobile={toggleMobileSidebar}
       />

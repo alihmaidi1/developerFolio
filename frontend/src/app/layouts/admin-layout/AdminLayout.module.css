@@ -1,4 +1,6 @@
 .layout {
+  --admin-sidebar-width: 272px;
+  --admin-sidebar-collapsed-width: 92px;
   --ui-radius: 11px;
 
   color-scheme: dark;
@@ -6,26 +8,29 @@
   color: var(--admin-color-text);
   background: var(--admin-color-background);
   display: grid;
-  grid-template-columns: 264px minmax(0, 1fr);
+  grid-template-columns: var(--admin-sidebar-width) minmax(0, 1fr);
   transition: grid-template-columns var(--admin-transition-fast);
 }
 
 .layoutSidebarCollapsed {
-  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-columns: var(--admin-sidebar-collapsed-width) minmax(0, 1fr);
 }
 
 .sidebar {
   height: 100svh;
+  min-width: 0;
   background: var(--admin-color-surface);
   border-right: 1px solid var(--admin-color-border);
-  padding: 24px 20px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
+  gap: 18px;
   position: sticky;
   top: 0;
 }
 
-.sidebarHeader {
+.sidebarTop {
+  min-width: 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -33,61 +38,65 @@
 }
 
 .brand {
+  min-width: 0;
   color: inherit;
-  padding: 4px;
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  align-self: flex-start;
   text-decoration: none;
 }
 
-.brand:focus-visible,
-.navigationLink:focus-visible,
-.logoutButton:focus-visible,
-.sidebarToggleDesktop:focus-visible,
-.sidebarToggleMobile:focus-visible {
-  outline: 2px solid var(--admin-color-accent);
-  outline-offset: 3px;
-  border-radius: 10px;
-}
-
 .brandMark {
-  width: 36px;
-  height: 36px;
+  width: 38px;
+  height: 38px;
   color: var(--ui-color-accent-contrast);
   background: var(--admin-color-accent);
-  border-radius: 10px;
+  border-radius: 11px;
   display: grid;
   place-items: center;
+  flex: 0 0 auto;
   font-size: 0.74rem;
-  font-weight: 700;
+  font-weight: 800;
+  letter-spacing: 0.04em;
 }
 
-.brandCopy {
+.brandText,
+.navigationText,
+.accountText,
+.logoutButton span,
+.navigationLabel,
+.navigationMeta {
+  transition:
+    opacity var(--admin-transition-fast),
+    transform var(--admin-transition-fast);
+}
+
+.brandText {
+  min-width: 0;
   display: grid;
   gap: 2px;
 }
 
-.brandName {
+.brandText strong {
   font-size: 0.78rem;
+  font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
 
-.brandCopy small {
+.brandText small {
   color: var(--admin-color-muted);
   font-size: 0.66rem;
 }
 
-.sidebarToggleDesktop,
-.sidebarToggleMobile {
-  width: 36px;
-  height: 36px;
+.desktopToggle,
+.mobileToggle {
+  width: 38px;
+  height: 38px;
   color: var(--admin-color-muted);
   background: var(--admin-color-surface-raised);
   border: 1px solid var(--admin-color-border);
-  border-radius: 10px;
+  border-radius: 11px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
@@ -98,65 +107,71 @@
     border-color var(--admin-transition-fast);
 }
 
-.sidebarToggleDesktop:hover,
-.sidebarToggleMobile:hover {
+.desktopToggle:hover,
+.mobileToggle:hover {
   color: var(--admin-color-accent);
   border-color: var(--admin-color-border-strong);
 }
 
-.sidebarToggleDesktop svg,
-.sidebarToggleMobile svg {
-  width: 18px;
-  height: 18px;
+.brand:focus-visible,
+.desktopToggle:focus-visible,
+.mobileToggle:focus-visible,
+.navigationLink:focus-visible,
+.logoutButton:focus-visible {
+  outline: 2px solid var(--admin-color-accent);
+  outline-offset: 3px;
+  border-radius: 12px;
 }
 
-.sidebarToggleMobile {
+.desktopToggle svg,
+.mobileToggle svg,
+.navigationLink > svg,
+.navigationUnavailable > svg,
+.logoutButton svg {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.mobileToggle {
   display: none;
 }
 
+.sidebarBody {
+  min-height: 0;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 18px;
+}
+
 .navigation {
-  margin-top: 28px;
+  min-width: 0;
   display: grid;
-  gap: 7px;
+  gap: 6px;
 }
 
 .navigationLabel {
   color: var(--admin-color-subtle);
-  margin: 0 12px 8px;
+  margin: 0 12px 6px;
   font-size: 0.65rem;
-  font-weight: 700;
+  font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
 
 .navigationLink,
 .navigationUnavailable {
-  min-height: 56px;
+  min-width: 0;
+  min-height: 48px;
   color: var(--admin-color-muted);
-  border-radius: 12px;
+  border-radius: 13px;
   padding: 0 12px;
   display: flex;
   align-items: center;
-  justify-content: center;
   gap: 11px;
   font-size: 0.82rem;
   text-decoration: none;
-}
-
-.layoutSidebarCollapsed .navigationLink,
-.layoutSidebarCollapsed .navigationUnavailable {
-  justify-content: center;
-  padding: 0;
-}
-
-.navigationLink > svg,
-.navigationUnavailable > svg {
-  width: 18px;
-  height: 18px;
-  flex: 0 0 auto;
-}
-
-.navigationLink {
   transition:
     color var(--admin-transition-fast),
     background-color var(--admin-transition-fast);
@@ -172,40 +187,34 @@
   background: var(--admin-color-accent-soft);
 }
 
-.navigationCopy {
+.navigationText {
   min-width: 0;
   display: grid;
   gap: 3px;
 }
 
-.navigationCopy strong {
-  color: inherit;
-  font-size: 0.8rem;
-  font-weight: 650;
+.navigationText strong,
+.navigationText small,
+.accountText small,
+.accountText strong {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
-.navigationCopy small {
+.navigationText strong {
+  color: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.navigationText small {
   color: var(--admin-color-subtle);
   font-size: 0.66rem;
 }
 
-.collapsedOnlyHidden {
-  transition:
-    opacity var(--admin-transition-fast),
-    width var(--admin-transition-fast);
-}
-
-.layoutSidebarCollapsed .collapsedOnlyHidden {
-  width: 0;
-  height: 0;
-  opacity: 0;
-  overflow: hidden;
-  white-space: nowrap;
-  pointer-events: none;
-}
-
 .navigationUnavailable {
-  opacity: 0.66;
+  opacity: 0.62;
 }
 
 .navigationMeta {
@@ -215,14 +224,15 @@
   margin-left: auto;
   padding: 4px 7px;
   font-size: 0.6rem;
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
 }
 
 .account {
+  min-width: 0;
   background: var(--admin-color-surface-raised);
   border: 1px solid var(--admin-color-border);
-  border-radius: 14px;
+  border-radius: 16px;
   margin-top: auto;
   padding: 12px;
 }
@@ -239,40 +249,33 @@
   height: 34px;
   color: var(--admin-color-accent);
   background: var(--admin-color-accent-soft);
-  border-radius: 10px;
+  border-radius: 11px;
   display: grid;
   place-items: center;
   flex: 0 0 auto;
   font-size: 0.76rem;
-  font-weight: 700;
+  font-weight: 800;
 }
 
-.accountCopy {
+.accountText {
   min-width: 0;
   display: grid;
   gap: 4px;
 }
 
-.accountCopy small,
-.accountCopy strong {
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.accountCopy small {
+.accountText small {
   color: var(--admin-color-subtle);
   font-size: 0.64rem;
 }
 
-.accountCopy strong {
+.accountText strong {
   font-size: 0.72rem;
-  font-weight: 600;
-  white-space: nowrap;
+  font-weight: 700;
 }
 
 .logoutButton {
   width: 100%;
-  min-height: 38px;
+  min-height: 40px;
   color: var(--admin-color-muted);
   background: transparent;
   border: 0;
@@ -287,10 +290,6 @@
   cursor: pointer;
 }
 
-.layoutSidebarCollapsed .logoutButton {
-  justify-content: center;
-}
-
 .logoutButton:hover:not(:disabled) {
   color: var(--admin-color-danger);
 }
@@ -300,9 +299,40 @@
   opacity: 0.6;
 }
 
-.logoutButton svg {
-  width: 16px;
-  height: 16px;
+.layoutSidebarCollapsed .sidebar {
+  padding-inline: 16px;
+}
+
+.layoutSidebarCollapsed .brand {
+  justify-content: center;
+}
+
+.layoutSidebarCollapsed .brandText,
+.layoutSidebarCollapsed .navigationText,
+.layoutSidebarCollapsed .navigationLabel,
+.layoutSidebarCollapsed .navigationMeta,
+.layoutSidebarCollapsed .accountText,
+.layoutSidebarCollapsed .logoutButton span {
+  width: 0;
+  opacity: 0;
+  overflow: hidden;
+  transform: translateX(-6px);
+  pointer-events: none;
+}
+
+.layoutSidebarCollapsed .navigationLink,
+.layoutSidebarCollapsed .navigationUnavailable,
+.layoutSidebarCollapsed .logoutButton {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+.layoutSidebarCollapsed .account {
+  padding: 10px;
+}
+
+.layoutSidebarCollapsed .accountIdentity {
+  justify-content: center;
 }
 
 .workspace {
@@ -311,10 +341,7 @@
 }
 
 @media (max-width: 760px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
+  .layout,
   .layoutSidebarCollapsed {
     grid-template-columns: 1fr;
   }
@@ -324,62 +351,57 @@
     padding: 14px 18px;
     border-right: 0;
     border-bottom: 1px solid var(--admin-color-border);
-    display: flex;
-    flex-direction: column;
     position: static;
   }
 
-  .sidebarHeader {
-    min-width: 0;
-  }
-
-  .sidebarToggleDesktop {
+  .desktopToggle {
     display: none;
   }
 
-  .sidebarToggleMobile {
+  .mobileToggle {
     display: grid;
   }
 
-  .navigation {
+  .layoutSidebarCollapsed .brand {
+    justify-content: flex-start;
+  }
+
+  .sidebarBody {
     display: none;
-    grid-column: 1 / -1;
-    width: 100%;
-    margin-top: 14px;
+    gap: 14px;
     padding-top: 14px;
     border-top: 1px solid var(--admin-color-border);
   }
 
-  .layoutMobileSidebarOpen .navigation {
-    display: grid;
+  .layoutMobileSidebarOpen .sidebarBody {
+    display: flex;
   }
 
-  .layoutSidebarCollapsed .navigationLink,
-  .layoutSidebarCollapsed .navigationUnavailable {
-    justify-content: flex-start;
-    padding: 0 12px;
-  }
-
-  .layoutSidebarCollapsed .collapsedOnlyHidden {
+  .layoutSidebarCollapsed .brandText,
+  .layoutSidebarCollapsed .navigationText,
+  .layoutSidebarCollapsed .navigationLabel,
+  .layoutSidebarCollapsed .navigationMeta,
+  .layoutSidebarCollapsed .accountText,
+  .layoutSidebarCollapsed .logoutButton span {
     width: auto;
     opacity: 1;
     overflow: visible;
+    transform: none;
     pointer-events: auto;
   }
 
+  .layoutSidebarCollapsed .navigationLink,
+  .layoutSidebarCollapsed .navigationUnavailable,
+  .layoutSidebarCollapsed .logoutButton {
+    justify-content: flex-start;
+    padding-inline: 12px;
+  }
+
   .account {
-    display: none;
     background: transparent;
     border: 0;
     margin: 0;
     padding: 0;
-  }
-
-  .layoutMobileSidebarOpen .account {
-    display: block;
-    margin-top: 14px;
-    padding-top: 14px;
-    border-top: 1px solid var(--admin-color-border);
   }
 
   .accountIdentity {
@@ -388,10 +410,9 @@
 
   .logoutButton {
     width: auto;
-    min-height: 40px;
-    border: 0;
-    margin: 0;
-    padding: 0 4px;
+    border-top: 0;
+    margin-top: 0;
+    padding: 0 12px;
   }
 
   .workspace {
@@ -401,10 +422,16 @@
 
 @media (prefers-reduced-motion: reduce) {
   .layout,
+  .brandText,
+  .navigationText,
+  .accountText,
+  .logoutButton span,
+  .navigationLabel,
+  .navigationMeta,
+  .desktopToggle,
+  .mobileToggle,
   .navigationLink,
-  .collapsedOnlyHidden,
-  .sidebarToggleDesktop,
-  .sidebarToggleMobile {
+  .navigationUnavailable {
     transition: none;
   }
 }
