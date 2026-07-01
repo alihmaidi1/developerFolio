@@ -12,6 +12,7 @@ interface AdminLayoutProps {
 
 export function AdminLayout({ onLogout, isLoggingOut }: AdminLayoutProps) {
   const admin = useAppSelector((state) => state.adminAuth.user);
+
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
   const [isMobileNavigationOpen, setIsMobileNavigationOpen] = useState(false);
   const toggleDesktopSidebar = () =>
