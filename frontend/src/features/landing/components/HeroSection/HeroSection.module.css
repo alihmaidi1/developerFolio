@@ -1,0 +1,313 @@
+/* Layout */
+.section {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: clamp(120px, 16vh, 180px) clamp(20px, 4vw, 40px) clamp(72px, 10vw, 120px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+  position: relative;
+  min-height: 100vh;
+}
+
+/* Left column */
+.intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+/* Status badge */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 7px 12px 7px 10px;
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--accent);
+  text-transform: uppercase;
+  opacity: 0;
+}
+
+.badgeDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 12px var(--accent-glow);
+  position: relative;
+}
+
+.badgeDot::after {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0.5;
+  animation: pulse 2.2s ease-out infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(0.7); opacity: 0.6; }
+  100% { transform: scale(1.8); opacity: 0; }
+}
+
+/* Headlines */
+.heroName {
+  font-size: clamp(40px, 6vw, 68px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0;
+  color: var(--text-primary);
+  opacity: 0;
+}
+
+.heroName .accent {
+  background: linear-gradient(
+    135deg,
+    var(--text-primary) 0%,
+    var(--accent) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.heroTitle {
+  font-size: clamp(18px, 2.2vw, 22px);
+  font-weight: 500;
+  color: var(--text-secondary);
+  margin: 0;
+  max-width: 540px;
+  line-height: 1.45;
+  opacity: 0;
+}
+
+.heroDescription {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--text-muted);
+  max-width: 520px;
+  margin: 0;
+  opacity: 0;
+}
+
+/* Actions */
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 6px;
+  opacity: 0;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px 22px;
+  border-radius: var(--radius-md);
+  font-family: var(--font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  text-decoration: none;
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast),
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.btnPrimary {
+  background: var(--accent);
+  color: var(--bg-base);
+}
+
+.btnPrimary:hover {
+  background: var(--accent-hover);
+  box-shadow: 0 0 28px var(--accent-glow);
+}
+
+.btnSecondary {
+  background: transparent;
+  color: var(--text-primary);
+  border-color: var(--border-strong);
+}
+
+.btnSecondary:hover {
+  border-color: var(--accent-border);
+  color: var(--accent);
+  background: var(--accent-soft);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btnArrow {
+  display: inline-block;
+  transition: transform var(--transition-fast);
+}
+
+.btn:hover .btnArrow {
+  transform: translateX(3px);
+}
+
+/* Tech chips */
+.techRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 14px;
+  margin-top: 18px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  opacity: 0;
+}
+
+.techRow span {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.techRow span::before {
+  content: "·";
+  color: var(--accent);
+  font-size: 18px;
+  line-height: 0;
+}
+
+.techRow span:first-child::before {
+  content: "›";
+  color: var(--accent);
+  font-size: 14px;
+  line-height: 1;
+}
+
+/* Right column */
+.sceneWrap {
+  position: relative;
+  height: clamp(440px, 60vh, 620px);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background:
+    radial-gradient(
+      ellipse at center 70%,
+      var(--accent-soft-2) 0%,
+      transparent 55%
+    );
+}
+
+.sceneWrap::before {
+  content: "";
+  position: absolute;
+  inset: 12px;
+  border: 1px solid var(--border-default);
+  border-radius: calc(var(--radius-xl) - 4px);
+  pointer-events: none;
+  z-index: 2;
+  background:
+    linear-gradient(to bottom, transparent 0%, transparent 92%, rgb(0 0 0 / 40%) 100%);
+}
+
+.sceneWrap::after {
+  content: "";
+  position: absolute;
+  left: 24px;
+  top: 24px;
+  width: 50px;
+  height: 50px;
+  border-left: 1px solid var(--accent);
+  border-top: 1px solid var(--accent);
+  border-top-left-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.5;
+}
+
+.sceneCornerBR {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  width: 50px;
+  height: 50px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  border-bottom-right-radius: var(--radius-md);
+  pointer-events: none;
+  z-index: 3;
+  opacity: 0.5;
+}
+
+.sceneLabel {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgb(13 13 13 / 70%);
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-secondary);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 3;
+}
+
+.sceneLabel::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+  .section {
+    grid-template-columns: 1fr;
+    min-height: auto;
+    padding-top: clamp(100px, 14vh, 140px);
+  }
+
+  .sceneWrap {
+    height: clamp(360px, 50vh, 480px);
+    order: 2;
+  }
+
+  .intro {
+    order: 1;
+  }
+}
+
+@media (max-width: 640px) {
+  .heroName {
+    font-size: clamp(36px, 10vw, 48px);
+  }
+
+  .sceneWrap {
+    height: 360px;
+  }
+}

@@ -1,0 +1,470 @@
+.skeleton {
+  min-height: 100vh;
+}
+
+.shimmer {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  background:
+    linear-gradient(
+      90deg,
+      var(--bg-surface) 0%,
+      var(--bg-surface-2) 42%,
+      color-mix(in srgb, var(--accent-soft) 70%, var(--bg-surface-2)) 50%,
+      var(--bg-surface-2) 58%,
+      var(--bg-surface) 100%
+    );
+  background-size: 240% 100%;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-md);
+  animation: landing-shimmer 1500ms ease-in-out infinite;
+}
+
+.rounded {
+  border-radius: 999px;
+}
+
+@keyframes landing-shimmer {
+  0% { background-position: 120% 0; }
+  100% { background-position: -120% 0; }
+}
+
+.hero {
+  width: 100%;
+  max-width: 1280px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: clamp(120px, 16vh, 180px) clamp(20px, 4vw, 40px) clamp(72px, 10vw, 120px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(32px, 5vw, 64px);
+  align-items: center;
+}
+
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+}
+
+.badge {
+  width: min(220px, 62vw);
+  height: 33px;
+}
+
+.heroTitleA,
+.heroTitleB {
+  height: clamp(44px, 6vw, 70px);
+}
+
+.heroTitleA {
+  width: min(560px, 92%);
+}
+
+.heroTitleB {
+  width: min(390px, 70%);
+}
+
+.heroLineA,
+.heroLineB {
+  height: 20px;
+}
+
+.heroLineA {
+  width: min(520px, 88%);
+}
+
+.heroLineB {
+  width: min(430px, 76%);
+}
+
+.actions,
+.chips,
+.projectTags,
+.contactLinks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.actionPrimary,
+.actionSecondary {
+  height: 48px;
+}
+
+.actionPrimary {
+  width: 148px;
+}
+
+.actionSecondary {
+  width: 132px;
+}
+
+.chips {
+  margin-top: 12px;
+}
+
+.chip {
+  width: 82px;
+  height: 18px;
+}
+
+.scene {
+  position: relative;
+  height: clamp(440px, 60vh, 620px);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 50% 64%, var(--accent-soft-2), transparent 54%),
+    var(--bg-surface);
+}
+
+.scene::before,
+.scene::after {
+  content: "";
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  pointer-events: none;
+  opacity: 0.45;
+}
+
+.scene::before {
+  left: 24px;
+  top: 24px;
+  border-left: 1px solid var(--accent);
+  border-top: 1px solid var(--accent);
+  border-top-left-radius: var(--radius-md);
+}
+
+.scene::after {
+  right: 24px;
+  bottom: 24px;
+  border-right: 1px solid var(--accent);
+  border-bottom: 1px solid var(--accent);
+  border-bottom-right-radius: var(--radius-md);
+}
+
+.scenePill {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 158px;
+  height: 30px;
+}
+
+.sceneOrb {
+  position: absolute;
+  width: clamp(170px, 28vw, 270px);
+  height: clamp(170px, 28vw, 270px);
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+}
+
+.sceneLines {
+  position: absolute;
+  left: 12%;
+  right: 12%;
+  bottom: 16%;
+  display: grid;
+  gap: 12px;
+}
+
+.sceneLine {
+  height: 14px;
+}
+
+.sceneLine:nth-child(1) { width: 82%; }
+.sceneLine:nth-child(2) { width: 64%; }
+.sceneLine:nth-child(3) { width: 74%; }
+.sceneLine:nth-child(4) { width: 48%; }
+
+.section {
+  display: block;
+}
+
+.sectionHead {
+  margin-bottom: 48px;
+}
+
+.eyebrow {
+  width: 190px;
+  height: 18px;
+}
+
+.sectionTitle {
+  width: min(440px, 82vw);
+  height: 44px;
+  margin-top: 18px;
+}
+
+.sectionLead {
+  width: min(640px, 100%);
+  height: 22px;
+  margin-top: 18px;
+}
+
+.profileGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
+  gap: clamp(24px, 4vw, 48px);
+}
+
+.profileBody {
+  height: 220px;
+}
+
+.statGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.stat {
+  display: grid;
+  gap: 12px;
+  padding: 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  background: var(--bg-surface);
+}
+
+.statValue {
+  width: 70%;
+  height: 40px;
+}
+
+.statLabel {
+  width: 100%;
+  height: 16px;
+}
+
+.skillsGrid,
+.contactGrid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(28px, 4vw, 56px);
+}
+
+.capabilityList {
+  display: grid;
+  gap: 10px;
+}
+
+.capability {
+  height: 78px;
+}
+
+.skillTiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.skillTile {
+  height: 104px;
+}
+
+.projectGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+}
+
+.project {
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+}
+
+.projectMedia {
+  aspect-ratio: 16 / 10;
+}
+
+.projectTitle {
+  width: 72%;
+  height: 28px;
+}
+
+.projectBody {
+  height: 72px;
+}
+
+.projectTag,
+.projectTagShort {
+  height: 24px;
+}
+
+.projectTag {
+  width: 78px;
+}
+
+.projectTagShort {
+  width: 54px;
+}
+
+.timeline {
+  position: relative;
+  display: grid;
+  gap: 64px;
+  padding: 6px 0;
+}
+
+.timelineSpine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: var(--border-strong);
+  opacity: 0.38;
+}
+
+.timelineItem {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  align-items: start;
+}
+
+.timelineItem:nth-child(odd) .timelineCard {
+  grid-column: 3;
+}
+
+.timelineItem:nth-child(even) .timelineCard {
+  grid-column: 1;
+}
+
+.timelineDot {
+  grid-column: 2;
+  justify-self: center;
+  width: 16px;
+  height: 16px;
+  margin-top: 32px;
+}
+
+.timelineCard {
+  height: 174px;
+}
+
+.terminal,
+.contactAside {
+  display: grid;
+  gap: 14px;
+}
+
+.terminal {
+  padding: 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-xl);
+  background: var(--bg-surface);
+}
+
+.terminalBar {
+  height: 36px;
+}
+
+.terminalLine {
+  height: 20px;
+}
+
+.terminalLine:nth-child(3) { width: 84%; }
+.terminalLine:nth-child(4) { width: 72%; }
+.terminalLine:nth-child(5) { width: 64%; }
+.terminalLine:nth-child(6) { width: 78%; }
+
+.contactText {
+  height: 112px;
+}
+
+.contactButton {
+  width: 168px;
+  height: 48px;
+}
+
+.contactLink {
+  width: 88px;
+  height: 34px;
+}
+
+@media (max-width: 960px) {
+  .hero,
+  .profileGrid,
+  .skillsGrid,
+  .projectGrid,
+  .contactGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .hero {
+    min-height: auto;
+    padding-top: clamp(100px, 14vh, 140px);
+  }
+
+  .scene {
+    height: clamp(360px, 50vh, 480px);
+  }
+
+  .projectGrid {
+    gap: 16px;
+  }
+}
+
+@media (max-width: 880px) {
+  .timelineSpine {
+    left: 16px;
+    transform: none;
+  }
+
+  .timelineItem {
+    grid-template-columns: 1fr;
+    padding-left: 48px;
+  }
+
+  .timelineItem:nth-child(odd) .timelineCard,
+  .timelineItem:nth-child(even) .timelineCard {
+    grid-column: 1;
+  }
+
+  .timelineDot {
+    position: absolute;
+    left: 16px;
+    top: 32px;
+    grid-column: auto;
+    margin: 0;
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 640px) {
+  .heroTitleA,
+  .heroTitleB {
+    height: 48px;
+  }
+
+  .scene {
+    height: 360px;
+  }
+
+  .statGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .skillTiles {
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shimmer {
+    animation: none;
+  }
+}

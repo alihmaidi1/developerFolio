@@ -1,0 +1,288 @@
+/* ============ LAYOUT ============ */
+.wrap {
+  display: grid;
+  grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.columnTitle {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 4px;
+}
+
+.columnTitle::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    var(--border-strong),
+    transparent
+  );
+}
+
+/* ============ CAPABILITIES (left) ============ */
+.capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.capability {
+  position: relative;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 14px;
+  align-items: start;
+  padding: 16px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  transition:
+    border-color var(--transition-fast),
+    transform var(--transition-fast),
+    background var(--transition-fast);
+}
+
+.capability:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-surface-2);
+  transform: translateX(2px);
+}
+
+.capability::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 14px;
+  bottom: 14px;
+  width: 2px;
+  background: var(--accent);
+  border-radius: 0 2px 2px 0;
+  opacity: 0;
+  transition: opacity var(--transition-fast);
+}
+
+.capability:hover::before {
+  opacity: 0.85;
+}
+
+.capabilityIndex {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  padding-top: 2px;
+  min-width: 28px;
+}
+
+.capabilityText {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+/* ============ ICON GRID (right) ============ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: 10px;
+}
+
+.tile {
+  --tile-rotate: 0deg;
+  --tile-lift: 0px;
+  --tile-glow: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 22px 14px 18px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  cursor: default;
+  transition:
+    border-color 220ms ease,
+    transform 280ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    background 220ms ease,
+    box-shadow 220ms ease;
+  isolation: isolate;
+}
+
+/* Soft radial accent that grows on hover */
+.tile::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(
+    140px circle at 50% 90%,
+    var(--accent-soft-2),
+    transparent 60%
+  );
+  opacity: 0;
+  transition: opacity 280ms ease;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Top accent line that draws in on hover */
+.tile::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 0;
+  height: 1px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent-glow);
+  transform: translateX(-50%);
+  transition: width 280ms ease;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.tile:hover {
+  border-color: var(--accent-border);
+  background: var(--bg-surface-2);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgb(0 0 0 / 40%);
+}
+
+.tile:hover::before {
+  opacity: 1;
+}
+
+.tile:hover::after {
+  width: 60%;
+}
+
+.tileIcon {
+  position: relative;
+  z-index: 1;
+  font-size: 30px;
+  line-height: 1;
+  color: var(--text-secondary);
+  transition:
+    color 220ms ease,
+    transform 380ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    filter 280ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+}
+
+.tile:hover .tileIcon {
+  color: var(--accent);
+  transform: translateY(-2px) scale(1.12) rotate(-6deg);
+  filter: drop-shadow(0 0 10px var(--accent-glow));
+  animation: tile-icon-wiggle 600ms ease;
+}
+
+@keyframes tile-icon-wiggle {
+  0%   { transform: translateY(0) rotate(0deg) scale(1); }
+  30%  { transform: translateY(-4px) rotate(-10deg) scale(1.15); }
+  60%  { transform: translateY(-2px) rotate(6deg) scale(1.1); }
+  100% { transform: translateY(-2px) rotate(-6deg) scale(1.12); }
+}
+
+.tileName {
+  position: relative;
+  z-index: 1;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  text-align: center;
+  transition: color 220ms ease;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+
+.tile:hover .tileName {
+  color: var(--text-primary);
+}
+
+/* Idle floating animation — tiny vertical drift, alternating direction */
+.tile {
+  animation: tile-idle 6s ease-in-out infinite;
+  animation-delay: calc(var(--tile-i, 0) * 220ms);
+}
+
+@keyframes tile-idle {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-3px); }
+}
+
+.tile:nth-child(odd) {
+  animation-name: tile-idle-alt;
+}
+
+@keyframes tile-idle-alt {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(3px); }
+}
+
+/* Disable idle drift on hover so the lift transform takes over cleanly */
+.tile:hover {
+  animation: none;
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 960px) {
+  .wrap {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .grid {
+    grid-template-columns: repeat(auto-fill, minmax(88px, 1fr));
+    gap: 8px;
+  }
+  .tile {
+    padding: 18px 8px 14px;
+    gap: 10px;
+  }
+  .tileIcon {
+    font-size: 24px;
+  }
+}
+
+/* ============ MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .tile,
+  .tile:nth-child(odd) {
+    animation: none;
+  }
+  .tile:hover .tileIcon {
+    animation: none;
+    transform: scale(1.05);
+  }
+}

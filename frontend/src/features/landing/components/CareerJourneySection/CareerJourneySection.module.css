@@ -1,0 +1,375 @@
+/* ============ TIMELINE LAYOUT ============ */
+.timeline {
+  position: relative;
+  margin-top: 40px;
+}
+
+/* Center spine — track + animated fill */
+.spine {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.spineTrack {
+  position: absolute;
+  inset: 0;
+  background: var(--border-strong);
+  border-radius: 1px;
+  opacity: 0.45;
+}
+
+.spineFill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    var(--accent) 12%,
+    var(--accent) 88%,
+    transparent 100%
+  );
+  border-radius: 1px;
+  box-shadow: 0 0 14px var(--accent-glow);
+  transform: scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+.spineFill::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgb(255 255 255 / 0.72) 45%,
+    transparent 78%
+  );
+  opacity: 0.34;
+  animation: spine-shimmer 2400ms ease-in-out infinite;
+}
+
+@keyframes spine-shimmer {
+  0% { transform: translateY(-28%); opacity: 0; }
+  34% { opacity: 0.38; }
+  100% { transform: translateY(94%); opacity: 0; }
+}
+
+/* Spine endpoint glyphs */
+.spineCap {
+  position: absolute;
+  left: 50%;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--bg-base);
+  border: 2px solid var(--accent);
+  box-shadow:
+    0 0 0 4px var(--bg-base),
+    0 0 14px var(--accent-glow);
+  z-index: 2;
+  will-change: transform, opacity;
+}
+
+.spineCapTop {
+  top: 0;
+}
+
+.spineCapBottom {
+  bottom: 0;
+  transform: translate(-50%, 50%);
+}
+
+/* Items row — relative so the dot can sit at center */
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 64px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  position: relative;
+  z-index: 1;
+}
+
+.item {
+  position: relative;
+  display: grid;
+  grid-template-columns: 1fr 56px 1fr;
+  align-items: start;
+  min-height: 80px;
+  will-change: opacity;
+}
+
+/* Center marker — dot on the spine */
+.dot {
+  grid-column: 2;
+  justify-self: center;
+  position: relative;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--bg-base);
+  border: 2px solid var(--accent);
+  margin-top: 28px;
+  box-shadow:
+    0 0 0 4px var(--bg-base),
+    0 0 16px var(--accent-glow);
+  z-index: 3;
+  will-change: transform, opacity;
+}
+
+.dot::before {
+  content: "";
+  position: absolute;
+  inset: 2px;
+  border-radius: 50%;
+  background: var(--accent);
+  opacity: 0;
+  transform: scale(0.5);
+  transition:
+    opacity 220ms ease,
+    transform 220ms ease;
+}
+
+.item:hover .dot::before,
+.item[data-anim-active="true"] .dot::before {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Pulsing ring around dot — purely decorative, runs once when visible */
+.dot::after {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 1px solid var(--accent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.item[data-anim-visible="true"] .dot::after {
+  animation: dot-pulse 1800ms ease-out 1;
+}
+
+@keyframes dot-pulse {
+  0%   { opacity: 0.7; transform: scale(0.6); }
+  100% { opacity: 0; transform: scale(2.2); }
+}
+
+/* Connector arm from card to spine */
+.item::before {
+  content: "";
+  position: absolute;
+  top: 36px;
+  width: 24px;
+  height: 1px;
+  background: var(--border-strong);
+  opacity: 0.42;
+  transform: scaleX(0.3);
+  transition:
+    background-color var(--transition-fast),
+    opacity var(--transition-fast),
+    transform var(--transition-fast);
+  z-index: 1;
+}
+
+.item[data-anim-active="true"]::before {
+  background: var(--accent);
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+/* ============ ALTERNATING SIDES ============ */
+.itemLeft .card {
+  grid-column: 1;
+  text-align: right;
+  align-items: flex-end;
+}
+.itemLeft::before {
+  right: calc(50% + 18px);
+  left: auto;
+  transform-origin: right center;
+}
+
+.itemRight .card {
+  grid-column: 3;
+  text-align: left;
+  align-items: flex-start;
+}
+.itemRight::before {
+  left: calc(50% + 18px);
+  transform-origin: left center;
+}
+
+/* ============ CARDS ============ */
+.card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 24px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  transition:
+    background-color var(--transition-fast),
+    border-color var(--transition-fast),
+    translate var(--transition-fast),
+    box-shadow var(--transition-fast);
+  will-change: transform, opacity;
+}
+
+.itemLeft .card { transform-origin: right center; }
+.itemRight .card { transform-origin: left center; }
+
+.itemLeft .card:hover {
+  border-color: var(--accent-border);
+  translate: -2px -2px;
+  box-shadow: var(--shadow-card);
+}
+.itemRight .card:hover {
+  border-color: var(--accent-border);
+  translate: 2px -2px;
+  box-shadow: var(--shadow-card);
+}
+
+.item[data-anim-active="true"] .card {
+  background: color-mix(in srgb, var(--bg-surface) 88%, var(--accent-soft));
+  border-color: var(--accent-border);
+  box-shadow: var(--shadow-card);
+}
+
+.period {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  width: fit-content;
+}
+
+.role {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  margin: 0;
+  line-height: 1.25;
+}
+
+.org {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 4px 0 6px;
+}
+
+.tech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.itemLeft .tech { justify-content: flex-end; }
+.itemRight .tech { justify-content: flex-start; }
+
+.tech span {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 4px 8px;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  color: var(--text-secondary);
+  letter-spacing: 0.04em;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.tech span:hover,
+.item[data-anim-active="true"] .tech span {
+  border-color: var(--accent-border);
+  color: var(--accent);
+}
+
+/* ============ RESPONSIVE — single column on mobile ============ */
+@media (max-width: 880px) {
+  .spine {
+    left: 16px;
+    transform: none;
+  }
+
+  .spineCap {
+    left: 16px;
+  }
+
+  .item {
+    grid-template-columns: 1fr;
+    padding-left: 48px;
+  }
+
+  .dot {
+    position: absolute;
+    left: 16px;
+    top: 28px;
+    margin-top: 0;
+    transform: translateX(-50%);
+    grid-column: auto;
+  }
+
+  .item::before {
+    top: 36px;
+    left: 24px;
+    width: 18px;
+    transform-origin: left center;
+  }
+
+  .itemLeft .card,
+  .itemRight .card {
+    grid-column: 1;
+    text-align: left;
+    align-items: flex-start;
+  }
+
+  .itemLeft .tech,
+  .itemRight .tech {
+    justify-content: flex-start;
+  }
+
+  .itemLeft .card:hover,
+  .itemRight .card:hover {
+    translate: 0 -2px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .item[data-anim-visible="true"] .dot::after {
+    animation: none;
+  }
+}

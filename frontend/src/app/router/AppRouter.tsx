@@ -2,13 +2,9 @@ import { lazy, Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
 import { Loading } from "@/shared/ui";
 import { RouteErrorBoundary } from "./RouteErrorBoundary";
-import {
-  I18nProvider,
-  PortfolioDataProvider,
-  RootLayout,
-} from "@/features/landing";
 
 const AdminRouter = lazy(() => import("./AdminRouter"));
+const LandingPage = lazy(() => import("@/features/landing"));
 
 export function AppRouter() {
   return (
@@ -25,11 +21,9 @@ export function AppRouter() {
         <Route
           path="/*"
           element={
-            <I18nProvider>
-              <PortfolioDataProvider>
-                <RootLayout />
-              </PortfolioDataProvider>
-            </I18nProvider>
+            <RouteErrorBoundary>
+              <LandingPage />
+            </RouteErrorBoundary>
           }
         />
       </Routes>

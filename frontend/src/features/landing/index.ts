@@ -1,3 +1,2 @@
-export { RootLayout } from "./layouts/RootLayout";
-export { I18nProvider } from "./hooks/useI18n";
-export { PortfolioDataProvider } from "./hooks/usePortfolioData";
+export { LandingPage } from "./LandingPage";
+export { default } from "./LandingPage";

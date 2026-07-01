@@ -282,10 +282,16 @@
   z-index: 9999;
   will-change: transform;
   display: none;
+  opacity: 0;
+  transition: opacity 0.12s ease-out;
 
   // Hide cursor on touch devices
   @include mixins.hover {
     display: block;
+  }
+
+  &-visible {
+    opacity: 1;
   }
 }
 
@@ -572,6 +578,25 @@
 
       @include mixins.mq("md") {
         width: 40px;
+      }
+    }
+
+    &-initials {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 40px;
+      min-height: 40px;
+      font-size: 22px;
+      line-height: 1;
+      font-weight: 900;
+      letter-spacing: 0;
+      color: var(--color-text-400);
+
+      @include mixins.mq("md") {
+        min-width: 44px;
+        min-height: 44px;
+        font-size: 24px;
       }
     }
 
@@ -1606,21 +1631,24 @@
   display: flex;
   position: relative;
   overflow: hidden;
+  z-index: 2;
+  pointer-events: none;
 
   &-content {
     align-items: center;
     justify-content: center;
-    height: 46%;
+    height: 50%;
+    padding-top: var(--height-header);
 
     @include mixins.landscape {
       height: 100%;
 
       @include mixins.mq("md") {
-        padding-bottom: 30%;
+        padding-bottom: 28%;
       }
 
       @include mixins.mq("lg") {
-        padding-bottom: 5%;
+        padding-bottom: 6%;
       }
     }
 
@@ -1636,6 +1664,7 @@
       position: relative;
       left: 50%;
       transform: translateX(-50%);
+      will-change: transform;
 
       @include mixins.landscape {
         left: 0;
@@ -1662,8 +1691,9 @@
 
   &-title {
     font-weight: 900;
-    letter-spacing: 0.02em;
+    letter-spacing: 0;
     font-size: var(--font-size-title-lg);
+    line-height: 0.94;
 
     @include mixins.landscape {
       font-size: var(--font-size-title-lg);
@@ -1700,19 +1730,26 @@
 }
 
 .three-canvas {
-  width: calc(var(--svw) * 100);
-  height: calc(var(--lvh) * 100);
-  max-height: calc(var(--lvh) * 100);
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
+  opacity: 1;
+  transition: opacity 0.35s ease-out;
 
   &-contact {
-    position: absolute;
-    bottom: var(--contact-bottom);
+    position: fixed;
+    top: 0;
+    bottom: auto;
     left: 0;
+    z-index: 0;
     width: 100%;
     height: calc(var(--lvh) * 100);
     max-height: calc(var(--lvh) * 100);
+    pointer-events: none;
   }
 }
 
@@ -1753,6 +1790,8 @@
     width: 100%;
     min-height: calc(var(--lvh) * 100);
     max-height: calc(var(--lvh) * 100);
+    position: relative;
+    z-index: 1;
   }
 }
 
@@ -1765,6 +1804,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
+  position: relative;
+  background-color: var(--color-beige-400);
 
   &-spacer {
     display: none;
@@ -1784,6 +1825,7 @@
   max-height: calc(var(--lvh) * 100);
   min-height: calc(var(--lvh) * 100);
   overflow: hidden;
+  z-index: 2;
 }
 
 .intro-about-hidden {
@@ -1796,13 +1838,21 @@
   width: 100%;
   max-height: calc(var(--lvh) * 100);
   min-height: calc(var(--lvh) * 100);
-  overflow: hidden;
-  z-index: -1;
-  display: flex;
-  align-items: flex-end;
+  overflow: visible;
+  z-index: 0;
+  display: block;
+  position: relative;
+  background-color: var(--color-beige-400);
 
   &-visible {
     position: sticky;
+  }
+
+  > div {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
   }
 }
 
