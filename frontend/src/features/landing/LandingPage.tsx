@@ -1,4 +1,5 @@
 import { useRef } from "react";
+import { ErrorState } from "@/shared/ui";
 import "./landing.css";
 import { LandingHeader } from "./components/LandingHeader/LandingHeader";
 import { HeroSection } from "./components/HeroSection/HeroSection";
@@ -14,7 +15,7 @@ import { useLandingAnimations } from "./hooks/useLandingAnimations";
 
 export function LandingPage() {
   const rootRef = useRef<HTMLDivElement>(null);
-  const { data, isLoading } = useLandingPageData();
+  const { data, isLoading, isError } = useLandingPageData();
 
   useLandingAnimations({ scope: rootRef, enabled: !isLoading });
 
@@ -28,6 +29,16 @@ export function LandingPage() {
       <LandingHeader />
       {isLoading ? (
         <LandingSkeleton />
+      ) : isError || !data ? (
+        <main>
+          <ErrorState
+            title="Landing data unavailable"
+            description="The landing page could not load its API data. Please check the backend connection and try again."
+            actionLabel="Reload"
+            fullPage
+            onAction={() => window.location.reload()}
+          />
+        </main>
       ) : (
         <main>
           <HeroSection hero={data.hero} />

@@ -12,7 +12,6 @@ const DEFAULT_PRIMARY_CTA = { label: "View Projects", href: "#projects" };
 const DEFAULT_SECONDARY_CTA = { label: "Contact Me", href: "#contact" };
 const DEFAULT_BADGE = "AVAILABLE FOR WORK";
 const DEFAULT_CONTACT_CTA = "Let's Build Something";
-const DEFAULT_ABOUT_TITLE = "About Me";
 
 const TECH_KEYWORDS = [
   ".NET",
@@ -123,50 +122,10 @@ function mapSocial(response: LandingPageResponse): LandingSocialLink[] {
   }));
 }
 
-function buildAboutBody(response: LandingPageResponse): string {
-  return (
-    response.settings.greeting.subTitle ||
-    response.settings.contact.subtitle ||
-    ""
-  );
-}
-
 function buildCapabilities(response: LandingPageResponse): string[] {
   return response.skills.statements
     .map((statement) => statement.text.trim())
     .filter(Boolean);
-}
-
-function buildAboutStats(response: LandingPageResponse) {
-  const stats: { value: string; label: string }[] = [];
-
-  if (response.projects.length > 0) {
-    stats.push({
-      value: `${response.projects.length}+`,
-      label: "Published Projects",
-    });
-  }
-
-  if (response.workExperiences.length > 0) {
-    stats.push({
-      value: `${response.workExperiences.length}`,
-      label: "Work Experiences",
-    });
-  }
-
-  if (response.skills.softwareSkills.length > 0) {
-    stats.push({
-      value: `${response.skills.softwareSkills.length}+`,
-      label: "Technologies",
-    });
-  }
-
-  // Keep at least one stat so the card row isn't empty.
-  if (stats.length === 0) {
-    stats.push({ value: "Clean Code", label: "Main Focus" });
-  }
-
-  return stats;
 }
 
 export function mapLandingResponse(
@@ -190,11 +149,6 @@ export function mapLandingResponse(
         ? { label: "Download Resume", href: greeting.resumeUrl }
         : undefined,
       techStack: pickHeroTechStack(response),
-    },
-    about: {
-      title: DEFAULT_ABOUT_TITLE,
-      body: buildAboutBody(response),
-      stats: buildAboutStats(response),
     },
     capabilities: buildCapabilities(response),
     skills: mapSoftwareSkills(response),

@@ -10,17 +10,6 @@ export interface LandingHero {
   techStack: string[];
 }
 
-export interface LandingAboutStat {
-  value: string;
-  label: string;
-}
-
-export interface LandingAbout {
-  title: string;
-  body: string;
-  stats: LandingAboutStat[];
-}
-
 export interface LandingSoftwareSkill {
   id: string;
   name: string;
@@ -72,7 +61,6 @@ export interface LandingEducation {
 
 export interface LandingPageData {
   hero: LandingHero;
-  about: LandingAbout;
   capabilities: string[];
   skills: LandingSoftwareSkill[];
   projects: LandingProject[];

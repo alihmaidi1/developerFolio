@@ -1,7 +1,6 @@
 import { useMemo } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { landingApi } from "../api/landing.api";
-import { LANDING_DEFAULT_DATA } from "../landing.defaults";
 import { mapLandingResponse } from "../landing.mapper";
 import type { LandingPageData } from "../landing.types";
 import type { LandingPageResponse } from "../api/landing.api.types";
@@ -9,10 +8,9 @@ import type { LandingPageResponse } from "../api/landing.api.types";
 const LANDING_QUERY_KEY = ["landing-page"] as const;
 
 interface UseLandingPageDataResult {
-  data: LandingPageData;
+  data: LandingPageData | null;
   isLoading: boolean;
   isError: boolean;
-  isUsingFallback: boolean;
 }
 
 function isValidResponse(value: unknown): value is LandingPageResponse {
@@ -44,13 +42,9 @@ export function useLandingPageData(): UseLandingPageDataResult {
     }
   }, [query.data]);
 
-  const data = mapped ?? LANDING_DEFAULT_DATA;
-  const isUsingFallback = data === LANDING_DEFAULT_DATA && !query.isLoading;
-
   return {
-    data,
+    data: mapped,
     isLoading: query.isLoading,
     isError: query.isError,
-    isUsingFallback,
   };
 }
