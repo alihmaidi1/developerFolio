@@ -20,13 +20,13 @@ public static class DatabaseInitializer
         await dbContext.Database.MigrateAsync();
         await scope.ServiceProvider.GetRequiredService<AdminSeeder>().SeedAsync();
         await scope.ServiceProvider.GetRequiredService<SettingsSeeder>().SeedAsync();
+            await scope.ServiceProvider.GetRequiredService<SkillsSeeder>().SeedAsync();
 
         if (app.Environment.IsDevelopment())
         {
             await scope.ServiceProvider.GetRequiredService<ProjectSeeder>().SeedAsync();
             await scope.ServiceProvider.GetRequiredService<EducationSeeder>().SeedAsync();
             await scope.ServiceProvider.GetRequiredService<WorkExperienceSeeder>().SeedAsync();
-            await scope.ServiceProvider.GetRequiredService<SkillsSeeder>().SeedAsync();
         }
     }
 }
