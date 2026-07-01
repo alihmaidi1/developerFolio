@@ -1,5 +1,6 @@
 using DeveloperFolio.Application.Abstractions;
 using DeveloperFolio.Domain.Security;
+using DeveloperFolio.Domain.Settings;
 using DeveloperFolio.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
@@ -52,6 +53,18 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         dbContext.AdminUsers.Add(AdminUser.Create(
             "admin@example.com",
             passwordHasher.Hash("integration-password")));
+        dbContext.GreetingSettings.Add(GreetingSettings.Create(
+            "Ali Hmaidi",
+            "Backend Developer",
+            "Integration test landing summary.",
+            null,
+            true));
+        dbContext.ContactSettings.Add(ContactSettings.Create(
+            "Contact Me",
+            "Integration test contact summary.",
+            "admin@example.com",
+            null,
+            "Testing"));
         await dbContext.SaveChangesAsync();
     }
 

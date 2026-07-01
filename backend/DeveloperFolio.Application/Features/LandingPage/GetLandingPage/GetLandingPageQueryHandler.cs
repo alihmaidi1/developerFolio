@@ -36,7 +36,7 @@ internal sealed class GetLandingPageQueryHandler(IApplicationDbContext dbContext
             .AsNoTracking()
             .Where(link => link.IsPublished)
             .OrderBy(link => link.SortOrder)
-            .ThenByDescending(link => link.CreatedAtUtc)
+            .ThenBy(link => link.Id)
             .Select(link => new PortfolioSocialLink(link.Id, link.Name, link.Url, link.IconClassName))
             .ToArrayAsync(cancellationToken);
 
@@ -45,14 +45,14 @@ internal sealed class GetLandingPageQueryHandler(IApplicationDbContext dbContext
             .Include(project => project.Technologies)
             .Where(project => project.IsPublished)
             .OrderBy(project => project.SortOrder)
-            .ThenByDescending(project => project.CreatedAtUtc)
+            .ThenBy(project => project.Id)
             .ToArrayAsync(cancellationToken);
 
         var skillStatements = await dbContext.SkillStatements
             .AsNoTracking()
             .Where(statement => statement.IsPublished)
             .OrderBy(statement => statement.SortOrder)
-            .ThenByDescending(statement => statement.CreatedAtUtc)
+            .ThenBy(statement => statement.Id)
             .Select(statement => new PublishedSkillStatement(statement.Id, statement.Text))
             .ToArrayAsync(cancellationToken);
 
@@ -60,7 +60,7 @@ internal sealed class GetLandingPageQueryHandler(IApplicationDbContext dbContext
             .AsNoTracking()
             .Where(skill => skill.IsPublished)
             .OrderBy(skill => skill.SortOrder)
-            .ThenByDescending(skill => skill.CreatedAtUtc)
+            .ThenBy(skill => skill.Id)
             .Select(skill => new PublishedSoftwareSkill(skill.Id, skill.Name, skill.IconClassName))
             .ToArrayAsync(cancellationToken);
 
@@ -69,7 +69,7 @@ internal sealed class GetLandingPageQueryHandler(IApplicationDbContext dbContext
             .Include(entry => entry.DescriptionBullets)
             .Where(entry => entry.IsPublished)
             .OrderBy(entry => entry.SortOrder)
-            .ThenByDescending(entry => entry.CreatedAtUtc)
+            .ThenBy(entry => entry.Id)
             .ToArrayAsync(cancellationToken);
 
         var workExperiences = await dbContext.WorkExperienceEntries

@@ -12,5 +12,15 @@ export function resolveAssetUrl(
   }
 
   const normalized = path.startsWith("/") ? path : `/${path}`;
-  return `${BASE_URL.replace(/\/$/, "")}${normalized}`;
+  return `${resolveAssetBaseUrl()}${normalized}`;
+}
+
+function resolveAssetBaseUrl(): string {
+  const baseUrl = BASE_URL.trim().replace(/\/$/, "");
+
+  if (!baseUrl) {
+    return "";
+  }
+
+  return baseUrl.replace(/\/api$/i, "");
 }

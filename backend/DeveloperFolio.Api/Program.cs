@@ -4,11 +4,18 @@ using DeveloperFolio.Application;
 using DeveloperFolio.Infrastructure;
 using DeveloperFolio.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.OpenApi.Models;
 using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+    options.KnownNetworks.Clear();
+    options.KnownProxies.Clear();
+});
 builder.Host.UseSerilog((context, configuration) =>
     configuration.ReadFrom.Configuration(context.Configuration));
 builder.Services.AddProblemDetails();
@@ -47,9 +54,13 @@ builder.Services.AddSwaggerGen(options =>
 var app = builder.Build();
 
 
+app.UseForwardedHeaders();
 app.UseExceptionHandler();
 app.UseSerilogRequestLogging();
-app.UseHttpsRedirection();
+if (app.Configuration.GetValue("Https:UseRedirection", true))
+{
+    app.UseHttpsRedirection();
+}
 app.UseCors("Frontend");
 app.UseStaticFiles();
 app.UseAuthentication();

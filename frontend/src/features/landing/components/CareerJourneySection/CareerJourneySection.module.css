@@ -58,9 +58,17 @@
 }
 
 @keyframes spine-shimmer {
-  0% { transform: translateY(-28%); opacity: 0; }
-  34% { opacity: 0.38; }
-  100% { transform: translateY(94%); opacity: 0; }
+  0% {
+    transform: translateY(-28%);
+    opacity: 0;
+  }
+  34% {
+    opacity: 0.38;
+  }
+  100% {
+    transform: translateY(94%);
+    opacity: 0;
+  }
 }
 
 /* Spine endpoint glyphs */
@@ -163,8 +171,14 @@
 }
 
 @keyframes dot-pulse {
-  0%   { opacity: 0.7; transform: scale(0.6); }
-  100% { opacity: 0; transform: scale(2.2); }
+  0% {
+    opacity: 0.7;
+    transform: scale(0.6);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
 }
 
 /* Connector arm from card to spine */
@@ -229,8 +243,12 @@
   will-change: transform, opacity;
 }
 
-.itemLeft .card { transform-origin: right center; }
-.itemRight .card { transform-origin: left center; }
+.itemLeft .card {
+  transform-origin: right center;
+}
+.itemRight .card {
+  transform-origin: left center;
+}
 
 .itemLeft .card:hover {
   border-color: var(--accent-border);
@@ -294,8 +312,12 @@
   gap: 6px;
 }
 
-.itemLeft .tech { justify-content: flex-end; }
-.itemRight .tech { justify-content: flex-start; }
+.itemLeft .tech {
+  justify-content: flex-end;
+}
+.itemRight .tech {
+  justify-content: flex-start;
+}
 
 .tech span {
   font-family: var(--font-mono);

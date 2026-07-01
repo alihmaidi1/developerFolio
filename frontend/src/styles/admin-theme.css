@@ -53,10 +53,10 @@
   --transition-fast: 180ms ease;
 
   /*
-   * Bridge layer — maps the legacy --admin-color-* / --ui-color-* names
-   * (still referenced across existing admin feature CSS modules) onto the
-   * tokens above, so every component picks up the new theme at once.
-   */
+    * Bridge layer — maps the legacy --admin-color-* / --ui-color-* names
+    * (still referenced across existing admin feature CSS modules) onto the
+    * tokens above, so every component picks up the new theme at once.
+    */
   --admin-color-background: var(--bg-base);
   --admin-color-surface: var(--bg-surface);
   --admin-color-surface-raised: var(--bg-elevated);

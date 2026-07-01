@@ -24,9 +24,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       style={{ "--mx": "50%", "--my": "0%" } as CSSProperties}
     >
       <header className={styles.cardHeader}>
-        <span className={styles.cardIndex}>
-          / 0{index + 1}
-        </span>
+        <span className={styles.cardIndex}>/ 0{index + 1}</span>
         <span className={styles.cardTag}>Project</span>
       </header>
 

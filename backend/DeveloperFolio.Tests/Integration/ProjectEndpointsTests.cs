@@ -15,12 +15,7 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
     [Fact]
     public async Task AdminCanCreateProjectAndPublicCanReadIt()
     {
-        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new
-        {
-            email = "admin@example.com",
-            password = "integration-password",
-        });
-        loginResponse.EnsureSuccessStatusCode();
+        await AuthenticateAsync();
 
         var createResponse = await _client.PostAsJsonAsync("/api/admin/projects", new
         {
@@ -77,25 +72,24 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
     }
 
     [Fact]
-    public async Task AdminCanUploadAndDownloadResume()
+    public async Task AdminCanUploadAndDownloadProjectImage()
     {
-        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new
-        {
-            email = "admin@example.com",
-            password = "integration-password",
-        });
-        loginResponse.EnsureSuccessStatusCode();
+        await AuthenticateAsync();
 
-        var expectedContent = "%PDF-1.4 test resume"u8.ToArray();
+        var expectedContent = "test image content"u8.ToArray();
         using var form = new MultipartFormDataContent();
         using var file = new ByteArrayContent(expectedContent);
-        file.Headers.ContentType = new MediaTypeHeaderValue("application/pdf");
-        form.Add(file, "file", "resume.pdf");
+        file.Headers.ContentType = new MediaTypeHeaderValue("image/png");
+        form.Add(file, "file", "project.png");
 
-        var uploadResponse = await _client.PostAsync("/api/admin/resume", form);
+        var uploadResponse = await _client.PostAsync("/api/admin/uploads/project-image", form);
         uploadResponse.EnsureSuccessStatusCode();
 
-        var downloadedContent = await _client.GetByteArrayAsync("/api/resume/download");
+        var upload = await uploadResponse.Content.ReadFromJsonAsync<OperationResultResponse<UploadImageResponse>>();
+        upload!.IsSuccess.Should().BeTrue();
+        upload.Value!.Url.Should().StartWith("/projects/");
+
+        var downloadedContent = await _client.GetByteArrayAsync(upload.Value.Url);
         downloadedContent.Should().Equal(expectedContent);
     }
 
@@ -129,8 +123,27 @@ public sealed class ProjectEndpointsTests(ApiFactory factory) : IClassFixture<Ap
         result.Error!.Code.Should().Be("Error.ValidationFailures");
     }
 
-    private sealed record LoginResponse(Guid Id, string Email);
+    private async Task AuthenticateAsync()
+    {
+        var loginResponse = await _client.PostAsJsonAsync("/api/auth/login", new
+        {
+            email = "admin@example.com",
+            password = "integration-password",
+        });
+        loginResponse.EnsureSuccessStatusCode();
+
+        var login = await loginResponse.Content.ReadFromJsonAsync<OperationResultResponse<LoginResponse>>();
+        login!.IsSuccess.Should().BeTrue();
+        login.Value!.AccessToken.Should().NotBeNullOrWhiteSpace();
+
+        _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+            "Bearer",
+            login.Value.AccessToken);
+    }
+
+    private sealed record LoginResponse(Guid Id, string Email, string AccessToken);
     private sealed record ProjectResponse(Guid Id, string Title);
+    private sealed record UploadImageResponse(string Url);
     private sealed record LandingPageResponse(
         ProjectResponse[] Projects,
         WorkExperienceResponse[] WorkExperiences);
