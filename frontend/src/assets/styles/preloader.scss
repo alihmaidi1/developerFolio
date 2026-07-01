@@ -5,7 +5,18 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: var(--color-beige-400);
+  background:
+    radial-gradient(
+      60% 48% at 68% 34%,
+      rgb(132 204 22 / 14%) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      46% 40% at 22% 74%,
+      rgb(101 163 13 / 10%) 0%,
+      transparent 68%
+    ),
+    var(--bg-base);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +37,8 @@
   }
 
   &-path {
-    fill: var(--color-text-400);
+    fill: var(--accent);
+    filter: drop-shadow(0 0 22px var(--accent-glow));
   }
 
   &-hidden {

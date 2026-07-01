@@ -31,6 +31,11 @@ export function LandingPage() {
       ) : (
         <main>
           <HeroSection hero={data.hero} />
+          <div
+            className="landing-hero-skills-transition"
+            data-anim-hero-skills-bridge
+            aria-hidden="true"
+          />
           <SkillsSection
             capabilities={data.capabilities}
             skills={data.skills}

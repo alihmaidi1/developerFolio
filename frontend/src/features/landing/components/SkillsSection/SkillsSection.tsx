@@ -15,7 +15,11 @@ export function SkillsSection({
   const hasSkills = skills.length > 0;
 
   return (
-    <section id="skills" className="landing-section" data-anim-section="skills">
+    <section
+      id="skills"
+      className={`landing-section ${styles.section}`}
+      data-anim-section="skills"
+    >
       <span className="landing-eyebrow">01 / Capabilities & Stack</span>
       <h2 className="landing-section-title">What I do — and what I use</h2>
       <p className="landing-section-lede">

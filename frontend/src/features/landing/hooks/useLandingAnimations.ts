@@ -23,7 +23,7 @@ export function useLandingAnimations({
       const root = scope.current;
       root
         .querySelectorAll<HTMLElement>(
-          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile], [data-anim-prompt-card], [data-anim-prompt-console], [data-anim-prompt-line], [data-anim-prompt-input], [data-anim-education-card]",
+          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile], [data-anim-prompt-card], [data-anim-prompt-console], [data-anim-prompt-line], [data-anim-prompt-input], [data-anim-education-card], [data-anim-hero-skills-bridge]",
         )
         .forEach((el) => {
           gsap.set(el, {
@@ -251,6 +251,27 @@ export function useLandingAnimations({
       }
 
       // ============ SECTION SCROLL REVEALS ============
+      const heroSkillsBridge = scope.current?.querySelector<HTMLElement>(
+        "[data-anim-hero-skills-bridge]",
+      );
+      if (heroSkillsBridge) {
+        gsap.fromTo(
+          heroSkillsBridge,
+          { autoAlpha: 0.62, y: 24 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSkillsBridge,
+              start: "top bottom",
+              end: "bottom 72%",
+              scrub: 0.7,
+            },
+          },
+        );
+      }
+
       const fadeItems =
         scope.current?.querySelectorAll<HTMLElement>("[data-anim-fade]");
 

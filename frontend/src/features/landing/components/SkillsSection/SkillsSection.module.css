@@ -1,4 +1,58 @@
 /* ============ LAYOUT ============ */
+.section {
+  position: relative;
+  padding-top: calc(var(--landing-section-y) + clamp(10px, 2vw, 28px));
+  isolation: isolate;
+}
+
+.section::before {
+  content: "";
+  position: absolute;
+  top: clamp(-80px, -8vw, -42px);
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  height: clamp(220px, 28vh, 360px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  background:
+    radial-gradient(
+      62% 88% at 74% 0%,
+      rgb(132 204 22 / 7%) 0%,
+      rgb(132 204 22 / 3%) 42%,
+      transparent 72%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(10 10 10 / 32%) 0%,
+      var(--bg-base) 52%,
+      transparent 100%
+    );
+}
+
+.section::after {
+  content: "";
+  position: absolute;
+  top: clamp(-70px, -7vw, -36px);
+  left: 50%;
+  z-index: -1;
+  width: 100vw;
+  height: clamp(180px, 24vh, 300px);
+  transform: translateX(-50%);
+  pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgb(132 204 22 / 3.5%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(132 204 22 / 3.5%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at 74% 0%, black 0%, transparent 68%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at 74% 0%,
+    black 0%,
+    transparent 68%
+  );
+  opacity: 0.36;
+}
+
 .wrap {
   display: grid;
   grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
@@ -28,11 +82,7 @@
   content: "";
   flex: 1;
   height: 1px;
-  background: linear-gradient(
-    to right,
-    var(--border-strong),
-    transparent
-  );
+  background: linear-gradient(to right, var(--border-strong), transparent);
 }
 
 /* ============ CAPABILITIES (left) ============ */
@@ -204,10 +254,18 @@
 }
 
 @keyframes tile-icon-wiggle {
-  0%   { transform: translateY(0) rotate(0deg) scale(1); }
-  30%  { transform: translateY(-4px) rotate(-10deg) scale(1.15); }
-  60%  { transform: translateY(-2px) rotate(6deg) scale(1.1); }
-  100% { transform: translateY(-2px) rotate(-6deg) scale(1.12); }
+  0% {
+    transform: translateY(0) rotate(0deg) scale(1);
+  }
+  30% {
+    transform: translateY(-4px) rotate(-10deg) scale(1.15);
+  }
+  60% {
+    transform: translateY(-2px) rotate(6deg) scale(1.1);
+  }
+  100% {
+    transform: translateY(-2px) rotate(-6deg) scale(1.12);
+  }
 }
 
 .tileName {
@@ -236,8 +294,13 @@
 }
 
 @keyframes tile-idle {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-3px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-3px);
+  }
 }
 
 .tile:nth-child(odd) {
@@ -245,8 +308,13 @@
 }
 
 @keyframes tile-idle-alt {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(3px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
 }
 
 /* Disable idle drift on hover so the lift transform takes over cleanly */

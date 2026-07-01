@@ -2,11 +2,25 @@
   min-height: 160px;
   display: grid;
   place-items: center;
+  color: var(--text-primary, #fafafa);
 }
 
 .page {
   min-height: calc(var(--svh) * 100);
-  background: var(--color-background-400, #f5efe6);
+  background:
+    radial-gradient(
+      60% 48% at 68% 34%,
+      rgb(132 204 22 / 14%) 0%,
+      transparent 62%
+    ),
+    radial-gradient(
+      46% 40% at 22% 74%,
+      rgb(101 163 13 / 10%) 0%,
+      transparent 68%
+    ),
+    var(--bg-base, #0a0a0a);
+  position: relative;
+  overflow: hidden;
 }
 
 .inline {
@@ -18,14 +32,55 @@
   inset: 0;
   z-index: var(--z-index-preloader, 100);
   min-height: calc(var(--svh) * 100);
-  background: var(--color-background-400, #f5efe6);
+  background: rgb(10 10 10 / 88%);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  overflow: hidden;
+}
+
+.page::before,
+.overlay::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, rgb(132 204 22 / 5%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(132 204 22 / 5%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(ellipse at center, black 0%, transparent 72%);
+  -webkit-mask-image: radial-gradient(
+    ellipse at center,
+    black 0%,
+    transparent 72%
+  );
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.page::after,
+.overlay::after {
+  content: "";
+  position: absolute;
+  inset: auto 14% 12%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgb(132 204 22 / 36%),
+    transparent
+  );
+  box-shadow: 0 0 24px var(--accent-glow, rgb(132 204 22 / 20%));
+  opacity: 0.75;
+  pointer-events: none;
 }
 
 .surface {
+  position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
-  gap: 18px;
-  color: var(--ui-color-accent, var(--color-text-400, #2d2a24));
+  gap: 16px;
+  color: var(--accent, #84cc16);
 }
 
 .spinner {
@@ -33,24 +88,29 @@
   height: 38px;
   display: inline-block;
   flex: 0 0 auto;
-  border: 4px solid rgb(51 51 51 / 18%);
-  border-top-color: currentColor;
+  border: 1px solid var(--accent-border, rgb(132 204 22 / 25%));
+  border-top-color: var(--accent, #84cc16);
+  border-right-color: var(--accent-hover, #a3e635);
   border-radius: 50%;
-  animation: spin 800ms linear infinite;
+  box-shadow:
+    0 0 0 1px rgb(132 204 22 / 8%),
+    0 0 18px var(--accent-glow, rgb(132 204 22 / 20%));
+  animation: spin 900ms linear infinite;
 }
 
 .spinnerCompact {
   width: 20px;
   height: 20px;
-  border-width: 2px;
+  border-width: 1px;
 }
 
 .logo {
-  width: 72px;
-  height: 78px;
-  color: var(--color-text-400, #2d2a24);
+  width: 74px;
+  height: 80px;
+  color: var(--accent, #84cc16);
   transform-origin: center;
-  animation: logoPulse 1.4s var(--ease-power2-out, ease) infinite;
+  filter: drop-shadow(0 0 22px var(--accent-glow, rgb(132 204 22 / 20%)));
+  animation: logoPulse 1.65s var(--ease-power2-out, ease) infinite;
 }
 
 .logoPath {
@@ -63,17 +123,25 @@
 }
 
 .progressTrack {
-  width: 120px;
+  position: relative;
+  width: 136px;
   height: 2px;
   overflow: hidden;
-  background: rgb(45 42 36 / 18%);
+  background: var(--border-default, #1f1f1f);
+  border-radius: 999px;
 }
 
 .progressBar {
   display: block;
   width: var(--loading-progress, 0%);
   height: 100%;
-  background: var(--color-text-400, #2d2a24);
+  background: linear-gradient(
+    90deg,
+    var(--accent-dim, #65a30d),
+    var(--accent, #84cc16),
+    var(--accent-hover, #a3e635)
+  );
+  box-shadow: 0 0 14px var(--accent-glow, rgb(132 204 22 / 20%));
   transition: width 260ms var(--ease-power2-out, ease);
 }
 
@@ -103,14 +171,14 @@
   }
 
   50% {
-    transform: scale(0.96);
-    opacity: 0.72;
+    transform: scale(0.94);
+    opacity: 0.68;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .spinner,
   .logo {
-    animation-duration: 1.6s;
+    animation: none;
   }
 }
