@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
-      ASPNETCORE_URLS: http://+:8080
+      ASPNETCORE_URLS: http://+:8081
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
       Https__UseRedirection: ${HTTPS_USE_REDIRECTION:-false}
       ConnectionStrings__Database: ${DATABASE_CONNECTION_STRING}
@@ -25,11 +25,11 @@ services:
     volumes:
       - api-uploads:/app/wwwroot
     expose:
-      - "8080"
+      - "8081"
     networks:
       - edge
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
@@ -43,7 +43,7 @@ services:
     networks:
       - edge
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/healthz || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
