@@ -1,6 +1,5 @@
 import { StatusBadge } from "./StatusBadge";
 import { HeroActions } from "./HeroActions";
-import { TechMarquee } from "./TechMarquee";
 import { HeroBackdrop } from "./HeroBackdrop";
 import styles from "./HeroSection.module.css";
 import type { LandingHero } from "../../landing.types";
@@ -98,8 +97,6 @@ export function HeroSection({ hero }: HeroSectionProps) {
           </article>
         </div>
       </div>
-
-      <TechMarquee items={hero.techStack} />
 
       <span className={styles.scrollCue} aria-hidden="true">
         <span className={styles.scrollCueDot} />

@@ -97,12 +97,6 @@ export function useLandingAnimations({
           0.92,
         )
         .fromTo(
-          '[data-anim="hero-tech"]',
-          { y: 8, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.5 },
-          1.08,
-        )
-        .fromTo(
           '[data-anim="floating-panel"]',
           { y: 14, opacity: 0 },
           {
