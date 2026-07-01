@@ -23,7 +23,7 @@ export function useLandingAnimations({
       const root = scope.current;
       root
         .querySelectorAll<HTMLElement>(
-          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile]",
+          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile], [data-anim-prompt-card], [data-anim-prompt-console], [data-anim-prompt-line], [data-anim-prompt-input]",
         )
         .forEach((el) => {
           gsap.set(el, {
@@ -78,28 +78,34 @@ export function useLandingAnimations({
           0.35,
         )
         .fromTo(
+          '[data-anim="hero-role"]',
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.55 },
+          0.48,
+        )
+        .fromTo(
           '[data-anim="hero-title"]',
           { y: 16, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.7 },
-          0.55,
+          0.62,
         )
         .fromTo(
           '[data-anim="hero-description"]',
           { y: 12, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.6 },
-          0.7,
+          0.78,
         )
         .fromTo(
           '[data-anim="hero-actions"]',
           { y: 12, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.6 },
-          0.85,
+          0.92,
         )
         .fromTo(
           '[data-anim="hero-tech"]',
           { y: 8, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.5 },
-          1.0,
+          1.08,
         )
         .fromTo(
           '[data-anim="floating-panel"]',
@@ -111,7 +117,7 @@ export function useLandingAnimations({
             stagger: 0.08,
             ease: "power2.out",
           },
-          1.1,
+          1.16,
         );
 
       // ============ MOUSE PARALLAX (hero scene) ============
@@ -137,7 +143,8 @@ export function useLandingAnimations({
 
         const onMove = (event: MouseEvent) => {
           const rect = sceneWrap.getBoundingClientRect();
-          const dx = (event.clientX - (rect.left + rect.width / 2)) / rect.width;
+          const dx =
+            (event.clientX - (rect.left + rect.width / 2)) / rect.width;
           const dy =
             (event.clientY - (rect.top + rect.height / 2)) / rect.height;
           setters.forEach(({ xTo, yTo, factor }, i) => {
@@ -153,9 +160,8 @@ export function useLandingAnimations({
       }
 
       // ============ SECTION SCROLL REVEALS ============
-      const fadeItems = scope.current?.querySelectorAll<HTMLElement>(
-        "[data-anim-fade]",
-      );
+      const fadeItems =
+        scope.current?.querySelectorAll<HTMLElement>("[data-anim-fade]");
 
       fadeItems?.forEach((el) => {
         gsap.fromTo(
@@ -201,6 +207,91 @@ export function useLandingAnimations({
 
       // Career timeline — spine fill scrubbed against scroll, items slide
       // in from their alternating side, dots get a one-shot pulse when seen.
+      const promptCards = scope.current?.querySelectorAll<HTMLElement>(
+        "[data-anim-prompt-card]",
+      );
+      const promptConsole = scope.current?.querySelector<HTMLElement>(
+        "[data-anim-prompt-console]",
+      );
+      const promptLines = scope.current?.querySelectorAll<HTMLElement>(
+        "[data-anim-prompt-line]",
+      );
+      const promptInput = scope.current?.querySelector<HTMLElement>(
+        "[data-anim-prompt-input]",
+      );
+
+      if (promptCards && promptCards.length > 0) {
+        gsap.set(promptCards, { autoAlpha: 0, x: -30, y: 12 });
+        ScrollTrigger.create({
+          trigger: promptCards[0],
+          start: "top 86%",
+          once: true,
+          onEnter: () => {
+            gsap.to(promptCards, {
+              autoAlpha: 1,
+              x: 0,
+              y: 0,
+              duration: 0.58,
+              ease: "power3.out",
+              stagger: 0.08,
+            });
+          },
+        });
+      }
+
+      if (promptConsole) {
+        const promptLineItems = promptLines ? Array.from(promptLines) : [];
+        gsap.set(promptConsole, { autoAlpha: 0, x: 44, rotate: 1.1 });
+        if (promptLineItems.length > 0) {
+          gsap.set(promptLineItems, { autoAlpha: 0, y: 10 });
+        }
+        if (promptInput) {
+          gsap.set(promptInput, { autoAlpha: 0, y: 16, scale: 0.96 });
+        }
+
+        ScrollTrigger.create({
+          trigger: promptConsole,
+          start: "top 84%",
+          once: true,
+          onEnter: () => {
+            const promptTl = gsap.timeline({
+              defaults: { ease: "power3.out" },
+            });
+            promptTl.to(promptConsole, {
+              autoAlpha: 1,
+              x: 0,
+              rotate: 0,
+              duration: 0.72,
+            });
+            if (promptLineItems.length > 0) {
+              promptTl.to(
+                promptLineItems,
+                {
+                  autoAlpha: 1,
+                  y: 0,
+                  duration: 0.42,
+                  stagger: 0.075,
+                },
+                "-=0.28",
+              );
+            }
+            if (promptInput) {
+              promptTl.to(
+                promptInput,
+                {
+                  autoAlpha: 1,
+                  y: 0,
+                  scale: 1,
+                  duration: 0.42,
+                  ease: "back.out(1.35)",
+                },
+                "-=0.12",
+              );
+            }
+          },
+        });
+      }
+
       const timeline = scope.current?.querySelector<HTMLElement>(
         "[data-anim-timeline]",
       );
@@ -342,9 +433,7 @@ export function useLandingAnimations({
 
       // Eyebrow badges — clip-path slide in from left
       scope.current
-        ?.querySelectorAll<HTMLElement>(
-          "[data-anim-section] .landing-eyebrow",
-        )
+        ?.querySelectorAll<HTMLElement>("[data-anim-section] .landing-eyebrow")
         .forEach((el) => {
           gsap.fromTo(
             el,

@@ -6,6 +6,7 @@ export interface LandingHero {
   description: string;
   primaryCta: { label: string; href: string };
   secondaryCta: { label: string; href: string };
+  resumeCta?: { label: string; href: string };
   techStack: string[];
 }
 
@@ -54,6 +55,7 @@ export interface LandingContact {
 export interface LandingSocialLink {
   label: string;
   href: string;
+  iconClassName?: string;
 }
 
 export interface LandingPageData {

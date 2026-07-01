@@ -23,6 +23,12 @@ export function HeroSection({ hero }: HeroSectionProps) {
           {lastName ? <span className={styles.accent}>{lastName}</span> : null}
         </h1>
 
+        {hero.title ? (
+          <p className={styles.heroRole} data-anim="hero-role">
+            {hero.title}
+          </p>
+        ) : null}
+
         <p className={styles.heroTitle} data-anim="hero-title">
           {hero.summary}
         </p>
@@ -33,7 +39,11 @@ export function HeroSection({ hero }: HeroSectionProps) {
           </p>
         ) : null}
 
-        <HeroActions primary={hero.primaryCta} secondary={hero.secondaryCta} />
+        <HeroActions
+          primary={hero.primaryCta}
+          secondary={hero.secondaryCta}
+          resume={hero.resumeCta}
+        />
 
         <TechChips items={hero.techStack} />
       </div>

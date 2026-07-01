@@ -28,6 +28,7 @@ export function LandingSkeleton() {
           <div className={styles.actions}>
             <Block className={styles.actionPrimary} rounded />
             <Block className={styles.actionSecondary} rounded />
+            <Block className={styles.actionResume} rounded />
           </div>
           <div className={styles.chips}>
             {Array.from({ length: 5 }, (_, index) => (
@@ -153,12 +154,6 @@ function SkeletonSection({
     <section className={`landing-section ${styles.section}`}>
       <SectionHeader />
       <div className={styles.contactGrid}>
-        <div className={styles.terminal}>
-          <Block className={styles.terminalBar} />
-          {Array.from({ length: 5 }, (_, index) => (
-            <Block key={index} className={styles.terminalLine} />
-          ))}
-        </div>
         <div className={styles.contactAside}>
           <Block className={styles.contactText} />
           <Block className={styles.contactButton} rounded />
@@ -167,6 +162,12 @@ function SkeletonSection({
             <Block className={styles.contactLink} rounded />
             <Block className={styles.contactLink} rounded />
           </div>
+        </div>
+        <div className={styles.terminal}>
+          <Block className={styles.terminalBar} />
+          {Array.from({ length: 5 }, (_, index) => (
+            <Block key={index} className={styles.terminalLine} />
+          ))}
         </div>
       </div>
     </section>

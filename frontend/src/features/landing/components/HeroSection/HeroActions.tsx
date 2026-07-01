@@ -4,9 +4,10 @@ import type { LandingHero } from "../../landing.types";
 interface HeroActionsProps {
   primary: LandingHero["primaryCta"];
   secondary: LandingHero["secondaryCta"];
+  resume?: LandingHero["resumeCta"];
 }
 
-export function HeroActions({ primary, secondary }: HeroActionsProps) {
+export function HeroActions({ primary, secondary, resume }: HeroActionsProps) {
   return (
     <div className={styles.actions} data-anim="hero-actions">
       <a href={primary.href} className={`${styles.btn} ${styles.btnPrimary}`}>
@@ -21,6 +22,16 @@ export function HeroActions({ primary, secondary }: HeroActionsProps) {
       >
         {secondary.label}
       </a>
+      {resume ? (
+        <a
+          href={resume.href}
+          className={`${styles.btn} ${styles.btnResume}`}
+          download
+        >
+          <i className="fa-solid fa-download" aria-hidden="true" />
+          {resume.label}
+        </a>
+      ) : null}
     </div>
   );
 }

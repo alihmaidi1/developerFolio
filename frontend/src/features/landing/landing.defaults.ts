@@ -11,6 +11,7 @@ export const LANDING_DEFAULT_DATA: LandingPageData = {
       "I build reliable, maintainable, and performance-focused web applications with a strong backend foundation and clean user interfaces.",
     primaryCta: { label: "View Projects", href: "#projects" },
     secondaryCta: { label: "Contact Me", href: "#contact" },
+    resumeCta: undefined,
     techStack: [
       "ASP.NET Core",
       "React",
@@ -34,14 +35,22 @@ export const LANDING_DEFAULT_DATA: LandingPageData = {
     "Model relational data in PostgreSQL with EF Core and ship it via Docker-based environments.",
   ],
   skills: [
-    { id: "default-aspnet", name: "ASP.NET", iconClassName: "fab fa-microsoft" },
+    {
+      id: "default-aspnet",
+      name: "ASP.NET",
+      iconClassName: "fab fa-microsoft",
+    },
     { id: "default-csharp", name: "C#", iconClassName: "fas fa-code" },
     { id: "default-react", name: "React", iconClassName: "fab fa-react" },
     { id: "default-ts", name: "TypeScript", iconClassName: "fas fa-code" },
     { id: "default-node", name: "Node.js", iconClassName: "fab fa-node-js" },
     { id: "default-html", name: "HTML5", iconClassName: "fab fa-html5" },
     { id: "default-css", name: "CSS3", iconClassName: "fab fa-css3-alt" },
-    { id: "default-postgres", name: "PostgreSQL", iconClassName: "fas fa-database" },
+    {
+      id: "default-postgres",
+      name: "PostgreSQL",
+      iconClassName: "fas fa-database",
+    },
     { id: "default-docker", name: "Docker", iconClassName: "fab fa-docker" },
     { id: "default-git", name: "Git", iconClassName: "fab fa-git-alt" },
   ],
@@ -104,7 +113,15 @@ export const LANDING_DEFAULT_DATA: LandingPageData = {
     ctaLabel: "Let's Build Something",
   },
   social: [
-    { label: "GitHub", href: "https://github.com/Alihmaidi1" },
-    { label: "Email", href: "mailto:alihmaidi095@gmail.com" },
+    {
+      label: "GitHub",
+      href: "https://github.com/Alihmaidi1",
+      iconClassName: "fa-brands fa-github",
+    },
+    {
+      label: "Email",
+      href: "mailto:alihmaidi095@gmail.com",
+      iconClassName: "fa-solid fa-envelope",
+    },
   ],
 };

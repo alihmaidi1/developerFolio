@@ -32,10 +32,7 @@ const TECH_KEYWORDS = [
  * Pick up to N items for the hero tech chip row.
  * Prefer published software skill names; fall back to a curated keyword list.
  */
-function pickHeroTechStack(
-  response: LandingPageResponse,
-  limit = 5,
-): string[] {
+function pickHeroTechStack(response: LandingPageResponse, limit = 5): string[] {
   const names = response.skills.softwareSkills
     .map((skill) => skill.name)
     .filter(Boolean);
@@ -53,7 +50,9 @@ function pickHeroTechStack(
     (tech, idx, arr) => arr.indexOf(tech) === idx,
   );
 
-  return merged.length > 0 ? merged.slice(0, limit) : TECH_KEYWORDS.slice(0, limit);
+  return merged.length > 0
+    ? merged.slice(0, limit)
+    : TECH_KEYWORDS.slice(0, limit);
 }
 
 function mapSoftwareSkills(
@@ -68,8 +67,7 @@ function mapSoftwareSkills(
 
 function mapProjects(response: LandingPageResponse): LandingProject[] {
   return response.projects.map((project) => {
-    const href =
-      project.liveUrl ?? project.repositoryUrl ?? undefined;
+    const href = project.liveUrl ?? project.repositoryUrl ?? undefined;
     const highlight = project.technologies.length
       ? project.technologies.slice(0, 3).join(" · ")
       : undefined;
@@ -109,6 +107,7 @@ function mapSocial(response: LandingPageResponse): LandingSocialLink[] {
   return response.settings.socialLinks.map((link) => ({
     label: link.name,
     href: link.url,
+    iconClassName: link.iconClassName,
   }));
 }
 
@@ -175,6 +174,9 @@ export function mapLandingResponse(
       description: "",
       primaryCta: DEFAULT_PRIMARY_CTA,
       secondaryCta: DEFAULT_SECONDARY_CTA,
+      resumeCta: greeting.resumeUrl
+        ? { label: "Download Resume", href: greeting.resumeUrl }
+        : undefined,
       techStack: pickHeroTechStack(response),
     },
     about: {
