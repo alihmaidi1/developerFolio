@@ -76,7 +76,9 @@
   &-copy {
     font-weight: 700;
     color: var(--color-white-400);
-    font-family: "ProFontWindows";
+    font-family:
+      "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas,
+      "Liberation Mono", monospace;
     text-transform: uppercase;
 
     &-size {
@@ -1149,7 +1151,9 @@
   &-content {
     position: absolute;
     color: var(--color-text-cyan-400);
-    font-family: "ProFontWindows";
+    font-family:
+      "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas,
+      "Liberation Mono", monospace;
     top: 0;
     width: 100%;
     padding: var(--space-outer);
@@ -1877,7 +1881,9 @@
   font-size: var(--font-size-sm);
   font-weight: 700;
   color: var(--color-text-cyan-400);
-  font-family: "ProFontWindows";
+  font-family:
+    "JetBrains Mono", ui-monospace, SFMono-Regular, Consolas, "Liberation Mono",
+    monospace;
   text-align: center;
   align-items: center;
   height: var(--count-height);
