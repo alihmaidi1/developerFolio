@@ -15,12 +15,8 @@ export function SkillsSection({
   const hasSkills = skills.length > 0;
 
   return (
-    <section
-      id="skills"
-      className="landing-section"
-      data-anim-section="skills"
-    >
-      <span className="landing-eyebrow">02 / Capabilities & Stack</span>
+    <section id="skills" className="landing-section" data-anim-section="skills">
+      <span className="landing-eyebrow">01 / Capabilities & Stack</span>
       <h2 className="landing-section-title">What I do — and what I use</h2>
       <p className="landing-section-lede">
         On the left, the work I take on day to day. On the right, the tools I
@@ -33,7 +29,11 @@ export function SkillsSection({
             <h3 className={styles.columnTitle}>Capabilities</h3>
             <ul className={styles.capabilities}>
               {capabilities.map((statement, idx) => (
-                <li key={statement} className={styles.capability} data-anim-capability>
+                <li
+                  key={statement}
+                  className={styles.capability}
+                  data-anim-capability
+                >
                   <span className={styles.capabilityIndex}>
                     {String(idx + 1).padStart(2, "0")}
                   </span>
@@ -46,9 +46,7 @@ export function SkillsSection({
 
         {hasSkills ? (
           <div className={styles.column}>
-            <h3 className={styles.columnTitle}>
-              Tech Stack ({skills.length})
-            </h3>
+            <h3 className={styles.columnTitle}>Tech Stack ({skills.length})</h3>
             <div className={styles.grid}>
               {skills.map((skill, idx) => (
                 <article

@@ -2,7 +2,6 @@ import { useState } from "react";
 import styles from "./LandingHeader.module.css";
 
 const NAV_LINKS = [
-  { label: "About", href: "#about" },
   { label: "Skills", href: "#skills" },
   { label: "Projects", href: "#projects" },
   { label: "Career", href: "#career" },

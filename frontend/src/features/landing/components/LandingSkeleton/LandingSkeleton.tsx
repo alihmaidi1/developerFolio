@@ -48,7 +48,6 @@ export function LandingSkeleton() {
         </div>
       </section>
 
-      <SkeletonSection variant="profile" />
       <SkeletonSection variant="skills" />
       <SkeletonSection variant="projects" />
       <SkeletonSection variant="career" />
@@ -70,27 +69,8 @@ function SectionHeader() {
 function SkeletonSection({
   variant,
 }: {
-  variant: "profile" | "skills" | "projects" | "career" | "contact";
+  variant: "skills" | "projects" | "career" | "contact";
 }) {
-  if (variant === "profile") {
-    return (
-      <section className={`landing-section ${styles.section}`}>
-        <SectionHeader />
-        <div className={styles.profileGrid}>
-          <Block className={styles.profileBody} />
-          <div className={styles.statGrid}>
-            {Array.from({ length: 3 }, (_, index) => (
-              <div className={styles.stat} key={index}>
-                <Block className={styles.statValue} />
-                <Block className={styles.statLabel} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-    );
-  }
-
   if (variant === "skills") {
     return (
       <section className={`landing-section ${styles.section}`}>

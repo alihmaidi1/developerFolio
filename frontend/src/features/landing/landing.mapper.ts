@@ -189,9 +189,12 @@ export function mapLandingResponse(
     projects: mapProjects(response),
     career: mapCareer(response),
     contact: {
+      title: contact.title,
+      subtitle: contact.subtitle,
       status: "available",
       email: contact.email ?? "",
-      location: contact.address ?? "",
+      phone: contact.phone ?? "",
+      address: contact.address ?? "",
       ctaLabel: DEFAULT_CONTACT_CTA,
     },
     social: mapSocial(response),

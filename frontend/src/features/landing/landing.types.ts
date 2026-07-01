@@ -46,9 +46,12 @@ export interface LandingCareerStep {
 }
 
 export interface LandingContact {
+  title: string;
+  subtitle: string;
   status: string;
   email: string;
-  location: string;
+  phone: string;
+  address: string;
   ctaLabel: string;
 }
 

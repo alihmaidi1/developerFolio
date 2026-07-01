@@ -12,11 +12,22 @@ interface InfoItem {
   value: string;
   icon: string;
   href?: string;
+  external?: boolean;
 }
 
 interface PromptLine {
   tone: "muted" | "accent" | "normal" | "success";
   text: string;
+}
+
+function buildTelHref(phone: string): string {
+  return `tel:${phone.replace(/[^\d+]/g, "")}`;
+}
+
+function buildMapHref(address: string): string {
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+    address,
+  )}`;
 }
 
 function getSocialIcon(link: LandingSocialLink): string {
@@ -37,30 +48,47 @@ function getSocialIcon(link: LandingSocialLink): string {
 }
 
 export function ContactSection({ contact, social }: ContactSectionProps) {
-  const infoItems: InfoItem[] = [
-    contact.status
-      ? {
-          label: "Status",
-          value: contact.status,
-          icon: "fa-solid fa-circle-check",
-        }
-      : null,
-    contact.email
-      ? {
-          label: "Email",
-          value: contact.email,
-          icon: "fa-solid fa-envelope",
-          href: `mailto:${contact.email}`,
-        }
-      : null,
-    contact.location
-      ? {
-          label: "Location",
-          value: contact.location,
-          icon: "fa-solid fa-location-dot",
-        }
-      : null,
-  ].filter((item): item is InfoItem => item !== null);
+  const sectionTitle = contact.title || "Let's work together";
+  const sectionSubtitle =
+    contact.subtitle ||
+    "Tell me what you are building, what is blocked, or where you need a backend-focused full-stack hand.";
+
+  const infoItems = (
+    [
+      contact.status
+        ? {
+            label: "Status",
+            value: contact.status,
+            icon: "fa-solid fa-circle-check",
+          }
+        : null,
+      contact.email
+        ? {
+            label: "Email",
+            value: contact.email,
+            icon: "fa-solid fa-envelope",
+            href: `mailto:${contact.email}`,
+          }
+        : null,
+      contact.phone
+        ? {
+            label: "Phone",
+            value: contact.phone,
+            icon: "fa-solid fa-phone",
+            href: buildTelHref(contact.phone),
+          }
+        : null,
+      contact.address
+        ? {
+            label: "Address",
+            value: contact.address,
+            icon: "fa-solid fa-location-dot",
+            href: buildMapHref(contact.address),
+            external: true,
+          }
+        : null,
+    ] as Array<InfoItem | null>
+  ).filter((item): item is InfoItem => item !== null);
 
   const promptLines = [
     { tone: "muted", text: "system.load_contact_brief()" },
@@ -72,8 +100,9 @@ export function ContactSection({ contact, social }: ContactSectionProps) {
     contact.email
       ? { tone: "normal", text: `preferred_channel: ${contact.email}` }
       : null,
-    contact.location
-      ? { tone: "normal", text: `context.location: ${contact.location}` }
+    contact.phone ? { tone: "normal", text: `phone: ${contact.phone}` } : null,
+    contact.address
+      ? { tone: "normal", text: `address: ${contact.address}` }
       : null,
     { tone: "success", text: "output: clear next step + implementation plan" },
   ].filter((line): line is PromptLine => line !== null);
@@ -84,17 +113,13 @@ export function ContactSection({ contact, social }: ContactSectionProps) {
       className="landing-section"
       data-anim-section="contact"
     >
-      <span className="landing-eyebrow">05 / Get in Touch</span>
-      <h2 className="landing-section-title">Let's work together</h2>
+      <span className="landing-eyebrow">04 / Get in Touch</span>
+      <h2 className="landing-section-title">{sectionTitle}</h2>
 
       <div className={styles.wrap}>
         <div className={styles.infoPanel}>
           <p className={styles.kicker}>Direct channel</p>
-          <p className={styles.asideText}>
-            Tell me what you are building, what is blocked, or where you need a
-            backend-focused full-stack hand. I usually start with email, then
-            move to the best channel for the project.
-          </p>
+          <p className={styles.asideText}>{sectionSubtitle}</p>
 
           {infoItems.length > 0 ? (
             <div className={styles.infoList}>
@@ -116,6 +141,8 @@ export function ContactSection({ contact, social }: ContactSectionProps) {
                     key={item.label}
                     href={item.href}
                     className={styles.infoItem}
+                    target={item.external ? "_blank" : undefined}
+                    rel={item.external ? "noreferrer" : undefined}
                   >
                     {content}
                   </a>
@@ -133,7 +160,7 @@ export function ContactSection({ contact, social }: ContactSectionProps) {
               <a
                 href={`mailto:${contact.email}`}
                 className={styles.cta}
-                aria-label="Email Ali Hmaidi"
+                aria-label={`Email ${contact.email}`}
               >
                 {contact.ctaLabel}
                 <i className="fa-solid fa-arrow-right" aria-hidden="true" />

@@ -9,16 +9,12 @@ export function CareerJourneySection({ steps }: CareerJourneySectionProps) {
   if (steps.length === 0) return null;
 
   return (
-    <section
-      id="career"
-      className="landing-section"
-      data-anim-section="career"
-    >
-      <span className="landing-eyebrow">04 / Journey</span>
+    <section id="career" className="landing-section" data-anim-section="career">
+      <span className="landing-eyebrow">03 / Journey</span>
       <h2 className="landing-section-title">Career Journey</h2>
       <p className="landing-section-lede">
-        A short timeline of focus areas and the tools I've been doubling down
-        on along the way.
+        A short timeline of focus areas and the tools I've been doubling down on
+        along the way.
       </p>
 
       <div className={styles.timeline} data-anim-timeline>

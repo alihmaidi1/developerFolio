@@ -107,9 +107,13 @@ export const LANDING_DEFAULT_DATA: LandingPageData = {
     },
   ],
   contact: {
+    title: "Let's work together",
+    subtitle:
+      "Tell me what you are building, what is blocked, or where you need a backend-focused full-stack hand. I usually start with email, then move to the best channel for the project.",
     status: "available",
     email: "alihmaidi095@gmail.com",
-    location: "Germany",
+    phone: "",
+    address: "Germany",
     ctaLabel: "Let's Build Something",
   },
   social: [

@@ -225,41 +225,6 @@
   margin-top: 18px;
 }
 
-.profileGrid {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(280px, 0.8fr);
-  gap: clamp(24px, 4vw, 48px);
-}
-
-.profileBody {
-  height: 220px;
-}
-
-.statGrid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
-}
-
-.stat {
-  display: grid;
-  gap: 12px;
-  padding: 18px;
-  border: 1px solid var(--border-subtle);
-  border-radius: var(--radius-lg);
-  background: var(--bg-surface);
-}
-
-.statValue {
-  width: 70%;
-  height: 40px;
-}
-
-.statLabel {
-  width: 100%;
-  height: 16px;
-}
-
 .skillsGrid,
 .contactGrid {
   display: grid;
@@ -422,7 +387,6 @@
 
 @media (max-width: 960px) {
   .hero,
-  .profileGrid,
   .skillsGrid,
   .projectGrid,
   .contactGrid {
@@ -477,10 +441,6 @@
 
   .scene {
     height: 360px;
-  }
-
-  .statGrid {
-    grid-template-columns: 1fr;
   }
 
   .skillTiles {

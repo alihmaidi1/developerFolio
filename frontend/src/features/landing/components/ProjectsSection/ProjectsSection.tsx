@@ -13,7 +13,7 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
       className="landing-section"
       data-anim-section="projects"
     >
-      <span className="landing-eyebrow">03 / Selected Work</span>
+      <span className="landing-eyebrow">02 / Selected Work</span>
       <h2 className="landing-section-title">Featured Projects</h2>
       <p className="landing-section-lede">
         A small set of production-style projects that show how I structure
