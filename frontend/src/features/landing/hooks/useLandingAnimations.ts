@@ -52,6 +52,7 @@ export function useLandingAnimations({
 
     let cleanupMouseMove: (() => void) | undefined;
     let cleanupScrollProgress: (() => void) | undefined;
+    const cleanupHeroInteractions: Array<() => void> = [];
 
     const ctx = gsap.context(() => {
       // ============ INTRO TIMELINE ============
@@ -90,12 +91,6 @@ export function useLandingAnimations({
           0.62,
         )
         .fromTo(
-          '[data-anim="hero-description"]',
-          { y: 12, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6 },
-          0.78,
-        )
-        .fromTo(
           '[data-anim="hero-actions"]',
           { y: 12, opacity: 0 },
           { y: 0, opacity: 1, duration: 0.6 },
@@ -119,6 +114,19 @@ export function useLandingAnimations({
           },
           1.16,
         );
+
+      // Description is optional (backend may omit it) — animate only if present.
+      const heroDescription = scope.current?.querySelector<HTMLElement>(
+        '[data-anim="hero-description"]',
+      );
+      if (heroDescription) {
+        tl.fromTo(
+          heroDescription,
+          { y: 12, opacity: 0 },
+          { y: 0, opacity: 1, duration: 0.6 },
+          0.78,
+        );
+      }
 
       // ============ MOUSE PARALLAX (hero scene) ============
       const sceneWrap = scope.current?.querySelector<HTMLElement>(
@@ -157,6 +165,95 @@ export function useLandingAnimations({
         window.addEventListener("mousemove", onMove);
         cleanupMouseMove = () =>
           window.removeEventListener("mousemove", onMove);
+      }
+
+      // ============ HERO CURSOR GLOW ============
+      const heroSection = scope.current?.querySelector<HTMLElement>(
+        '[data-anim-section="hero"]',
+      );
+      const cursorGlow = scope.current?.querySelector<HTMLElement>(
+        "[data-hero-cursor-glow]",
+      );
+
+      if (heroSection && cursorGlow) {
+        const glowX = gsap.quickTo(cursorGlow, "x", {
+          duration: 0.5,
+          ease: "power3.out",
+        });
+        const glowY = gsap.quickTo(cursorGlow, "y", {
+          duration: 0.5,
+          ease: "power3.out",
+        });
+        const onEnter = () =>
+          gsap.to(cursorGlow, { opacity: 1, duration: 0.4 });
+        const onLeave = () =>
+          gsap.to(cursorGlow, { opacity: 0, duration: 0.4 });
+        const onGlowMove = (event: MouseEvent) => {
+          const rect = heroSection.getBoundingClientRect();
+          glowX(event.clientX - rect.left);
+          glowY(event.clientY - rect.top);
+        };
+        heroSection.addEventListener("mouseenter", onEnter);
+        heroSection.addEventListener("mouseleave", onLeave);
+        heroSection.addEventListener("mousemove", onGlowMove);
+        cleanupHeroInteractions.push(() => {
+          heroSection.removeEventListener("mouseenter", onEnter);
+          heroSection.removeEventListener("mouseleave", onLeave);
+          heroSection.removeEventListener("mousemove", onGlowMove);
+        });
+      }
+
+      // ============ MAGNETIC BUTTONS ============
+      scope.current
+        ?.querySelectorAll<HTMLElement>("[data-hero-magnetic]")
+        .forEach((btn) => {
+          const xTo = gsap.quickTo(btn, "x", {
+            duration: 0.4,
+            ease: "power3.out",
+          });
+          const yTo = gsap.quickTo(btn, "y", {
+            duration: 0.4,
+            ease: "power3.out",
+          });
+          const onMagMove = (event: MouseEvent) => {
+            const rect = btn.getBoundingClientRect();
+            xTo((event.clientX - (rect.left + rect.width / 2)) * 0.3);
+            yTo((event.clientY - (rect.top + rect.height / 2)) * 0.4);
+          };
+          const onMagLeave = () => {
+            xTo(0);
+            yTo(0);
+          };
+          btn.addEventListener("mousemove", onMagMove);
+          btn.addEventListener("mouseleave", onMagLeave);
+          cleanupHeroInteractions.push(() => {
+            btn.removeEventListener("mousemove", onMagMove);
+            btn.removeEventListener("mouseleave", onMagLeave);
+          });
+        });
+
+      // ============ HERO BACKDROP SCROLL PARALLAX ============
+      // Only move layers WITHOUT a CSS transform animation (image, orbs
+      // container) so we don't fight the aurora/orb keyframes.
+      if (heroSection) {
+        const parallaxLayers: Array<[string, number]> = [
+          ['[data-hero-parallax="image"]', 8],
+          ['[data-hero-parallax="orbs"]', 26],
+        ];
+        parallaxLayers.forEach(([selector, amount]) => {
+          const layer = scope.current?.querySelector<HTMLElement>(selector);
+          if (!layer) return;
+          gsap.to(layer, {
+            yPercent: amount,
+            ease: "none",
+            scrollTrigger: {
+              trigger: heroSection,
+              start: "top top",
+              end: "bottom top",
+              scrub: 0.6,
+            },
+          });
+        });
       }
 
       // ============ SECTION SCROLL REVEALS ============
@@ -623,6 +720,7 @@ export function useLandingAnimations({
     return () => {
       cleanupMouseMove?.();
       cleanupScrollProgress?.();
+      cleanupHeroInteractions.forEach((fn) => fn());
       ctx.revert();
     };
   }, [enabled, scope]);

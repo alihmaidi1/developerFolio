@@ -94,6 +94,15 @@
   transform: scaleX(1);
 }
 
+/* Active section (scroll-spy) */
+.nav a.navActive {
+  color: var(--accent);
+}
+
+.nav a.navActive::after {
+  transform: scaleX(1);
+}
+
 /* CTA */
 .cta {
   display: inline-flex;
@@ -239,6 +248,11 @@
   .sheetInner a:hover {
     color: var(--text-primary);
     background: var(--bg-elevated);
+  }
+
+  .sheetInner a.sheetActive {
+    color: var(--accent);
+    background: var(--accent-soft);
   }
 
   .sheetCta {

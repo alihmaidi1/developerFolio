@@ -1,0 +1,242 @@
+/* ============ BACKDROP CONTAINER ============ */
+.backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  z-index: 0;
+  pointer-events: none;
+  background: var(--bg-base);
+}
+
+.backdrop > * {
+  position: absolute;
+  inset: 0;
+}
+
+/* ============ AURORA MESH (fallback base) ============ */
+.aurora {
+  background:
+    radial-gradient(
+      60% 55% at 72% 30%,
+      rgb(132 204 22 / 22%) 0%,
+      transparent 60%
+    ),
+    radial-gradient(
+      45% 45% at 88% 68%,
+      rgb(163 230 53 / 14%) 0%,
+      transparent 65%
+    ),
+    radial-gradient(
+      55% 60% at 20% 80%,
+      rgb(101 163 13 / 12%) 0%,
+      transparent 60%
+    ),
+    linear-gradient(180deg, #0a0a0a 0%, #070707 100%);
+  filter: saturate(1.1);
+  animation: aurora-drift 22s ease-in-out infinite alternate;
+  transform-origin: center;
+  /* Extra bleed so parallax/scale never exposes an edge */
+  inset: -12%;
+}
+
+@keyframes aurora-drift {
+  0% {
+    transform: translate3d(-1.5%, -1%, 0) scale(1.05) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(1.5%, 1%, 0) scale(1.12) rotate(1.5deg);
+  }
+  100% {
+    transform: translate3d(-0.5%, 1.5%, 0) scale(1.08) rotate(-0.5deg);
+  }
+}
+
+/* ============ GLOW ORBS ============ */
+.orbs {
+  inset: -10%;
+}
+
+.orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  opacity: 0.55;
+}
+
+.orbA {
+  width: 380px;
+  height: 380px;
+  top: 8%;
+  right: 12%;
+  background: radial-gradient(circle, rgb(132 204 22 / 55%), transparent 70%);
+  animation: orb-float-a 16s ease-in-out infinite alternate;
+}
+
+.orbB {
+  width: 300px;
+  height: 300px;
+  bottom: 6%;
+  right: 28%;
+  background: radial-gradient(circle, rgb(163 230 53 / 40%), transparent 70%);
+  animation: orb-float-b 19s ease-in-out infinite alternate;
+}
+
+.orbC {
+  width: 260px;
+  height: 260px;
+  top: 42%;
+  left: 6%;
+  background: radial-gradient(circle, rgb(101 163 13 / 32%), transparent 70%);
+  animation: orb-float-c 24s ease-in-out infinite alternate;
+}
+
+@keyframes orb-float-a {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(-40px, 30px) scale(1.15);
+  }
+}
+@keyframes orb-float-b {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(30px, -34px) scale(1.1);
+  }
+}
+@keyframes orb-float-c {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  100% {
+    transform: translate(26px, 24px) scale(1.12);
+  }
+}
+
+/* ============ WIREFRAME MESH LINES ============ */
+.mesh {
+  background-image:
+    linear-gradient(to right, rgb(132 204 22 / 6%) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(132 204 22 / 6%) 1px, transparent 1px);
+  background-size: 72px 72px;
+  mask-image: radial-gradient(
+    ellipse 70% 70% at 75% 45%,
+    black 0%,
+    transparent 70%
+  );
+  -webkit-mask-image: radial-gradient(
+    ellipse 70% 70% at 75% 45%,
+    black 0%,
+    transparent 70%
+  );
+  opacity: 0.7;
+}
+
+/* ============ OPTIONAL GENERATED IMAGE ============ */
+/* Wrapper is the scroll-parallax layer; generous bleed so the parallax +
+   Ken Burns zoom never expose an edge. */
+.imageWrap {
+  inset: -10%;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.image {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.96;
+  transform-origin: 68% 42%;
+  animation: hero-kenburns 34s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Slow cinematic zoom + drift toward the mesh side */
+@keyframes hero-kenburns {
+  0% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.16) translate3d(-1.6%, -1.2%, 0);
+  }
+  100% {
+    transform: scale(1.06) translate3d(0, 0, 0);
+  }
+}
+
+/* ============ GRAIN ============ */
+.grain {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.55'/%3E%3C/svg%3E");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+}
+
+/* ============ LEGIBILITY SCRIM (left → right) ============ */
+.scrim {
+  background:
+    linear-gradient(
+      90deg,
+      rgb(10 10 10 / 82%) 0%,
+      rgb(10 10 10 / 54%) 34%,
+      rgb(10 10 10 / 18%) 64%,
+      rgb(10 10 10 / 4%) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgb(10 10 10 / 42%) 0%,
+      transparent 24%,
+      transparent 72%,
+      rgb(10 10 10 / 70%) 100%
+    );
+}
+
+/* ============ VIGNETTE ============ */
+.vignette {
+  box-shadow: inset 0 0 220px 60px rgb(0 0 0 / 65%);
+  background: radial-gradient(
+    ellipse at center,
+    transparent 55%,
+    rgb(0 0 0 / 45%) 100%
+  );
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 960px) {
+  .scrim {
+    background: linear-gradient(
+      180deg,
+      rgb(10 10 10 / 70%) 0%,
+      rgb(10 10 10 / 45%) 40%,
+      rgb(10 10 10 / 70%) 100%
+    );
+  }
+
+  .orbA {
+    width: 260px;
+    height: 260px;
+  }
+  .orbB {
+    width: 220px;
+    height: 220px;
+  }
+  .orbC {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .aurora,
+  .orbA,
+  .orbB,
+  .orbC,
+  .image {
+    animation: none;
+  }
+}
