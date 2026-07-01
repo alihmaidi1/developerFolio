@@ -80,6 +80,21 @@ export const LANDING_DEFAULT_DATA: LandingPageData = {
       highlight: "Type-safe · Responsive · Modular",
     },
   ],
+  education: [
+    {
+      id: "default-edu-1",
+      school: "Self-Directed Learning",
+      degree: "Software Engineering & Architecture",
+      period: "2021 — Present",
+      description:
+        "Continuous learning through building real projects, studying software design patterns, and applying production-grade practices in every iteration.",
+      bullets: [
+        "Clean Architecture, CQRS, and Domain-Driven Design",
+        "ASP.NET Core, EF Core, and PostgreSQL",
+        "React, TypeScript, and modern frontend tooling",
+      ],
+    },
+  ],
   career: [
     {
       id: "current",

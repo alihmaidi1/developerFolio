@@ -23,7 +23,7 @@ export function useLandingAnimations({
       const root = scope.current;
       root
         .querySelectorAll<HTMLElement>(
-          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile], [data-anim-prompt-card], [data-anim-prompt-console], [data-anim-prompt-line], [data-anim-prompt-input]",
+          "[data-anim], [data-anim-fade], [data-anim-section], [data-anim-project-card], [data-anim-capability], [data-anim-career-item], [data-anim-career-card], [data-anim-career-dot], [data-anim-career-detail], [data-anim-career-chip], [data-anim-spine-cap], [data-anim-skill-tile], [data-anim-prompt-card], [data-anim-prompt-console], [data-anim-prompt-line], [data-anim-prompt-input], [data-anim-education-card]",
         )
         .forEach((el) => {
           gsap.set(el, {
@@ -584,6 +584,34 @@ export function useLandingAnimations({
                   el.textContent = Math.ceil(counter.val) + suffix;
                 },
               });
+            });
+          },
+        });
+      }
+
+      // ============ EDUCATION CARDS — flip-up stagger ============
+      const educationCards = scope.current?.querySelectorAll<HTMLElement>(
+        "[data-anim-education-card]",
+      );
+      if (educationCards && educationCards.length > 0) {
+        gsap.set(educationCards, {
+          autoAlpha: 0,
+          y: 60,
+          rotateX: -8,
+          transformPerspective: 700,
+        });
+        ScrollTrigger.create({
+          trigger: educationCards[0],
+          start: "top 86%",
+          once: true,
+          onEnter: () => {
+            gsap.to(educationCards, {
+              autoAlpha: 1,
+              y: 0,
+              rotateX: 0,
+              duration: 0.78,
+              ease: "back.out(1.2)",
+              stagger: { each: 0.14, from: "start" },
             });
           },
         });

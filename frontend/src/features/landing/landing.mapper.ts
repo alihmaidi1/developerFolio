@@ -1,6 +1,7 @@
 import type { LandingPageResponse } from "./api/landing.api.types";
 import type {
   LandingCareerStep,
+  LandingEducation,
   LandingPageData,
   LandingProject,
   LandingSocialLink,
@@ -103,6 +104,17 @@ function mapCareer(response: LandingPageResponse): LandingCareerStep[] {
   });
 }
 
+function mapEducation(response: LandingPageResponse): LandingEducation[] {
+  return response.educations.map((edu) => ({
+    id: edu.id,
+    school: edu.schoolName,
+    degree: edu.degree,
+    period: edu.duration,
+    description: edu.description ?? "",
+    bullets: edu.descriptionBullets.filter(Boolean),
+  }));
+}
+
 function mapSocial(response: LandingPageResponse): LandingSocialLink[] {
   return response.settings.socialLinks.map((link) => ({
     label: link.name,
@@ -188,6 +200,7 @@ export function mapLandingResponse(
     skills: mapSoftwareSkills(response),
     projects: mapProjects(response),
     career: mapCareer(response),
+    education: mapEducation(response),
     contact: {
       title: contact.title,
       subtitle: contact.subtitle,

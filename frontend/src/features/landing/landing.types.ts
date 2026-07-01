@@ -61,6 +61,15 @@ export interface LandingSocialLink {
   iconClassName?: string;
 }
 
+export interface LandingEducation {
+  id: string;
+  school: string;
+  degree: string;
+  period: string;
+  description: string;
+  bullets: string[];
+}
+
 export interface LandingPageData {
   hero: LandingHero;
   about: LandingAbout;
@@ -68,6 +77,7 @@ export interface LandingPageData {
   skills: LandingSoftwareSkill[];
   projects: LandingProject[];
   career: LandingCareerStep[];
+  education: LandingEducation[];
   contact: LandingContact;
   social: LandingSocialLink[];
 }

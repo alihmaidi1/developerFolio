@@ -1,0 +1,205 @@
+/* ============ GRID ============ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 460px), 1fr));
+  gap: 24px;
+}
+
+/* ============ CARD ============ */
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 28px 28px 26px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transform-style: preserve-3d;
+  transition:
+    border-color var(--transition-fast),
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1),
+    box-shadow var(--transition-fast);
+}
+
+/* Dot-grid texture — subtle academic graph-paper feel */
+.card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: radial-gradient(
+    circle,
+    rgb(255 255 255 / 5%) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+/* Bottom accent bar draws across on hover */
+.card::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(
+    to right,
+    var(--accent),
+    #bef264 60%,
+    transparent
+  );
+  box-shadow: 0 0 10px var(--accent-glow);
+  transition: width 420ms ease;
+}
+
+.card:hover {
+  border-color: var(--accent-border);
+  transform: translateY(-4px);
+  box-shadow:
+    0 0 0 1px rgb(132 204 22 / 8%),
+    0 16px 40px rgb(0 0 0 / 40%);
+}
+
+.card:hover::before {
+  opacity: 1;
+}
+
+.card:hover::after {
+  width: 100%;
+}
+
+/* All direct children sit above the pseudo layers */
+.card > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* ============ CARD HEAD ============ */
+.cardHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.iconWrap {
+  display: inline-grid;
+  place-items: center;
+  width: 38px;
+  height: 38px;
+  border-radius: var(--radius-md);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  color: var(--accent);
+  font-size: 16px;
+  flex-shrink: 0;
+  transition:
+    background 220ms ease,
+    box-shadow 220ms ease,
+    transform 300ms cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.card:hover .iconWrap {
+  background: var(
+    --accent-soft-2,
+    color-mix(in srgb, var(--accent) 15%, transparent)
+  );
+  box-shadow: 0 0 14px var(--accent-glow);
+  transform: scale(1.08) rotate(-5deg);
+}
+
+.period {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--accent-soft);
+  border: 1px solid var(--accent-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  white-space: nowrap;
+}
+
+/* ============ TEXT ============ */
+.degree {
+  font-size: clamp(17px, 2vw, 20px);
+  font-weight: 700;
+  color: var(--text-primary);
+  line-height: 1.2;
+  margin: 0;
+  letter-spacing: -0.015em;
+}
+
+.school {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  letter-spacing: 0.05em;
+  margin: 0;
+}
+
+.body {
+  font-size: 14px;
+  line-height: 1.65;
+  color: var(--text-secondary);
+  margin: 2px 0 0;
+}
+
+/* ============ BULLETS ============ */
+.bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  list-style: none;
+  padding: 0;
+  margin: 4px 0 0;
+}
+
+.bullets li {
+  position: relative;
+  padding-left: 18px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--text-secondary);
+  transition: color 200ms ease;
+}
+
+.bullets li::before {
+  content: "›";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-weight: 700;
+  line-height: 1.55;
+}
+
+.card:hover .bullets li {
+  color: var(--text-primary);
+}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width: 600px) {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .card {
+    padding: 22px 18px 20px;
+  }
+}
+
+/* ============ REDUCED MOTION ============ */
+@media (prefers-reduced-motion: reduce) {
+  .card,
+  .card::after,
+  .iconWrap {
+    transition: none;
+  }
+}

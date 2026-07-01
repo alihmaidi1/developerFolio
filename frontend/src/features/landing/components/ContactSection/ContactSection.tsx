@@ -113,7 +113,7 @@ export function ContactSection({ contact, social }: ContactSectionProps) {
       className="landing-section"
       data-anim-section="contact"
     >
-      <span className="landing-eyebrow">04 / Get in Touch</span>
+      <span className="landing-eyebrow">06 / Get in Touch</span>
       <h2 className="landing-section-title">{sectionTitle}</h2>
 
       <div className={styles.wrap}>

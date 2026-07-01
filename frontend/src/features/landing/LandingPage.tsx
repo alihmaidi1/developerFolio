@@ -5,6 +5,7 @@ import { HeroSection } from "./components/HeroSection/HeroSection";
 import { SkillsSection } from "./components/SkillsSection/SkillsSection";
 import { ProjectsSection } from "./components/ProjectsSection/ProjectsSection";
 import { CareerJourneySection } from "./components/CareerJourneySection/CareerJourneySection";
+import { EducationSection } from "./components/EducationSection/EducationSection";
 import { ContactSection } from "./components/ContactSection/ContactSection";
 import { LandingFooter } from "./components/LandingFooter/LandingFooter";
 import { LandingSkeleton } from "./components/LandingSkeleton/LandingSkeleton";
@@ -36,6 +37,7 @@ export function LandingPage() {
           />
           <ProjectsSection projects={data.projects} />
           <CareerJourneySection steps={data.career} />
+          <EducationSection education={data.education} />
           <ContactSection contact={data.contact} social={data.social} />
         </main>
       )}
