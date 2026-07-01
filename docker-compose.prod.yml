@@ -11,7 +11,7 @@ services:
     restart: unless-stopped
     environment:
       ASPNETCORE_ENVIRONMENT: ${ASPNETCORE_ENVIRONMENT:-Production}
-      ASPNETCORE_URLS: http://+:8081
+      ASPNETCORE_URLS: http://+:8080
       ASPNETCORE_FORWARDEDHEADERS_ENABLED: "true"
       Https__UseRedirection: ${HTTPS_USE_REDIRECTION:-false}
       ConnectionStrings__Database: ${DATABASE_CONNECTION_STRING}
@@ -25,11 +25,11 @@ services:
     volumes:
       - api-uploads:/app/wwwroot
     expose:
-      - "8081"
+      - "8080"
     networks:
       - edge
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/health || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost:8080/health || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
@@ -40,10 +40,15 @@ services:
     depends_on:
       api:
         condition: service_healthy
+    # Published on localhost only. Your existing nginx forwards to this port
+    # (or reaches `web:80` by name on the edge network). Keep WEB_PUBLIC_PORT
+    # distinct from other apps on the host.
+    ports:
+      - "127.0.0.1:${WEB_PUBLIC_PORT:-8080}:80"
     networks:
       - edge
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost:8081/healthz || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5

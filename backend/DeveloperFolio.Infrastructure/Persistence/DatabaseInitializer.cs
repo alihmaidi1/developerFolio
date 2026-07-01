@@ -20,10 +20,12 @@ public static class DatabaseInitializer
         await dbContext.Database.MigrateAsync();
         await scope.ServiceProvider.GetRequiredService<AdminSeeder>().SeedAsync();
         await scope.ServiceProvider.GetRequiredService<SettingsSeeder>().SeedAsync();
-            await scope.ServiceProvider.GetRequiredService<SkillsSeeder>().SeedAsync();
+        // Skills seed in every environment (idempotent — skips if rows exist).
+        await scope.ServiceProvider.GetRequiredService<SkillsSeeder>().SeedAsync();
 
         if (app.Environment.IsDevelopment())
         {
+            // Personal/demo content stays Development-only.
             await scope.ServiceProvider.GetRequiredService<ProjectSeeder>().SeedAsync();
             await scope.ServiceProvider.GetRequiredService<EducationSeeder>().SeedAsync();
             await scope.ServiceProvider.GetRequiredService<WorkExperienceSeeder>().SeedAsync();
