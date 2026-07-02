@@ -32,7 +32,7 @@ services:
     # Published on localhost; your central nginx routes the API domain here.
     # Stays on `edge` to reach the external postgres container.
     ports:
-      - "127.0.0.1:${API_PUBLIC_PORT:-5000}:8080"
+      - "0.0.0.0:${API_PUBLIC_PORT:-5000}:8080"
     networks:
       - edge
     healthcheck:
