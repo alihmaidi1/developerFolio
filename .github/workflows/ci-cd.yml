@@ -163,7 +163,27 @@ jobs:
           port: ${{ secrets.DEPLOY_PORT || '22' }}
           script: |
             set -e
+
+            # Guard: never run rm against an empty path.
+            WEB_ROOT="${{ secrets.DEPLOY_WEB_ROOT }}"
+            if [ -z "$WEB_ROOT" ]; then
+              echo "ERROR: DEPLOY_WEB_ROOT secret is not set"; exit 1
+            fi
+
             cd ${{ secrets.DEPLOY_PATH }}
+
+            # 1) Update the API container.
             docker compose -f docker-compose.prod.yml pull
             docker compose -f docker-compose.prod.yml up -d
+
+            # 2) Publish the built SPA to the host nginx web root by copying the
+            #    assets out of the web image (no frontend container runs).
+            WEB_IMAGE=ghcr.io/${{ github.repository_owner }}/developerfolio-web:latest
+            docker pull "$WEB_IMAGE"
+            cid=$(docker create "$WEB_IMAGE")
+            mkdir -p "$WEB_ROOT"
+            rm -rf "$WEB_ROOT"/*
+            docker cp "$cid:/dist/." "$WEB_ROOT/"
+            docker rm "$cid"
+
             docker image prune -f

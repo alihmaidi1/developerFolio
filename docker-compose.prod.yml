@@ -1,5 +1,10 @@
-# Production deployment — pulls prebuilt images from GHCR and joins an existing
-# shared Docker network that also hosts your postgres + nginx containers.
+# Production deployment — pulls the prebuilt API image from GHCR and joins the
+# existing shared Docker network that hosts your postgres container.
+#
+# The frontend is NOT a container: your host nginx serves the built SPA from a
+# directory on the server and reverse-proxies /api (plus the media paths) to the
+# API published below. The deploy job extracts the SPA assets from the GHCR web
+# image onto the host nginx web root (see .github/workflows/ci-cd.yml).
 #
 #   docker compose -f docker-compose.prod.yml pull
 #   docker compose -f docker-compose.prod.yml up -d
@@ -24,8 +29,10 @@ services:
       Cors__AllowedOrigins__0: ${PUBLIC_APP_URL}
     volumes:
       - api-uploads:/app/wwwroot
-    expose:
-      - "8080"
+    # Published on localhost only; your host nginx proxies /api (and the media
+    # paths) here. Stays on `edge` too so it can reach the postgres container.
+    ports:
+      - "127.0.0.1:${API_PUBLIC_PORT:-8080}:8080"
     networks:
       - edge
     healthcheck:
@@ -34,32 +41,11 @@ services:
       timeout: 5s
       retries: 5
 
-  web:
-    image: ghcr.io/alihmaidi1/developerfolio-web:latest
-    restart: unless-stopped
-    depends_on:
-      api:
-        condition: service_healthy
-    # Published on localhost only. Your existing nginx forwards to this port
-    # (or reaches `web:80` by name on the edge network). Keep WEB_PUBLIC_PORT
-    # distinct from other apps on the host.
-    ports:
-      - "${WEB_PUBLIC_PORT:-8080}:80"
-    networks:
-      - edge
-    healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
-      interval: 30s
-      timeout: 5s
-      retries: 5
-
-
 volumes:
   api-uploads:
 
-# The existing network your postgres + nginx containers are already on.
-# Set EDGE_NETWORK in .env to that network's name. All four containers
-# (postgres, nginx, api, web) must share it so they resolve each other by name.
+# The existing network your postgres container is on. Set EDGE_NETWORK in .env
+# to that network's name so the api resolves postgres by name.
 networks:
   edge:
     external: true
