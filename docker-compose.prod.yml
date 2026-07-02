@@ -1,10 +1,14 @@
-# Production deployment — pulls prebuilt images from GHCR and joins an existing
-# shared Docker network that also hosts your postgres + nginx containers.
+# Production deployment — pulls prebuilt images from GHCR.
+#
+# The frontend container serves the built SPA as static files (no nginx) and
+# reads the backend URL at startup from VITE_API_URL (written into config.js),
+# then calls the backend directly. Your central nginx routes the domains to the
+# two published host ports:
+#     your-domain.com      -> WEB_PUBLIC_PORT   (frontend)
+#     api.your-domain.com  -> API_PUBLIC_PORT   (backend; == VITE_API_URL host)
 #
 #   docker compose -f docker-compose.prod.yml pull
 #   docker compose -f docker-compose.prod.yml up -d
-#
-# See PRODUCTION.md for the full walkthrough.
 services:
   api:
     image: ghcr.io/alihmaidi1/developerfolio-api:latest
@@ -21,11 +25,14 @@ services:
       Jwt__ExpirationMinutes: ${JWT_EXPIRATION_MINUTES}
       AdminSeed__Email: ${ADMIN_SEED_EMAIL}
       AdminSeed__Password: ${ADMIN_SEED_PASSWORD}
+      # CORS must allow the frontend origin (cross-origin API calls).
       Cors__AllowedOrigins__0: ${PUBLIC_APP_URL}
     volumes:
       - api-uploads:/app/wwwroot
-    expose:
-      - "8080"
+    # Published on localhost; your central nginx routes the API domain here.
+    # Stays on `edge` to reach the external postgres container.
+    ports:
+      - "127.0.0.1:${API_PUBLIC_PORT:-5000}:8080"
     networks:
       - edge
     healthcheck:
@@ -37,28 +44,23 @@ services:
   web:
     image: ghcr.io/alihmaidi1/developerfolio-web:latest
     restart: unless-stopped
-    depends_on:
-      api:
-        condition: service_healthy
-    # Published on the host so your central nginx forwards the domain here.
-    # Use a distinct WEB_PUBLIC_PORT per stack (this box runs several).
+    # Backend base URL the browser calls — written into config.js at startup.
+    # Change it in .env and restart; no rebuild needed.
+    environment:
+      VITE_API_URL: ${VITE_API_URL}
+    # Published on the host; your central nginx forwards the frontend domain here.
     ports:
       - "${WEB_PUBLIC_PORT:-8090}:80"
-    networks:
-      - edge
     healthcheck:
-      test: ["CMD-SHELL", "wget -qO- http://localhost/healthz || exit 1"]
+      test: ["CMD-SHELL", "wget -qO- http://localhost/ >/dev/null 2>&1 || exit 1"]
       interval: 30s
       timeout: 5s
       retries: 5
-
 
 volumes:
   api-uploads:
 
 # Shared network so the api reaches your existing postgres container by name.
-# Set EDGE_NETWORK in .env to the network your postgres is on (api + web join it).
-# Your central nginx does NOT need this network — it uses the published port.
 networks:
   edge:
     external: true

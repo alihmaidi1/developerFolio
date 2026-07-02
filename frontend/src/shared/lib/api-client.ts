@@ -1,6 +1,16 @@
 import axios, { type AxiosInstance } from "axios";
 
-export const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:5062";
+declare global {
+  interface Window {
+    __APP_CONFIG__?: { API_URL?: string };
+  }
+}
+
+// Runtime config (config.js, written from .env when the container starts) wins,
+// then the build-time env, then the local dev fallback. "" means same origin.
+const runtimeApiUrl = window.__APP_CONFIG__?.API_URL;
+export const BASE_URL =
+  runtimeApiUrl ?? import.meta.env.VITE_API_URL ?? "http://localhost:5062";
 
 export interface AxiosClientOptions {
   onUnauthorized: () => void;
