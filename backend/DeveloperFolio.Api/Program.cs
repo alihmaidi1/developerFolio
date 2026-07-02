@@ -61,7 +61,6 @@ if (app.Configuration.GetValue("Https:UseRedirection", true))
 {
     app.UseHttpsRedirection();
 }
-app.UseCors("Frontend");
 app.UseStaticFiles();
 app.UseAuthentication();
 app.UseAuthorization();
