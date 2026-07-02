@@ -30,6 +30,7 @@ internal sealed class GlobalExceptionHandler(
             var result = Result.NotFound<object>(Error.NotFound("Resource was not found."));
             httpContext.Response.StatusCode = (int)result.StatusCode;
             await httpContext.Response.WriteAsJsonAsync(result, cancellationToken);
+            
             return true;
         }
 
