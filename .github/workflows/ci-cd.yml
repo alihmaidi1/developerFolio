@@ -97,7 +97,7 @@ jobs:
           file: frontend/Dockerfile
           push: false
           build-args: |
-            VITE_API_URL=/api
+            VITE_API_URL=
           tags: developerfolio-web:ci
 
   publish-images:
@@ -141,7 +141,7 @@ jobs:
           file: frontend/Dockerfile
           push: true
           build-args: |
-            VITE_API_URL=/api
+            VITE_API_URL=
           tags: |
             ghcr.io/${{ github.repository_owner }}/developerfolio-web:latest
             ghcr.io/${{ github.repository_owner }}/developerfolio-web:${{ github.sha }}

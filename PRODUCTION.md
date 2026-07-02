@@ -40,7 +40,8 @@ Services:
 - `web`: containerized static frontend on `WEB_BIND_ADDRESS:WEB_PUBLIC_PORT`
 - `api`: ASP.NET Core API, internal port `8080`
 
-The frontend uses `VITE_API_URL=/api`, and Nginx proxies `/api/*` to the API container.
+The frontend is built with an empty `VITE_API_URL` (same origin) — the route
+constants already include `/api`, and the container Nginx proxies `/api/*` to the API.
 
 ## Host Nginx
 
