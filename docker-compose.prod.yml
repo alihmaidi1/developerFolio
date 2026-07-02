@@ -43,7 +43,7 @@ services:
     # Published on the host so your central nginx forwards the domain here.
     # Use a distinct WEB_PUBLIC_PORT per stack (this box runs several).
     ports:
-      - "${WEB_PUBLIC_PORT:-8080}:80"
+      - "${WEB_PUBLIC_PORT:-8090}:80"
     networks:
       - edge
     healthcheck:
