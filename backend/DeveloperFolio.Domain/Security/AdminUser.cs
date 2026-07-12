@@ -7,6 +7,7 @@ public sealed class AdminUser : Entity
     private AdminUser()
     {
     }
+    
 
     public string Email { get; private set; } = string.Empty;
     public string PasswordHash { get; private set; } = string.Empty;
